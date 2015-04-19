@@ -2,7 +2,7 @@
 
 A simple Production Renderer for Educational Purpose
 
-Features
+Features:
 * Extremely Simple APIs
 * Small Memory Footprint
 * Integrator: Unidirectional Path Tracing/Progressive Final Gathering/Photon Mapping
@@ -15,7 +15,7 @@ Features
 * OBVH (with some advanced algorithms)
 * Utilising AVX (Redqueen does not use Embree)
 
-Goals
+Goals:
 * Compact - reduce memory consumption 
 * Simple - so that people can use without manual
 * Fast - make best use of the instruction sets of modern CPUs
