@@ -15,7 +15,7 @@ Features
 * OBVH (with some advanced algorithms)
 * Utilising AVX (Redqueen does not use Embree)
 
-Goal
+Goals
 * Compact - reduce memory consumption 
 * Simple - so that people can use without manual
 * Fast - make best use of the instruction sets of modern CPUs
