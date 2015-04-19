@@ -1,6 +1,6 @@
-# Redqueen
+# redqueen
 
-A simple Production Renderer for Educational Purpose
+A Simple Production Renderer for Educational Purpose
 
 Features:
 * Extremely Simple APIs
