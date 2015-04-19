@@ -20,4 +20,4 @@ Goals:
 * Simple - so that people can use without manual
 * Fast - make best use of the instruction sets of modern CPUs
 * Robust - never crashes
-* Free - targeting at individuals and small stusios
+* Free - targeting at individuals and small studios
