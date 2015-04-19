@@ -5,9 +5,9 @@ A simple Production Renderer for Educational Purpose
 Features:
 * Extremely Simple APIs
 * Small Memory Footprint
-* Integrator: Unidirectional Path Tracing/Progressive Final Gathering/Photon Mapping
-* Primitive: Particle/Cylinder/Triangle/Tetragon
-* Light Source: Point/Parallel/Geometry/Sky
+* Integrators: Unidirectional Path Tracing/Progressive Final Gathering/Photon Mapping
+* Primitives: Particle/Cylinder/Triangle/Tetragon
+* Light Sources: Point/Parallel/Geometry/Sky
 * Per Light AOVs
 * Per Vertex User Data
 * Multi-Level Instancing
