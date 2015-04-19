@@ -13,7 +13,7 @@ Features:
 * Multi-Level Instancing
 * Uber Shader for Surface/Hair (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
 * OBVH (with some advanced algorithms)
-* Utilising AVX (Redqueen does not use Embree)
+* Utilising AVX (redqueen does not use Embree)
 
 Goals:
 * Compact - reduce memory consumption 
