@@ -9,7 +9,7 @@ Features:
 * Primitive: Particle/Cylinder/Triangle/Tetragon
 * Light Source: Point/Parallel/Geometry/Sky
 * Per Light AOVs
-* Ver Vertex User Data
+* Per Vertex User Data
 * Multi-Level Instancing
 * Uber Shader for Surface/Hair (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
 * OBVH (with some advanced algorithms)
