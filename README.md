@@ -11,7 +11,7 @@ Features:
 * Extremely Simple APIs
 * Small Memory Footprint
 * Integrators: Unidirectional Path Tracing / Progressive Final Gathering / Photon Mapping
-* Primitives: Particle / Cylinder (with Run-time Tessellation ) / Triangle / Tetragon
+* Primitives: Particle / Cylinder (with Runtime Tessellation ) / Triangle / Tetragon
 * Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
 * Per Vertex User Data
