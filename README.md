@@ -2,8 +2,7 @@
 
 A Simple Production Renderer for Educational Purpose
 
-1. Install https://software.intel.com/sites/default/files/managed/14/91/w_ccompxe_redist_
-msi_2015.0.108.zip
+1. Install https://software.intel.com/sites/default/files/managed/14/91/w_ccompxe_redist_msi_2015.0.108.zip
 2. Download and double click "redqueen.exe" in the bin folder to give it a shot.
 
 Select "Release" and "x64" in Configuration Manager to build your application.
