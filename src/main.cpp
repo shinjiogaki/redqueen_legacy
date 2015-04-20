@@ -147,16 +147,16 @@ int main( )
 		rqSetObjectName( instanced_object_id, "particles" );
 		{
 			// Add Group
-			auto group_id = rqAddGroup ( instanced_object_id );
+			auto part_id = rqAddPart ( instanced_object_id );
 
 			// xyzxyz...
 			float positions[ ] = { 0.3, 0.2, 0, -0.3, 0.2, 0 };
 			float radii    [ ] = { 0.2, 0.2 };
 			int   ids      [ ] = { 0, 1   };
-			rqSetShaderID ( instanced_object_id, group_id, shader_id0  );
-			rqAddPositions( instanced_object_id, group_id, 2, positions );
-			rqAddRadii    ( instanced_object_id, group_id, 2, radii );
-			rqAddParticles( instanced_object_id, group_id, 2, ids );
+			rqSetShaderID ( instanced_object_id, part_id, shader_id0  );
+			rqAddPositions( instanced_object_id, part_id, 2, positions );
+			rqAddRadii    ( instanced_object_id, part_id, 2, radii );
+			rqAddParticles( instanced_object_id, part_id, 2, ids );
 		}
 
 	}
@@ -179,7 +179,7 @@ int main( )
 		
 
 		// Add Group
-		auto group_id = rqAddGroup ( object_id );
+		auto part_id = rqAddPart ( object_id );
 
 		// Trianlges
 		{
@@ -207,20 +207,20 @@ int main( )
 				0,0,1, 0,0,1, 0,0,1, 0,0,1
 			};
 
-			rqAddPositions ( object_id, group_id, 12, positions );
-			rqAddUVs       ( object_id, group_id, 12, uvs       );
-			rqAddVertexData( object_id, group_id, "my_data", 12, 3, my_data );
+			rqAddPositions ( object_id, part_id, 12, positions );
+			rqAddUVs       ( object_id, part_id, 12, uvs       );
+			rqAddVertexData( object_id, part_id, "my_data", 12, 3, my_data );
 
 			{
 				int vertex_ids[ ] = { 0, 1, 2, 0, 2, 3 };
-				rqSetShaderID  ( object_id, group_id,    shader_id0 );
-				rqAddTriangles ( object_id, group_id, 2, vertex_ids );
+				rqSetShaderID  ( object_id, part_id,    shader_id0 );
+				rqAddTriangles ( object_id, part_id, 2, vertex_ids );
 			}
 			
 			{
 				int vertex_ids[ ] = { 4, 5, 6, 7, 8, 9, 10, 11 };	
-				rqSetShaderID  ( object_id, group_id,    shader_id1 );
-				rqAddTetragons ( object_id, group_id, 2, vertex_ids );
+				rqSetShaderID  ( object_id, part_id,    shader_id1 );
+				rqAddTetragons ( object_id, part_id, 2, vertex_ids );
 			}
 
 		}
@@ -230,16 +230,16 @@ int main( )
 		/*
 		{
 			// Add Group
-			auto group_id = rqAddGroup ( object_id );
+			auto part_id = rqAddPart ( object_id );
 
 			// xyzxyz...
 			float positions[ ] = { -1, -1, 0, 0, 0,  0, 1, 1,  0 };
 			float radii    [ ] = { 0.05, 0.025, 0.0 };
 			int   ids      [ ] = { 0, 1  };
-			rqSetShaderID ( object_id, group_id, shader_id1 );
-			rqAddPositions( object_id, group_id, 3, positions );
-			rqAddRadii    ( object_id, group_id, 3, radii );
-			rqAddCylinders( object_id, group_id, 2, ids);
+			rqSetShaderID ( object_id, part_id, shader_id1 );
+			rqAddPositions( object_id, part_id, 3, positions );
+			rqAddRadii    ( object_id, part_id, 3, radii );
+			rqAddCylinders( object_id, part_id, 2, ids);
 		}
 		*/
 

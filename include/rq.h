@@ -231,7 +231,7 @@ API void rqSetObjectName ( const int object_id, const char* name );
 API void rqSetObjectTime ( const int object_id, const float time );
 
 // Group
-API int  rqAddGroup     ( const int object_id );
+API int  rqAddPart ( const int object_id );
 
 // Set Temporal Shader ID
 API void rqSetShaderID ( const int object_id, const int group_id, const int shader_id );
