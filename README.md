@@ -16,13 +16,13 @@ A Simple Production Renderer for Educational Purpose
 * Extremely Simple APIs
 * Small Memory Footprint
 * Integrators: Unidirectional Path Tracing with MIS / Progressive Final Gathering / Photon Mapping
-* Primitives: Particle / Cylinder (with Runtime Tessellation ) / Triangle / Tetragon
+* Primitives: Particle / Cylinder (with Runtime Tessellation) / Triangle / Tetragon
 * Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
 * Per Vertex User Data
 * Multi-Level Instancing
-* Uber Shader for Surface/Hair (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
-* OBVH (with some advanced algorithms)
+* Uber Shader for Surface / Hair (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
+* OBVH with Refitting / Treelet Reordering
 * Utilising AVX (Redqueen does not use Embree)
 
 ###Goals:
