@@ -4,12 +4,10 @@ A Simple Production Renderer for Educational Purpose
 
 To give a shot:
 1. Install https://software.intel.com/sites/default/files/managed/14/91/w_ccompxe_redist_msi_2015.0.108.zip
-
 2. Download and double click "redqueen.exe" in the bin folder.
 
 To create your app:
 1. Download and install VS Community https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx
-
 2. Select "Release" and "x64" in Configuration Manager to build your application.
 
 Features:
