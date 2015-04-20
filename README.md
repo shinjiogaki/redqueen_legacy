@@ -2,6 +2,8 @@
 
 A Simple Production Renderer for Educational Purpose
 
+Download and double click "redqueen.exe" in the bin folder to give it a shot.
+
 Features:
 * Extremely Simple APIs
 * Small Memory Footprint
