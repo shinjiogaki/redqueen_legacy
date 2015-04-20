@@ -10,9 +10,9 @@ Select "Release" and "x64" in Configuration Manager to build your application.
 Features:
 * Extremely Simple APIs
 * Small Memory Footprint
-* Integrators: Unidirectional Path Tracing/Progressive Final Gathering/Photon Mapping
-* Primitives: Particle/Cylinder/Triangle/Tetragon
-* Light Sources: Point/Parallel/Geometry/Sky
+* Integrators: Unidirectional Path Tracing / Progressive Final Gathering / Photon Mapping
+* Primitives: Particle / Cylinder (with Run-time Tessellation ) / Triangle / Tetragon
+* Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
 * Per Vertex User Data
 * Multi-Level Instancing
