@@ -67,7 +67,7 @@ int main( )
 		rqSetCameraPosition ( camera_id, 0, 1, -4 );
 		rqSetCameraTarget   ( camera_id, 0, 1,  0 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
-		rqSetCameraUpVector ( camera_id, 0.2, 1,  0 ); // Camera Blur :)
+		//rqSetCameraUpVector ( camera_id, 0.2, 1,  0 ); // Camera Blur :)
 
 		// AOVs
 		auto aov_id0 = rqAddCameraAOV( camera_id );
@@ -119,10 +119,13 @@ int main( )
 		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
 		//rqSetSurfaceImage ( shader_id1, surface_shader_id1, Element::Glossy,  "C:\\Shinji\\redqueen\\light.hdr", 1.0f, 0, 0 ); // null : identity matrix
 		
+		// Smoothing ( to create vertex normals and tangents )
+		rqSetShaderSmoothAngle( shader_id0, 30 );
+		rqSetShaderSmoothAngle( shader_id1, 30 );
+		
 		/*
 		// Displacement Map Example
 		{
-			rqSetShaderSmoothAngle( shader_id0, 180 );
 		
 			rqAddDisplacementShader ( shader_id0 );
 			rqSetDisplacementVector ( shader_id0, 0, 0, 0, -0.1 );
@@ -233,21 +236,19 @@ int main( )
 
 		
 		// Cylinder (Ribbon) Example
-		/*
 		{
 			// Add Group
 			auto part_id = rqAddPart ( object_id );
 
 			// xyzxyz...
-			float positions[ ] = { -1, -1, 0, 0, 0,  0, 1, 1,  0 };
-			float radii    [ ] = { 0.05, 0.025, 0.0 };
-			int   ids      [ ] = { 0, 1  };
+			float positions[ ] = { -1, 0.75, 0,    -0.3, 1, 0.2,   0.3, 0.75, 0.2,   1,  1,  0 };
+			float radii    [ ] = { 0.012, 0.008, 0.004, 0.0 };
+			int   ids      [ ] = { 0, 1, 2  };
 			rqSetShaderID ( object_id, part_id, shader_id1 );
-			rqAddPositions( object_id, part_id, 3, positions );
-			rqAddRadii    ( object_id, part_id, 3, radii );
-			rqAddCylinders( object_id, part_id, 2, ids);
+			rqAddPositions( object_id, part_id, 4, positions );
+			rqAddRadii    ( object_id, part_id, 4, radii );
+			rqAddCylinders( object_id, part_id, 3, ids);
 		}
-		*/
 
 	}
 
@@ -292,7 +293,7 @@ int main( )
 		rqSetSkyLightZenith ( 0, 1, 0 );
 		rqSetSkyLightNorth  ( 0, 0, -1 );
 		rqSetSkyLightSample ( 64 );
-		rqSetSkyLightPhoton (1000000);
+		rqSetSkyLightPhoton ( 1000000 );
 		//rqSetSkyLightImage ( "C:\\Shinji\\redqueen\\image.hdr" );
 		
 		// Light AOVs

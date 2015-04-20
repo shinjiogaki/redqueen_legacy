@@ -21,6 +21,7 @@ Global
 		{5255E3FB-F0F7-41F8-98EF-119DF1A02EA0}.Release|Win32.Build.0 = Release|Win32
 		{5255E3FB-F0F7-41F8-98EF-119DF1A02EA0}.Release|x64.ActiveCfg = Release|x64
 		{5255E3FB-F0F7-41F8-98EF-119DF1A02EA0}.Release|x64.Build.0 = Release|x64
+		{5255E3FB-F0F7-41F8-98EF-119DF1A02EA0}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,12 +52,12 @@ enum class Element : char
 
 enum class AngleMeasure : char { Horizontal, Vertical, Diagonal }; // For Field of View
 enum class Sideness     : char { Face, Back, Both }; // 2 sided-material
-enum class Projection   : char { Perspective, Spherical, Orthographic }; // FOr camera and Gobo
+enum class Projection   : char { Perspective, Spherical, Orthographic }; // For camera and Gobo
 enum class Addressing   : char { Wrap, Clamp };
 enum class PixelSampler : char { Nearest, Stochastic, Bilinear };
 enum class Filter       : char { None, Gradient, Normal, Gaussian, Variance };
 enum class Path         : char { Null, Occlusion, DiffuseReflection, DiffuseTransmittance, GlossyReflection, GlossyRefraction, SpecularReflection, SpecularRefraction };
-enum class Material     : char { Metal, Glass, ThinGlass };
+enum class Material     : char { Conductor, Dielectric, DielectricFilm };
 //enum class BRDF         : char { Ward };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ API void rqFinalizeRenderer    ( );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Display
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API void rqSetDisplayGamma  ( const float gamma   );
+API void rqSetDisplayGamma  ( const float gamma   ); // Not working yet
 API void rqSetPreviewWindow ( const bool  preview );
 
 
@@ -195,14 +195,14 @@ API int  rqAddShader                ( );
 API void rqSetShaderName            ( const int shader_id, const char*      name );
 API void rqSetShaderTime            ( const int shader_id, const float      time );
 API void rqSetShaderSmoothAngle     ( const int shader_id, const float      smooth_angle           );
-API void rqSetShaderRoundCorner     ( const int shader_id, const float      round_corner           );
+API void rqSetShaderRoundCorner     ( const int shader_id, const float      round_corner           ); // Not working yet
 API void rqSetShaderHairUV          ( const int shader_id, const bool       assign_hair_texture_uv );
 API void rqSetShaderVisibility      ( const int shader_id, const Visibility visibility             );
 
-
+// Surface Shader
 API int  rqAddSurfaceShader         ( const int shader_id );
-API void rqSetSurfaceSideness       ( const int shader_id, const int layer_id, const Sideness   sideness   );										   
-API void rqSetSurfaceMaterial       ( const int shader_id, const int layer_id, const Material   material   );
+API void rqSetSurfaceSideness       ( const int shader_id, const int layer_id, const Sideness   sideness      );
+API void rqSetSurfaceMaterial       ( const int shader_id, const int layer_id, const Material   material      );
 API void rqSetSurfaceVirtualLight   ( const int shader_id, const int layer_id, const bool       virtual_light );
 API void rqSetSurfaceColor          ( const int shader_id, const int layer_id, const Element    element, const float r, const float g, const float b ); // Set Color or Values
 API void rqSetSurfaceImage          ( const int shader_id, const int layer_id, const Element    element, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
@@ -232,7 +232,7 @@ API int  rqAddObject     ( const char* name );
 API void rqSetObjectName ( const int object_id, const char* name );
 API void rqSetObjectTime ( const int object_id, const float time );
 
-// Group
+// Part ( Limitation: particles and cylinders and mesh(triangles and tetragons) should be in different groups )
 API int  rqAddPart ( const int object_id );
 
 // Set Temporal Shader ID
