@@ -14,6 +14,8 @@
 // Enumerations
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+enum Visibility : char { Invisible = 0, InvisibleFromLight = 1, InvisibleFromCamera = 2, Visible = 3 };
+
 enum Channel : int
 {
 	Beauty            = 1 <<  0,
@@ -56,7 +58,6 @@ enum class PixelSampler : char { Nearest, Stochastic, Bilinear };
 enum class Filter       : char { None, Gradient, Normal, Gaussian, Variance };
 enum class Path         : char { Null, Occlusion, DiffuseReflection, DiffuseTransmittance, GlossyReflection, GlossyRefraction, SpecularReflection, SpecularRefraction };
 enum class Material     : char { Metal, Glass, ThinGlass };
-enum class Visibility   : char { Visible, InvisibleFromCamera, InvisibleFromLight, Invisible };
 //enum class BRDF         : char { Ward };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -191,16 +192,17 @@ API void rqSetPreviewWindow ( const bool  preview );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 API int  rqAddShader                ( );
-API void rqSetShaderName            ( const int shader_id, const char* name );
-API void rqSetShaderTime            ( const int shader_id, const float time );
-API void rqSetShaderSmoothAngle     ( const int shader_id, const float smooth_angle           );
-API void rqSetShaderRoundCorner     ( const int shader_id, const float round_corner           );
-API void rqSetShaderHairUV          ( const int shader_id, const bool  assign_hair_texture_uv );
+API void rqSetShaderName            ( const int shader_id, const char*      name );
+API void rqSetShaderTime            ( const int shader_id, const float      time );
+API void rqSetShaderSmoothAngle     ( const int shader_id, const float      smooth_angle           );
+API void rqSetShaderRoundCorner     ( const int shader_id, const float      round_corner           );
+API void rqSetShaderHairUV          ( const int shader_id, const bool       assign_hair_texture_uv );
+API void rqSetShaderVisibility      ( const int shader_id, const Visibility visibility             );
+
 
 API int  rqAddSurfaceShader         ( const int shader_id );
 API void rqSetSurfaceSideness       ( const int shader_id, const int layer_id, const Sideness   sideness   );										   
 API void rqSetSurfaceMaterial       ( const int shader_id, const int layer_id, const Material   material   );
-API void rqSetSurfaceVisibility     ( const int shader_id, const int layer_id, const Visibility visibility );
 API void rqSetSurfaceVirtualLight   ( const int shader_id, const int layer_id, const bool       virtual_light );
 API void rqSetSurfaceColor          ( const int shader_id, const int layer_id, const Element    element, const float r, const float g, const float b ); // Set Color or Values
 API void rqSetSurfaceImage          ( const int shader_id, const int layer_id, const Element    element, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
@@ -234,28 +236,28 @@ API void rqSetObjectTime ( const int object_id, const float time );
 API int  rqAddPart ( const int object_id );
 
 // Set Temporal Shader ID
-API void rqSetShaderID ( const int object_id, const int group_id, const int shader_id );
+API void rqSetShaderID ( const int object_id, const int part_id, const int shader_id );
 
 // Vertex Data
-API void rqAddRadii    ( const int object_id, const int group_id, const int n, const float* data );
-API void rqAddUVs      ( const int object_id, const int group_id, const int n, const float* data );
-API void rqAddPositions( const int object_id, const int group_id, const int n, const float* data );
-API void rqAddNormals  ( const int object_id, const int group_id, const int n, const float* data );
-API void rqAddTangents ( const int object_id, const int group_id, const int n, const float* data );
+API void rqAddRadii    ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddUVs      ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddPositions( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddNormals  ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddTangents ( const int object_id, const int part_id, const int n, const float* data );
 
 // Primitive
-API void rqAddParticles ( const int object_id, const int group_id, const int n, const int* vertex_ids );
-API void rqAddCylinders ( const int object_id, const int group_id, const int n, const int* vertex_ids );
-API void rqAddTriangles ( const int object_id, const int group_id, const int n, const int* vertex_ids );
-API void rqAddTetragons ( const int object_id, const int group_id, const int n, const int* vertex_ids );
+API void rqAddParticles ( const int object_id, const int part_id, const int n, const int* vertex_ids );
+API void rqAddCylinders ( const int object_id, const int part_id, const int n, const int* vertex_ids );
+API void rqAddTriangles ( const int object_id, const int part_id, const int n, const int* vertex_ids );
+API void rqAddTetragons ( const int object_id, const int part_id, const int n, const int* vertex_ids );
 
 // Multi-Level Instance
 API int  rqAddInstance ( const int object_id );
 API void rqSetInstance ( const int object_id, const int instance_id, int instanced_object_id, float matrix[4][4] );
 
 // Per Vertex/Primitive data "position", "uv", and "radius" are reserved.
-API void rqAddVertexData    ( const int object_id, const int group_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
-//API void rqAddPrimitiveData ( const int object_id, const int group_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
+API void rqAddVertexData    ( const int object_id, const int part_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
+//API void rqAddPrimitiveData ( const int object_id, const int part_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
 
 // Mesh Processing to Come..
 

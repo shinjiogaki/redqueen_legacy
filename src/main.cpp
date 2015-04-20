@@ -47,7 +47,7 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	{
 		rqSetCameraSample      ( camera_id, 31 ); // AA samples can be an arbitrary number
-		rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
+		//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, Projection  ::Perspective );
 		rqSetCameraAngleMeasure( camera_id, AngleMeasure::Vertical    );
@@ -56,7 +56,7 @@ int main( )
 		rqSetCameraTime     ( camera_id,  0.0f );
 		rqSetCameraFOV      ( camera_id, 40.0f );
 		rqSetCameraBokeh    ( camera_id,  0.5f );
-		rqSetCameraPosition ( camera_id, -1, 1, -4 );
+		rqSetCameraPosition ( camera_id, 0, 1, -4 );
 		rqSetCameraTarget   ( camera_id, 0, 1,  0 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
 
@@ -64,10 +64,10 @@ int main( )
 		rqSetCameraTime     ( camera_id,  1.0f );
 		rqSetCameraFOV      ( camera_id, 40.0f );
 		rqSetCameraBokeh    ( camera_id,  0.5f );
-		rqSetCameraPosition ( camera_id, -1, 1, -4 );
+		rqSetCameraPosition ( camera_id, 0, 1, -4 );
 		rqSetCameraTarget   ( camera_id, 0, 1,  0 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
-		//rqSetCameraUpVector ( camera_id, 0.2, 1,  0 ); // Camera Blur :)
+		rqSetCameraUpVector ( camera_id, 0.2, 1,  0 ); // Camera Blur :)
 
 		// AOVs
 		auto aov_id0 = rqAddCameraAOV( camera_id );
@@ -106,11 +106,13 @@ int main( )
 	
 		auto surface_shader_id0 = rqAddSurfaceShader( shader_id0 );
 		rqSetShaderName   ( shader_id0, "white" );
+		//rqSetShaderVisibility ( shader_id0, Visibility::InvisibleFromLight );
 		rqSetSurfaceColor ( shader_id0, surface_shader_id0, Element::Lambertian, 0.8f, 0.8f, 0.8f );
 		//rqSetSurfaceImage ( shader_id0, surface_shader_id0, Element::Emissive, "C:\\Shinji\\redqueen\\light.hdr", 1.0f, 0, 0 ); // null : identity matrix
 	
 		auto surface_shader_id1 = rqAddSurfaceShader( shader_id1 );
 		rqSetShaderName   ( shader_id1, "glossy");
+		//rqSetShaderVisibility ( shader_id1, Visibility::InvisibleFromCamera );
 		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::Lambertian, 0.9f, 0.9f, 0.9f );
 		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::Glossy    , 1.0f, 1.0f, 1.0f );
 		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::Roughness , 0.2f, 0.2f, 0.2f );
@@ -153,12 +155,11 @@ int main( )
 			float positions[ ] = { 0.3, 0.2, 0, -0.3, 0.2, 0 };
 			float radii    [ ] = { 0.2, 0.2 };
 			int   ids      [ ] = { 0, 1   };
-			rqSetShaderID ( instanced_object_id, part_id, shader_id0  );
+			rqSetShaderID ( instanced_object_id, part_id, shader_id1  );
 			rqAddPositions( instanced_object_id, part_id, 2, positions );
 			rqAddRadii    ( instanced_object_id, part_id, 2, radii );
 			rqAddParticles( instanced_object_id, part_id, 2, ids );
 		}
-
 	}
 
 
@@ -169,14 +170,13 @@ int main( )
 		
 		// Instance
 		{
-			float matrix0[4][4] = {1,0,0,0,   0,1,0,0,     0,0,1,0,   0,0,0,1  };
-			float matrix1[4][4] = {1,0,0,0,   0,1,0,0.5,   0,0,1,0,   0,0,0,1  };
+			float matrix0[4][4] = { 1,0,0,0,   0,1,0,0,     0,0,1,0,   0,0,0,1 };
+			float matrix1[4][4] = { 1,0,0,0,   0,1,0,0.5,   0,0,1,0,   0,0,0,1 };
 			auto instance_id0 = rqAddInstance( object_id );
 			auto instance_id1 = rqAddInstance( object_id );
 			rqSetInstance( object_id, instance_id0, instanced_object_id, matrix0 );
 			rqSetInstance( object_id, instance_id1, instanced_object_id, matrix1 );
 		}
-		
 
 		// Add Group
 		auto part_id = rqAddPart ( object_id );
@@ -186,14 +186,18 @@ int main( )
 			// xyzxyz...
 			float positions[ ] =
 			{
-				-1, 0,  1, -1, 0, -1, 1, 0, -1, 1, 0,  1,
-				-1, 2,  1, -1, 2, -1, 1, 2, -1, 1, 2,  1,
-				-1, 2,  1, -1, 0,  1, 1, 0,  1, 1, 2,  1
+				-1, 0,  1, -1, 0, -1,  1, 0, -1,  1, 0, 1,
+				-1, 2,  1, -1, 2, -1,  1, 2, -1,  1, 2, 1,
+				-1, 2,  1, -1, 0,  1,  1, 0,  1,  1, 2, 1,
+				-1, 2, -1, -1, 0, -1, -1, 0,  1, -1, 2, 1,
+				 1, 2, -1,  1, 0, -1,  1, 0,  1,  1, 2, 1
 			};
 
 			// uvuvuvuv...
 			float uvs[ ] =
 			{
+				0, 1, 0, 0, 1, 0, 1, 1,
+				0, 1, 0, 0, 1, 0, 1, 1,
 				0, 1, 0, 0, 1, 0, 1, 1,
 				0, 1, 0, 0, 1, 0, 1, 1,
 				0, 1, 0, 0, 1, 0, 1, 1
@@ -204,12 +208,14 @@ int main( )
 			{
 				1,0,0, 1,0,0, 1,0,0, 1,0,0,
 				0,1,0, 0,1,0, 0,1,0, 0,1,0,
-				0,0,1, 0,0,1, 0,0,1, 0,0,1
+				0,0,1, 0,0,1, 0,0,1, 0,0,1,
+				0,1,1, 0,1,1, 0,1,1, 0,1,1,
+				1,0,1, 1,0,1, 1,0,1, 1,0,1
 			};
 
-			rqAddPositions ( object_id, part_id, 12, positions );
-			rqAddUVs       ( object_id, part_id, 12, uvs       );
-			rqAddVertexData( object_id, part_id, "my_data", 12, 3, my_data );
+			rqAddPositions ( object_id, part_id, 20, positions );
+			rqAddUVs       ( object_id, part_id, 20, uvs       );
+			rqAddVertexData( object_id, part_id, "my_data", 20, 3, my_data );
 
 			{
 				int vertex_ids[ ] = { 0, 1, 2, 0, 2, 3 };
@@ -218,9 +224,9 @@ int main( )
 			}
 			
 			{
-				int vertex_ids[ ] = { 4, 5, 6, 7, 8, 9, 10, 11 };	
-				rqSetShaderID  ( object_id, part_id,    shader_id1 );
-				rqAddTetragons ( object_id, part_id, 2, vertex_ids );
+				int vertex_ids[ ] = { 4, 5, 6, 7,   8, 9, 10, 11,   12, 13, 14, 15,   16, 17, 18, 19  };
+				rqSetShaderID  ( object_id, part_id,    shader_id0 );
+				rqAddTetragons ( object_id, part_id, 4, vertex_ids );
 			}
 
 		}
@@ -282,9 +288,9 @@ int main( )
 	// Skylight
 	////////////////////////
 	{
-		rqSetSkyLightColor  ( 0.5,0.5,1 );
-		rqSetSkyLightZenith ( 0,1,0 );
-		rqSetSkyLightNorth  ( 0,0,-1 );
+		rqSetSkyLightColor  ( 0.5, 0.5, 1 );
+		rqSetSkyLightZenith ( 0, 1, 0 );
+		rqSetSkyLightNorth  ( 0, 0, -1 );
 		rqSetSkyLightSample ( 64 );
 		rqSetSkyLightPhoton (1000000);
 		//rqSetSkyLightImage ( "C:\\Shinji\\redqueen\\image.hdr" );
@@ -305,11 +311,11 @@ int main( )
 	////////////////////////
 	// Rendering
 	////////////////////////
+	rqSetRendererClamp ( 1, 1, 1 );
 	rqSetRendererSample( 256 );
-	rqSetRendererBounce( 0 );
+	rqSetRendererBounce( 3 );
 	rqSetRendererResolution( 0.1 );
 	//rqSetRendererDistance ( 0 );
-	//rqSetRendererClamp( 1,1,1 );
 
 	rqInitialize ( );
 	rqRender     ( );
