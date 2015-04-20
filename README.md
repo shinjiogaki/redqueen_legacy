@@ -2,8 +2,8 @@
 
 A Simple Production Renderer for Educational Purpose
 
-* Download and double click "redqueen.exe" in the bin folder to give it a shot.
-* Select "Release" and "x64" in Configuration Manager to build your application.
+Download and double click "redqueen.exe" in the bin folder to give it a shot.
+Select "Release" and "x64" in Configuration Manager to build your application.
 
 Features:
 * Extremely Simple APIs
