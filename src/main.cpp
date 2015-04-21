@@ -104,20 +104,25 @@ int main( )
 			0,0,1
 		};
 	
-		auto surface_shader_id0 = rqAddSurfaceShader( shader_id0 );
-		rqSetShaderName   ( shader_id0, "white" );
-		//rqSetShaderVisibility ( shader_id0, Visibility::InvisibleFromLight );
-		rqSetSurfaceColor ( shader_id0, surface_shader_id0, Element::Lambertian, 0.8f, 0.8f, 0.8f );
-		//rqSetSurfaceImage ( shader_id0, surface_shader_id0, Element::Emissive, "C:\\Shinji\\redqueen\\light.hdr", 1.0f, 0, 0 ); // null : identity matrix
+		{
+			auto surface_shader_id = rqAddSurfaceShader( shader_id0 );
+			rqSetShaderName   ( shader_id0, "white" );
+			//rqSetShaderVisibility ( shader_id0, Visibility::InvisibleFromLight );
+			rqSetSurfaceColor ( shader_id0, surface_shader_id, Element::Lambertian, 0.8f, 0.8f, 0.8f );
+			//rqSetSurfaceImage ( shader_id0, surface_shader_id0, Element::Emissive, "C:\\Shinji\\redqueen\\light.hdr", 1.0f, 0, 0 ); // null : identity matrix
+			//rqSetSurfaceColor ( shader_id0, surface_shader_id, Element::ShadowTransparency, 1.0f, 0.2f, 0.2f );
+		}
 	
-		auto surface_shader_id1 = rqAddSurfaceShader( shader_id1 );
-		rqSetShaderName   ( shader_id1, "glossy");
-		//rqSetShaderVisibility ( shader_id1, Visibility::InvisibleFromCamera );
-		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::Lambertian, 0.9f, 0.9f, 0.9f );
-		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::Glossy    , 1.0f, 1.0f, 1.0f );
-		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::Roughness , 0.2f, 0.2f, 0.2f );
-		rqSetSurfaceColor ( shader_id1, surface_shader_id1, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
-		//rqSetSurfaceImage ( shader_id1, surface_shader_id1, Element::Glossy,  "C:\\Shinji\\redqueen\\light.hdr", 1.0f, 0, 0 ); // null : identity matrix
+		{
+			auto surface_shader_id = rqAddSurfaceShader( shader_id1 );
+			rqSetShaderName   ( shader_id1, "glossy");
+			//rqSetShaderVisibility ( shader_id1, Visibility::InvisibleFromCamera );
+			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Lambertian, 0.9f, 0.9f, 0.9f );
+			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Glossy    , 1.0f, 1.0f, 1.0f );
+			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Roughness , 0.2f, 0.2f, 0.2f );
+			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
+			//rqSetSurfaceImage ( shader_id1, surface_shader_id1, Element::Glossy,  "C:\\Shinji\\redqueen\\light.hdr", 1.0f, 0, 0 ); // null : identity matrix
+		}
 		
 		// Smoothing ( to create vertex normals and tangents )
 		rqSetShaderSmoothAngle( shader_id0, 30 );
