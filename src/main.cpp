@@ -235,7 +235,8 @@ int main( )
 		}
 
 		
-		// Cylinder (Ribbon) Example
+		// Cylinder (Ribbon) Example needs AVX2
+		/*
 		{
 			// Add Group
 			auto part_id = rqAddPart ( object_id );
@@ -249,7 +250,7 @@ int main( )
 			rqAddRadii    ( object_id, part_id, 4, radii );
 			rqAddCylinders( object_id, part_id, 3, ids);
 		}
-
+		*/
 	}
 
 
