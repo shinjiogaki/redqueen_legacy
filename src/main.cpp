@@ -211,6 +211,16 @@ int main( )
 				0, 1, 0, 0, 1, 0, 1, 1
 			};
 
+			// xyzxyz...
+			float motion[ ] =
+			{
+				 0.0, 0, 0,    0.0, -0.3, 0,    0, -0.3, 0,    0, 0, 0, 
+				 0.0, 0, 0,    0.0,  0.3, 0,    0,  0.3, 0,    0, 0, 0,  
+				 0.0, 0, 0,    0.0,  0.0, 0,    0,  0.0, 0,    0, 0, 0, 
+				-0.3, 0, 0,   -0.3,  0.0, 0,    0,  0.0, 0,    0, 0, 0, 
+				 0.3, 0, 0,    0.3,  0.0, 0,    0,  0.0, 0,    0, 0, 0, 
+			};
+
 			// rgbrgb...
 			float my_data[ ] =
 			{
@@ -223,6 +233,7 @@ int main( )
 
 			rqAddPositions ( object_id, part_id, 20, positions );
 			rqAddUVs       ( object_id, part_id, 20, uvs       );
+			rqAddVertexData( object_id, part_id, "motion" , 20, 3, motion  );
 			rqAddVertexData( object_id, part_id, "my_data", 20, 3, my_data );
 
 			{
