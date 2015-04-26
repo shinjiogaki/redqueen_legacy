@@ -46,7 +46,7 @@ enum class Element : char
 	Normal,
 	Weight,
 	Anisotropy, Roughness, Angle, // Polishing
-	IOR, Fresnel, Thickness, // 
+	IOR, Fresnel, Thickness, //
 	Clip
 };
 
@@ -253,9 +253,10 @@ API void rqAddTetragons ( const int object_id, const int part_id, const int n, c
 
 // Multi-Level Instance
 API int  rqAddInstance ( const int object_id );
-API void rqSetInstance ( const int object_id, const int instance_id, int instanced_object_id, float matrix[4][4] );
+API void rqSetInstance ( const int object_id, const int instance_id, const int instanced_object_id, const float matrix[4][4] = 0, int shader_id = 0 );
 
-// Per Vertex/Primitive data "position", "uv", "radius", and "motion" are reserved.
+
+// Per Vertex/Primitive data "position", "uv", and "radius" are reserved.
 API void rqAddVertexData    ( const int object_id, const int part_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
 //API void rqAddPrimitiveData ( const int object_id, const int part_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
 
