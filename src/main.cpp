@@ -45,7 +45,7 @@ int main( )
 	////////////////////////
 	auto camera_id = rqAddCamera( );
 	{
-		rqSetCameraSample      ( camera_id, 49 ); // AA samples can be an arbitrary number
+		rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
 		//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, Projection  ::Perspective );
@@ -118,8 +118,8 @@ int main( )
 			auto surface_shader_id = rqAddSurfaceShader( shader_id2 );
 			rqSetShaderName   ( shader_id2, "green" );
 			rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::Lambertian, 0.5f, 1.0f, 0.8f );
-			rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::Specular  , 1.0f, 1.0f, 1.0f );
-			rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
+			//rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::Specular  , 1.0f, 1.0f, 1.0f );
+			//rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
 		}
 
 		// Smoothing ( to create vertex normals and tangents )
@@ -280,7 +280,7 @@ int main( )
 		}
 		*/
 		
-
+		/*
 		auto parallel_light_id = rqAddParallelLight( );
 		{
 			rqSetParallelLightDirection( parallel_light_id, 1, -1, 2 );
@@ -292,6 +292,7 @@ int main( )
 			rqSetParallelLightAOVName    ( parallel_light_id, aov_id, "parallel_light_lambertian.png");
 			rqSetParallelLightAOVChannel ( parallel_light_id, aov_id, Channel::Lambertian );
 		}
+		*/
 	}
 
 
@@ -300,12 +301,14 @@ int main( )
 	// Skylight
 	////////////////////////
 	{
-		rqSetSkyLightColor  ( 2, 2, 2 );
+		rqSetSkyLightColor  ( 1, 1, 1 );
 		rqSetSkyLightZenith ( 0, 1, 0 );
 		rqSetSkyLightNorth  ( 0, 0, -1 );
 		rqSetSkyLightSample ( 256 );
-		rqSetSkyLightPhoton ( 1000000 );
-		rqSetSkyLightImage ( "C:\\Shinji\\redqueen\\Model\\Ajax\\light\\image.hdr" );
+		rqSetSkyLightPhoton ( 0 );
+		//rqSetSkyLightImage ( "C:\\Shinji\\redqueen\\Model\\OutdoorMIS\\light\\light.png" );
+		//rqSetSkyLightImage ( "C:\\Shinji\\hdri\\Factory_Catwalk_2k.pfm" );
+		//rqSetSkyLightImage ( "C:\\Shinji\\hdri\\BasketballCourt_3k.hdr" );
 		
 		// Light AOVs
 		auto aov_id = rqAddSkyLightAOV ( );
@@ -323,12 +326,12 @@ int main( )
 	////////////////////////
 	// Rendering
 	////////////////////////
-	rqSetRendererClamp     ( 1, 1, 1 );
-	rqSetRendererSample    ( 256  );
-	rqSetRendererBounce    ( 2    );
-	rqSetRendererResolution( 0.01 ); // Density Estimation
-	rqSetRendererDistance  ( 0.10 ); // Secondary Final Gathering
-	rqSetRendererRadius    ( 0.0  ); // Turn off Caustics Photon
+	rqSetRendererClamp     ( 1000000, 1000000, 1000000 );
+	rqSetRendererSample    ( 256 );
+	rqSetRendererBounce    ( 2 );
+	rqSetRendererResolution( 0 ); // Density Estimation
+	rqSetRendererDistance  ( 0 ); // Secondary Final Gathering
+	rqSetRendererRadius    ( 0 ); // Turn off Caustics Photon
 
 	rqInitialize ( );
 	rqRender     ( );

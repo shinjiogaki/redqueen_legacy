@@ -167,14 +167,15 @@ API void rqFinalizeGeometryLight   ( );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Rendering
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API void rqSetRendererSample     ( const int   sample     );
-API void rqSetRendererBounce     ( const int   bounce     );
-API void rqSetRendererRadius     ( const float radius     );
-API void rqSetRendererResolution ( const float resolution );
-API void rqSetRendererDistance   ( const float distance   );
-API void rqSetRendererRayDepth   ( const int   depth      );
-API void rqSetRendererPhotonDepth( const int   depth      );
-API void rqSetRendererClamp      ( const float r, const float g, const float b );
+API void rqSetRendererSample      ( const int   sample     );
+API void rqSetRendererBounce      ( const int   bounce     );
+API void rqSetRendererRadius      ( const float radius     );
+API void rqSetRendererResolution  ( const float resolution );
+API void rqSetRendererDistance    ( const float distance   );
+API void rqSetRendererRayDepth    ( const int   depth      );
+API void rqSetRendererPhotonDepth ( const int   depth      );
+API void rqSetRendererClamp       ( const float r, const float g, const float b );
+API void rqSetRendererError       ( const float r, const float g, const float b );
 
 API void rqInitializeRenderer  ( );
 API void rqFinalizeRenderer    ( );
@@ -191,27 +192,27 @@ API void rqSetPreviewWindow ( const bool  preview );
 // Shader
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-API int  rqAddShader                ( );
-API void rqSetShaderName            ( const int shader_id, const char*      name );
-API void rqSetShaderTime            ( const int shader_id, const float      time );
-API void rqSetShaderSmoothAngle     ( const int shader_id, const float      smooth_angle           );
-API void rqSetShaderRoundCorner     ( const int shader_id, const float      round_corner           ); // Not working yet
-API void rqSetShaderHairUV          ( const int shader_id, const bool       assign_hair_texture_uv );
-API void rqSetShaderVisibility      ( const int shader_id, const Visibility visibility             );
+API int  rqAddShader            ( );
+API void rqSetShaderName        ( const int shader_id, const char*      name );
+API void rqSetShaderTime        ( const int shader_id, const float      time );
+API void rqSetShaderSmoothAngle ( const int shader_id, const float      smooth_angle           );
+API void rqSetShaderRoundCorner ( const int shader_id, const float      round_corner           ); // Not working yet
+API void rqSetShaderHairUV      ( const int shader_id, const bool       assign_hair_texture_uv );
+API void rqSetShaderVisibility  ( const int shader_id, const Visibility visibility             );
 
 // Surface Shader
-API int  rqAddSurfaceShader         ( const int shader_id );
-API void rqSetSurfaceSideness       ( const int shader_id, const int layer_id, const Sideness   sideness      );
-API void rqSetSurfaceMaterial       ( const int shader_id, const int layer_id, const Material   material      );
-API void rqSetSurfaceVirtualLight   ( const int shader_id, const int layer_id, const bool       virtual_light );
-API void rqSetSurfaceColor          ( const int shader_id, const int layer_id, const Element    element, const float r, const float g, const float b ); // Set Color or Values
-API void rqSetSurfaceImage          ( const int shader_id, const int layer_id, const Element    element, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
+API int  rqAddSurfaceShader       ( const int shader_id );
+API void rqSetSurfaceSideness     ( const int shader_id, const int layer_id, const Sideness   sideness      );
+API void rqSetSurfaceMaterial     ( const int shader_id, const int layer_id, const Material   material      );
+API void rqSetSurfaceVirtualLight ( const int shader_id, const int layer_id, const bool       virtual_light );
+API void rqSetSurfaceColor        ( const int shader_id, const int layer_id, const Element    element, const float r, const float g, const float b ); // Set Color or Values
+API void rqSetSurfaceImage        ( const int shader_id, const int layer_id, const Element    element, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
 
 // Displacement Map (Needs Tangents and Normals to Work. They can be created by setting a proper smoothing angle )
-API int  rqAddDisplacementShader    ( const int shader_id );
-API void rqSetDisplacementLevel     ( const int shader_id, const int displacement_id, const int level ); // Subdivision Level
-API void rqSetDisplacementVector    ( const int shader_id, const int displacement_id, const float x, const float y, const float z );
-API void rqSetDisplacementImage     ( const int shader_id, const int displacement_id, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
+API int  rqAddDisplacementShader ( const int shader_id );
+API void rqSetDisplacementLevel  ( const int shader_id, const int displacement_id, const int level ); // Subdivision Level
+API void rqSetDisplacementVector ( const int shader_id, const int displacement_id, const float x, const float y, const float z );
+API void rqSetDisplacementImage  ( const int shader_id, const int displacement_id, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
 
 // Volume Shader
 //API int  rqAddVolumeShader        ( const int shader_id );
@@ -239,11 +240,11 @@ API int  rqAddPart ( const int object_id );
 API void rqSetShaderID ( const int object_id, const int part_id, const int shader_id );
 
 // Vertex Data
-API void rqAddRadii    ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddUVs      ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddPositions( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddNormals  ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddTangents ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddRadii     ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddUVs       ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddPositions ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddNormals   ( const int object_id, const int part_id, const int n, const float* data );
+API void rqAddTangents  ( const int object_id, const int part_id, const int n, const float* data );
 
 // Primitive
 API void rqAddParticles ( const int object_id, const int part_id, const int n, const int* vertex_ids );
