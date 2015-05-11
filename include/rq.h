@@ -46,8 +46,7 @@ enum class Element : char
 	Normal,
 	Weight,
 	Anisotropy, Roughness, Angle, // Polishing
-	IOR, Fresnel, Thickness, //
-	Clip
+	IOR, Fresnel, Thickness
 };
 
 enum class AngleMeasure : char { Horizontal, Vertical, Diagonal }; // For Field of View
@@ -213,6 +212,10 @@ API int  rqAddDisplacementShader ( const int shader_id );
 API void rqSetDisplacementLevel  ( const int shader_id, const int displacement_id, const int level ); // Subdivision Level
 API void rqSetDisplacementVector ( const int shader_id, const int displacement_id, const float x, const float y, const float z );
 API void rqSetDisplacementImage  ( const int shader_id, const int displacement_id, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
+
+// Opacity
+API void rqSetOpacity      ( const int shader_id, const float r, const float g, const float b );
+API void rqSetOpacityImage ( const int shader_id, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
 
 // Volume Shader
 //API int  rqAddVolumeShader        ( const int shader_id );

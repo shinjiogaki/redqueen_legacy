@@ -304,9 +304,8 @@ int main( )
 		rqSetSkyLightColor  ( 1, 1, 1 );
 		rqSetSkyLightZenith ( 0, 1, 0 );
 		rqSetSkyLightNorth  ( 0, 0, -1 );
-		rqSetSkyLightSample ( 256 );
-		rqSetSkyLightPhoton ( 0 );
-		//rqSetSkyLightImage ( "C:\\Shinji\\redqueen\\Model\\OutdoorMIS\\light\\light.png" );
+		rqSetSkyLightSample ( 0 );
+		rqSetSkyLightPhoton ( 1000000 );
 		//rqSetSkyLightImage ( "C:\\Shinji\\hdri\\Factory_Catwalk_2k.pfm" );
 		//rqSetSkyLightImage ( "C:\\Shinji\\hdri\\BasketballCourt_3k.hdr" );
 		
@@ -327,8 +326,8 @@ int main( )
 	// Rendering
 	////////////////////////
 	rqSetRendererClamp     ( 1000000, 1000000, 1000000 );
-	rqSetRendererSample    ( 256 );
-	rqSetRendererBounce    ( 2 );
+	rqSetRendererSample    ( 512 );
+	rqSetRendererBounce    ( 16 );
 	rqSetRendererResolution( 0 ); // Density Estimation
 	rqSetRendererDistance  ( 0 ); // Secondary Final Gathering
 	rqSetRendererRadius    ( 0 ); // Turn off Caustics Photon
