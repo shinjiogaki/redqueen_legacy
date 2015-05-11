@@ -12,7 +12,9 @@ A Simple Production Renderer for Educational Purpose
 1. Download and Install Visual Studio Community <https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx>
 2. Select "Release" and "x64" in Configuration Manager to build your application
 
+
 ###Features:
+![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.png)
 * Extremely Simple APIs
 * Small Memory Footprint
 * Integrators: Unidirectional Path Tracing with MIS / Progressive Final Gathering / Photon Mapping
