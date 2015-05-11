@@ -18,6 +18,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Small Memory Footprint
 * Integrators: Unidirectional Path Tracing with MIS / Progressive Final Gathering / Photon Mapping
 * Primitives: Particle / Cylinder (with Runtime Tessellation) / Triangle / Tetragon
+![Primitives](https://github.com/shinjiogaki/redqueen/blob/master/images/fur.png)
 * Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
 * Uber Shader (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
