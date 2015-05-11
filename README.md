@@ -14,7 +14,6 @@ A Simple Production Renderer for Educational Purpose
 
 
 ###Features:
-![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.png)
 * Extremely Simple APIs
 * Small Memory Footprint
 * Integrators: Unidirectional Path Tracing with MIS / Progressive Final Gathering / Photon Mapping
@@ -23,7 +22,9 @@ A Simple Production Renderer for Educational Purpose
 * Per Light AOVs
 * Per Vertex User Data
 * Multi-Level Instancing
-* Uber Shader for Surface / Hair (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
+![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.png)
+* Uber Shader (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
+![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * OBVH with Refitting / Treelet Reordering
 * Utilising AVX (Redqueen does not use Embree)
 
