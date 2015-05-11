@@ -1,6 +1,6 @@
 # Redqueen
 
-A Simple Production Renderer for Educational Purpose
+A Simple Production Renderer for Educational Purpose (Made in Japan)
 
 ###To give a shot:
   
