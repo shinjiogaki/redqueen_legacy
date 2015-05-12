@@ -23,7 +23,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Per Light AOVs
 * Uber Shader (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
-* Multi-Level Instancing
+* Multi-Level Instancing (40559990463 triangles in the image below)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
 * Per Vertex User Data
 ![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
