@@ -26,7 +26,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Multi-Level Instancing
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
 * Per Vertex User Data
-![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov.png)
+![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
 * OBVH with Refitting / Treelet Reordering
 * Utilising AVX (Redqueen does not use Embree)
 
