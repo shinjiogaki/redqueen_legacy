@@ -24,7 +24,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Uber Shader (The parameters of uber shader are automatically interpreted as the parameters of Eugene's model)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Multi-Level Instancing
-![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.png)
+![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
 * Per Vertex User Data
 ![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov.png)
 * OBVH with Refitting / Treelet Reordering
