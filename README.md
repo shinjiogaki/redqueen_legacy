@@ -21,7 +21,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 ![Primitives](https://github.com/shinjiogaki/redqueen/blob/master/images/fur.png)
 * Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
-* Uber Shader (The parameters are automatically interpreted as the ones of Eugene's model when applied for hair strands)
+* Uber Shader (The parameters are automatically interpreted as those of Eugene's model when applied for hair strands)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Multi-Level Instancing (40559990463 triangles in the image below)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
