@@ -28,7 +28,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/forest.png)
 * AOVs with Per Vertex User Data
 ![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
-* OBVH with Refitting / Treelet Reordering
+* OBVH with Refitting / Treelet Reordering / Child Node Sorting for Fast Occlusion Test
 * Redqueen does not use Embree
 
 ###Goals:
