@@ -5,7 +5,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 ###To give a shot:
   
 1. Download and Install Intel Compiler Redistributable Libraries <https://software.intel.com/sites/default/files/managed/6a/21/w_ccompxe_redist_msi_2015.2.179.zip> at <https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2015-composer-edition-for-windows>
-2. Double click "redqueen.exe" in the "bin" folder
+2. Double click "demo.exe" in the "bin" folder
 
 ###To create your app:
   
