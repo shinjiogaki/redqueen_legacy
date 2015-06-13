@@ -1,8 +1,8 @@
 
 // Select your favorite One
 
-//#define CLASSIC
-#define MY_APP
+#define CLASSIC
+//#define MY_APP
 
 
 // Include API header
@@ -45,7 +45,7 @@ int main( )
 	////////////////////////
 	auto camera_id = rqAddCamera( );
 	{
-		rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
+		rqSetCameraSample      ( camera_id, 17 ); // AA samples can be an arbitrary number
 		//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, Projection  ::Perspective );
@@ -133,12 +133,12 @@ int main( )
 		if( false )
 		{
 			rqAddDisplacementShader ( shader_id0 );
-			rqSetDisplacementVector ( shader_id0, 0, 0, 0, -0.1 );
+			rqSetDisplacementVector ( shader_id0, 0, 0.0f, 0.0f, -0.1f );
 			//rqSetDisplacementImage  ( shader_id0, 0, "low_freq.jpg", 0.2f, 0, 0 );
 			rqSetDisplacementLevel  ( shader_id0, 0, 16 );
 								    
 			rqAddDisplacementShader ( shader_id0 );
-			rqSetDisplacementVector ( shader_id0, 1, 0, 0, 0.01 );
+			rqSetDisplacementVector ( shader_id0, 1, 0.0f, 0.0f, 0.01f );
 			//rqSetDisplacementImage  ( shader_id0, 1, "high_freq.jpg", 0.2f, 0, 0 );
 			rqSetDisplacementLevel  ( shader_id0, 1, 4 );
 		}
@@ -148,7 +148,6 @@ int main( )
 	////////////////////////
 	// Geometry
 	////////////////////////
-	
 	auto instanced_object_id = rqAddObject( );
 	{
 
@@ -186,8 +185,6 @@ int main( )
 
 		// Mesh
 		{
-			// Add Group
-			auto part_id = rqAddPart ( object_id );
 	
 			// xyzxyz...
 			float positions[ ] =
@@ -231,6 +228,8 @@ int main( )
 
 			int vertex_ids[ ] = { 0,1,2,3 , 4, 5, 6, 7,   8, 9, 10, 11,   12, 13, 14, 15,   16, 17, 18, 19  };
 
+			auto part_id = rqAddPart ( object_id );
+
 			rqAddPositions ( object_id, part_id, 20, positions );
 			rqAddUVs       ( object_id, part_id, 20, uvs       );
 			rqAddVertexData( object_id, part_id, "motion" , 20, 3, motion  );
@@ -241,22 +240,20 @@ int main( )
 		}
 
 		
-		// Cylinder (Ribbon) Example needs AVX2
-		/*
+		// Cylinder (Ribbon) Example
 		{
-			// Add Group
-			auto part_id = rqAddPart ( object_id );
-
 			// xyzxyz...
-			float positions[ ] = { -1, 0.75, 0,    -0.3, 1, 0.2,   0.3, 0.75, 0.2,   1,  1,  0 };
-			float radii    [ ] = { 0.012, 0.008, 0.004, 0.0 };
+			float positions[ ] = { -1.0, 0.9, 0,    -0.4, 1, 0.2,   0.4, 0.9, 0.2,   1.0,  1,  0 };
+			float motion   [ ] = { 0, 0, 0,    0.0, 0.05, 0.05,    0, 0.1, 0.1,    0, 0.1, 0.1 };
+			float radii    [ ] = { 0.06, 0.04, 0.02, 0.00 };
 			int   ids      [ ] = { 0, 1, 2  };
-			rqSetShaderID ( object_id, part_id, shader_id1 );
+			auto  part_id = rqAddPart ( object_id );
+			rqSetShaderID ( object_id, part_id, shader_id2 );
 			rqAddPositions( object_id, part_id, 4, positions );
+			rqAddVertexData( object_id, part_id, "motion" , 4, 3, motion  );
 			rqAddRadii    ( object_id, part_id, 4, radii );
 			rqAddCylinders( object_id, part_id, 3, ids);
 		}
-		*/
 	}
 
 
@@ -268,7 +265,6 @@ int main( )
 	{
 		
 
-		/*
 		auto point_light_id = rqAddPointLight( );
 		{
 			rqSetPointLightPosition  ( point_light_id, 3, 3, -3 );
@@ -278,9 +274,7 @@ int main( )
 			rqSetPointLightOuterAngle( point_light_id,  10 );
 			rqSetPointLightPhoton    ( point_light_id, 1000000 );
 		}
-		*/
 		
-		/*
 		auto parallel_light_id = rqAddParallelLight( );
 		{
 			rqSetParallelLightDirection( parallel_light_id, 1, -1, 2 );
@@ -292,7 +286,6 @@ int main( )
 			rqSetParallelLightAOVName    ( parallel_light_id, aov_id, "parallel_light_lambertian.png");
 			rqSetParallelLightAOVChannel ( parallel_light_id, aov_id, Channel::Lambertian );
 		}
-		*/
 	}
 
 
@@ -306,8 +299,9 @@ int main( )
 		rqSetSkyLightNorth  ( 0, 0, -1 );
 		rqSetSkyLightSample ( 0 );
 		rqSetSkyLightPhoton ( 1000000 );
-		//rqSetSkyLightImage ( "C:\\Shinji\\hdri\\Factory_Catwalk_2k.pfm" );
-		//rqSetSkyLightImage ( "C:\\Shinji\\hdri\\BasketballCourt_3k.hdr" );
+		// From sIBL Library
+		//rqSetSkyLightImage ( "Factory_Catwalk_2k.pfm" );
+		//rqSetSkyLightImage ( "BasketballCourt_3k.hdr" );
 		
 		// Light AOVs
 		auto aov_id = rqAddSkyLightAOV ( );
@@ -326,8 +320,8 @@ int main( )
 	// Rendering
 	////////////////////////
 	rqSetRendererClamp     ( 1000000, 1000000, 1000000 );
-	rqSetRendererSample    ( 512 );
-	rqSetRendererBounce    ( 16 );
+	rqSetRendererSample    ( 256 );
+	rqSetRendererBounce    ( 2 );
 	rqSetRendererResolution( 0 ); // Density Estimation
 	rqSetRendererDistance  ( 0 ); // Secondary Final Gathering
 	rqSetRendererRadius    ( 0 ); // Turn off Caustics Photon
