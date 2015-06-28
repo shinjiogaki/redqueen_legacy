@@ -45,7 +45,7 @@ int main( )
 	////////////////////////
 	auto camera_id = rqAddCamera( );
 	{
-		rqSetCameraSample      ( camera_id, 17 ); // AA samples can be an arbitrary number
+		rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
 		//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, Projection  ::Perspective );
@@ -172,6 +172,7 @@ int main( )
 	// Add Object
 	auto object_id = rqAddObject( );
 	{
+		rqSetObjectName( object_id, "scene" );
 
 		// Instance
 		{
@@ -257,18 +258,15 @@ int main( )
 	}
 
 
-
 	////////////////////////
 	// Light
 	////////////////////////
-	
 	{
 		
-
 		auto point_light_id = rqAddPointLight( );
 		{
 			rqSetPointLightPosition  ( point_light_id, 3, 3, -3 );
-			rqSetPointLightColor     ( point_light_id,  50,  50,  50 );
+			rqSetPointLightColor     ( point_light_id,  5,  5,  5 );
 			rqSetPointLightDirection ( point_light_id,  -1,  -1,  1 );
 			rqSetPointLightInnerAngle( point_light_id,  0 );
 			rqSetPointLightOuterAngle( point_light_id,  10 );
@@ -278,7 +276,7 @@ int main( )
 		auto parallel_light_id = rqAddParallelLight( );
 		{
 			rqSetParallelLightDirection( parallel_light_id, 1, -1, 2 );
-			rqSetParallelLightColor    ( parallel_light_id, 0.5,0.5,0.5 );
+			rqSetParallelLightColor    ( parallel_light_id, 0.25,0.25,0.25 );
 			rqSetParallelLightPhoton   ( parallel_light_id, 1000000 );
 
 			// Light AOVs
@@ -289,7 +287,7 @@ int main( )
 	}
 
 
-
+	
 	////////////////////////
 	// Skylight
 	////////////////////////
@@ -322,8 +320,7 @@ int main( )
 	rqSetRendererClamp     ( 1000000, 1000000, 1000000 );
 	rqSetRendererSample    ( 256 );
 	rqSetRendererBounce    ( 2 );
-	rqSetRendererResolution( 0 ); // Density Estimation
-	rqSetRendererDistance  ( 0 ); // Secondary Final Gathering
+	rqSetRendererResolution( 0.1f ); // Density Estimation
 	rqSetRendererRadius    ( 0 ); // Turn off Caustics Photon
 
 	rqInitialize ( );

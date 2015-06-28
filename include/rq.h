@@ -170,7 +170,6 @@ API void rqSetRendererSample      ( const int   sample     );
 API void rqSetRendererBounce      ( const int   bounce     );
 API void rqSetRendererRadius      ( const float radius     );
 API void rqSetRendererResolution  ( const float resolution );
-API void rqSetRendererDistance    ( const float distance   );
 API void rqSetRendererRayDepth    ( const int   depth      );
 API void rqSetRendererPhotonDepth ( const int   depth      );
 API void rqSetRendererClamp       ( const float r, const float g, const float b );
