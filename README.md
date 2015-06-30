@@ -16,7 +16,11 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 ###Features:
 * Extremely Simple APIs
 * Small Memory Footprint
-* Integrators: Unidirectional Path Tracing with MIS / Progressive Final Gathering / Photon Mapping
+* Motion Blur with Consistent Motion
+* Integrators:
+  * Unidirectional Path Tracing with MIS for Outdoor Scenes
+  * Progressive Final Gathering for Interior Scenes
+  * Photon Mapping for SDS Paths
 * Primitives: Particle / Cylinder (with Runtime Tessellation) / Triangle / Tetragon
 ![Primitives](https://github.com/shinjiogaki/redqueen/blob/master/images/fur.png)
 * Light Sources: Point / Parallel / Geometry / Sky
