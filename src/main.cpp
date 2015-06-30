@@ -45,7 +45,7 @@ int main( )
 	////////////////////////
 	auto camera_id = rqAddCamera( );
 	{
-		rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
+		rqSetCameraSample      ( camera_id, 43 ); // AA samples can be an arbitrary number
 		//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, Projection  ::Perspective );
@@ -54,7 +54,7 @@ int main( )
 		// Camera Pose - Shutter Open
 		rqSetCameraTime     ( camera_id,  0.0f );
 		rqSetCameraFOV      ( camera_id, 40.0f );
-		rqSetCameraBokeh    ( camera_id,  1.0f );
+		rqSetCameraBokeh    ( camera_id,  0.1f );
 		rqSetCameraPosition ( camera_id, 0, 1, -4 );
 		rqSetCameraTarget   ( camera_id, 0, 1,  0 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
@@ -62,11 +62,11 @@ int main( )
 		// Camera Pose - Shutter Close
 		rqSetCameraTime     ( camera_id,  1.0f );
 		rqSetCameraFOV      ( camera_id, 40.0f );
-		rqSetCameraBokeh    ( camera_id,  1.0f );
+		rqSetCameraBokeh    ( camera_id,  0.1f );
 		rqSetCameraPosition ( camera_id, 0, 1, -4 );
 		rqSetCameraTarget   ( camera_id, 0, 1,  0 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
-		//rqSetCameraUpVector ( camera_id, 0.1, 1, 0.1 ); // Camera Blur :)
+		rqSetCameraUpVector ( camera_id, 0.1, 1, 0.1 ); // Camera Blur :)
 
 		// AOVs
 		auto aov_id0 = rqAddCameraAOV( camera_id );
@@ -107,17 +107,17 @@ int main( )
 		{
 			auto surface_shader_id = rqAddSurfaceShader( shader_id1 );
 			rqSetShaderName   ( shader_id1, "glossy");
-			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Lambertian, 1.0f, 0.5f, 0.0f );
+			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Lambertian, 0.5f, 0.5f, 0.5f );
 			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Glossy    , 1.0f, 1.0f, 1.0f );
 			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::Roughness , 0.1f, 0.1f, 0.1f );
-			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::IOR       , 3.0f, 3.0f, 3.0f ); // For Fresnel
+			rqSetSurfaceColor ( shader_id1, surface_shader_id, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
 		}
 		
 		// Shader 2
 		{
 			auto surface_shader_id = rqAddSurfaceShader( shader_id2 );
 			rqSetShaderName   ( shader_id2, "green" );
-			rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::Lambertian, 0.5f, 1.0f, 0.8f );
+			rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::Lambertian, 0.1f, 1.0f, 0.6f );
 			//rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::Specular  , 1.0f, 1.0f, 1.0f );
 			//rqSetSurfaceColor ( shader_id2, surface_shader_id, Element::IOR       , 5.0f, 5.0f, 5.0f ); // For Fresnel
 		}
@@ -176,8 +176,8 @@ int main( )
 
 		// Instance
 		{
-			float matrix0[4][4] = { 1,0,0,0,   0,1,0,0,     0,0,1,0,   0,0,0,1 };
-			float matrix1[4][4] = { 1,0,0,0,   0,1,0,1,     0,0,1,0,   0,0,0,1 };
+			float matrix0[4][4] = { 1,0,0,0,   0,1,0,0.0,     0,0,1,0,   0,0,0,1 };
+			float matrix1[4][4] = { 1,0,0,0,   0,1,0,1.5,     0,0,1,0,   0,0,0,1 };
 			auto instance_id0 = rqAddInstance( object_id );
 			auto instance_id1 = rqAddInstance( object_id );
 			rqSetInstance( object_id, instance_id0, instanced_object_id, matrix0, shader_id1 );
@@ -245,13 +245,17 @@ int main( )
 		{
 			// xyzxyz...
 			float positions[ ] = { -1.0, 0.9, 0,    -0.4, 1, 0.2,   0.4, 0.9, 0.2,   1.0,  1,  0 };
-			float motion   [ ] = { 0, 0, 0,    0.0, 0.05, 0.05,    0, 0.1, 0.1,    0, 0.1, 0.1 };
+			float motion1  [ ] = { 0, 0, 0,    0,   0,   0,    0,   1,   0,    0, 0, 0 }; // Offsets from the original positions
+			float motion2  [ ] = { 0, 0, 0,    0, 0.5, 0.5,    0, 0.5, 0.5,    0, 0, 0 }; // Offsets from the original positions
+			float motion3  [ ] = { 0, 0, 0,    0,   0,   0,    0,   1,   0,    0, 0, 0 }; // Offsets from the original positions
 			float radii    [ ] = { 0.06, 0.04, 0.02, 0.00 };
 			int   ids      [ ] = { 0, 1, 2  };
 			auto  part_id = rqAddPart ( object_id );
 			rqSetShaderID ( object_id, part_id, shader_id2 );
 			rqAddPositions( object_id, part_id, 4, positions );
-			rqAddVertexData( object_id, part_id, "motion" , 4, 3, motion  );
+			rqAddVertexData( object_id, part_id, "motion" , 4, 3, motion1  );
+			rqAddVertexData( object_id, part_id, "motion" , 4, 3, motion2  );
+			rqAddVertexData( object_id, part_id, "motion" , 4, 3, motion3  );
 			rqAddRadii    ( object_id, part_id, 4, radii );
 			rqAddCylinders( object_id, part_id, 3, ids);
 		}
@@ -320,7 +324,7 @@ int main( )
 	rqSetRendererClamp     ( 1000000, 1000000, 1000000 );
 	rqSetRendererSample    ( 256 );
 	rqSetRendererBounce    ( 2 );
-	rqSetRendererResolution( 0.1f ); // Density Estimation
+	rqSetRendererResolution( 0 ); // Density Estimation
 	rqSetRendererRadius    ( 0 ); // Turn off Caustics Photon
 
 	rqInitialize ( );
