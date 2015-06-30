@@ -9,7 +9,7 @@ render
 		sample       128
 		ray_depth    8
 		photon_depth 16
-		bounce       0
+		bounce       2
 		distance     0.2
 		radius       0.2
 		resolution   0.001
