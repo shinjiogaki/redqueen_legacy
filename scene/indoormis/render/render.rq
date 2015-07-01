@@ -10,7 +10,6 @@ render
 		ray_depth    8
 		photon_depth 16
 		bounce       2
-		distance     0.2
 		radius       0.2
 		resolution   0.001
 	end
