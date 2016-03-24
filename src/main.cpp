@@ -6,10 +6,14 @@
 
 //#define TUTORIAL01
 //#define TUTORIAL02
-#define TUTORIAL03
-//#define TUTORIAL04
+//#define TUTORIAL03
+#define TUTORIAL04
 //#define TUTORIAL05
 //#define TUTORIAL06
+//#define TUTORIAL0
+//#define TUTORIAL08
+//#define TUTORIAL09
+//#define TUTORIAL10
 
 
 // Include API header
@@ -28,23 +32,23 @@ int main( )
 
 	// Camera
 	auto camera_id = rqAddCamera( );
-	rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
-	rqSetCameraResolution  ( camera_id, 512, 512 );
-	rqSetCameraTime     ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV      ( camera_id, 35.0f );
-	rqSetCameraPosition ( camera_id, 0, 0, -4 );
-	rqSetCameraTime     ( camera_id,  1.0f ); // Shutter Close
-	rqSetCameraFOV      ( camera_id, 35.0f );
-	rqSetCameraPosition ( camera_id, 0, 0, -4 );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
+	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
+	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
 	// Object
 	auto object_id = rqAddObject( );
-	float        positions[ ] = { 0, 0,  0 };
-	float        radii    [ ] = { 1.0 };
-	unsigned int ids      [ ] = { 0   };
-	rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, positions );
-	rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radii     );
-	rqAddPrimitives  ( object_id, AtomParticle, 1, ids );
+	float        position[ ] = { 0, 0,  0 };
+	float        radius  [ ] = { 1.0 };
+	unsigned int id      [ ] = { 0   };
+	rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, position );
+	rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radius   );
+	rqAddPrimitives  ( object_id, AtomParticle, 1, id );
 	
 	// Parallel Light
 	auto light_id = rqAddParallelLight();
@@ -61,7 +65,8 @@ int main( )
 	rqInitialize ( );
 	rqRender     ( );
 	rqFinalize   ( );
-	rqShutdown   ( );
+
+	rqShutdown ( );
 
 	return 0;
 
@@ -78,19 +83,19 @@ int main( )
 
 	// Camera
 	auto camera_id = rqAddCamera( );
-	rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
-	rqSetCameraResolution  ( camera_id, 512, 512 );
-	rqSetCameraTime     ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV      ( camera_id, 35.0f );
-	rqSetCameraPosition ( camera_id, 0, 0, -4 );
-	rqSetCameraTime     ( camera_id,  1.0f ); // Shutter Close
-	rqSetCameraFOV      ( camera_id, 35.0f );
-	rqSetCameraPosition ( camera_id, 0, 0, -4 );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
+	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
+	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
 	// Object
 	auto object_id = rqAddObject( );
 	rqSetObjectName( object_id, "particles" );
-	const auto N = 1024;
+	const auto N = 4096;
 	float        positions[ N * 3 ];
 	float        radii    [ N ];
 	unsigned int ids      [ N ];
@@ -100,7 +105,7 @@ int main( )
 		positions[i*3+0] = 2*rand()/(float)RAND_MAX-1.0f;
 		positions[i*3+1] = 2*rand()/(float)RAND_MAX-1.0f;
 		positions[i*3+2] = 2*rand()/(float)RAND_MAX-1.0f;
-		radii[i] = 0.01f;
+		radii[i] = 0.05f;
 		ids  [i] = i;
 	}
 	rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
@@ -139,14 +144,14 @@ int main( )
 
 	// Camera
 	auto camera_id = rqAddCamera( );
-	rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
-	rqSetCameraResolution  ( camera_id, 512, 512 );
-	rqSetCameraTime     ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV      ( camera_id, 35.0f );
-	rqSetCameraPosition ( camera_id, 0, 0, -4 );
-	rqSetCameraTime     ( camera_id,  1.0f );  // Shutter Close
-	rqSetCameraFOV      ( camera_id, 35.0f );
-	rqSetCameraPosition ( camera_id, 0, 0, -4 );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
+	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
+	rqSetCameraTime      ( camera_id,  1.0f );  // Shutter Close
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
 
 	// Shader
@@ -198,8 +203,66 @@ int main( )
 #endif
 
 
-// Code to Build Your Own Software
+
+
+
+// Image Processing
 #ifdef TUTORIAL04
+int main( )
+{
+
+	rqStartup( );
+
+	// Camera
+	auto camera_id = rqAddCamera( );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
+	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
+	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
+
+	// Object
+	auto object_id = rqAddObject( );
+	float        position[ ] = { 0, 0,  0 };
+	float        radius  [ ] = { 1.0 };
+	unsigned int id      [ ] = { 0   };
+	rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, position );
+	rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radius   );
+	rqAddPrimitives  ( object_id, AtomParticle, 1, id );
+	
+	// Parallel Light
+	auto light_id = rqAddParallelLight();
+	rqSetParallelLightColor    ( light_id, 1,1,1);
+	rqSetParallelLightDirection( light_id, 1,-1,1);
+
+	// Display
+	rqSetPreviewWindow ( true );
+	rqSetDisplayGamma  ( 1.45f );
+
+	// Renderer
+	rqSetRendererSample ( 256 );
+
+	rqInitialize ( );
+	rqRender     ( );
+	rqFinalize   ( );
+
+	rqShutdown ( );
+
+	return 0;
+
+}
+#endif
+
+
+
+
+
+
+// Code to Build Your Own Software
+#ifdef TUTORIAL08
 int main( )
 {
 
@@ -442,7 +505,7 @@ int main( )
 		rqSetSkyLightSample ( 0 );
 		rqSetSkyLightPhoton ( 1000000 );
 		// From sIBL Library
-		rqSetSkyLightImage ( "d:\\Redqueen\\Model\\Materials\\light\\image.hdr" );
+		//rqSetSkyLightImage ( "d:\\Redqueen\\Model\\Materials\\light\\image.hdr" );
 		//rqSetSkyLightImage ( "BasketballCourt_3k.hdr" );
 		
 		// Light AOVs
@@ -483,7 +546,7 @@ int main( )
 
 
 
-#ifdef TUTORIAL05 // redqueen.exe
+#ifdef TUTORIAL09 // redqueen.exe
 int main( int argc, char *argv[ ] )
 {
 	if( 2 <= argc )
@@ -499,7 +562,7 @@ int main( int argc, char *argv[ ] )
 #endif
 
 
-#ifdef TUTORIAL06 // Turntable
+#ifdef TUTORIAL10 // Turntable
 int main( int argc, char *argv[ ] )
 {
 
