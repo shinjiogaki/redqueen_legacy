@@ -5,7 +5,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 ###To give a shot:
   
 1. Download and Install Intel Compiler Redistributable Libraries <https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2016-composer-edition-for-windows>
-2. Double click "demo.bat" or "demo.exe" in the "bin" folder
+2. Double click "tutorialxx.exe" in the "bin" folder
 
 ###To create your app:
   
