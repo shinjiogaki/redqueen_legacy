@@ -1,1 +1,0 @@
-redqueen ../scene/indoormis -preview

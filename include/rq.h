@@ -3,164 +3,292 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Redqueen Copyright (c) shinji All Rights Reserved.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#ifndef __rq_h__
-#define __rq_h__
+#pragma once
 
 
 #define API __declspec(dllexport) 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Units
+// Time     : 0 to 1
+// Angle    : degree
+// Position : meter
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Enumerations
+// Geometry
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-enum Visibility : char { Invisible = 0, InvisibleFromLight = 1, InvisibleFromCamera = 2, Visible = 3 };
-
-enum Channel : int
-{
-	Beauty            = 1 <<  0,
-	LightPath         = 1 <<  1,
-	Lambertian        = 1 <<  2, // CameraAOV + LightAOV
-	LambertianColor   = 1 <<  3,
-	Transmissive      = 1 <<  4, // CameraAOV + LightAOV
-	TransmissiveColor = 1 <<  5,
-	Glossy            = 1 <<  6, // CameraAOV + LightAOV
-	GlossyColor       = 1 <<  7,
-	Specular          = 1 <<  8,
-	SpecularColor     = 1 <<  9,
-	Emissive          = 1 << 10,
-	Normal            = 1 << 11,
-	Tangent           = 1 << 12,
-	Position          = 1 << 13,
-	Depth             = 1 << 14,
-	UserData          = 1 << 15
-	// More Channels to come
-};
+// Primitives
+static const int AtomNull     = 0;
+static const int AtomParticle = 1;
+static const int AtomCylinder = 2;
+static const int AtomTriangle = 3;
+static const int AtomTetragon = 4;
+static const int AtomInstance = 5;
 
 
-enum class Element : char
-{
-	Lambertian, Transmissive, Glossy, Specular, Emissive,
-	Diffusion, // SSS
-	ShadowTransparency,
-	Normal,
-	Weight,
-	Anisotropy, Roughness, Angle, // Polishing
-	IOR, Fresnel, Thickness
-};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Shader
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-enum class AngleMeasure : char { Horizontal, Vertical, Diagonal }; // For Field of View
-enum class Sideness     : char { Face, Back, Both }; // 2 sided-material
-enum class Projection   : char { Perspective, Spherical, Orthographic }; // For camera and Gobo
-enum class Addressing   : char { Wrap, Clamp };
-enum class PixelSampler : char { Nearest, Stochastic, Bilinear };
-enum class Filter       : char { None, Gradient, Normal, Gaussian, Variance };
-enum class Path         : char { Null, Occlusion, DiffuseReflection, DiffuseTransmittance, GlossyReflection, GlossyRefraction, SpecularReflection, SpecularRefraction };
-enum class Material     : char { Conductor, Dielectric, DielectricFilm };
-//enum class BRDF         : char { Ward };
+// Visibility
+static const int InvisibleFromLight  = 1;
+static const int InvisibleFromCamera = 2;
+static const int Invisible           = 3;
+
+// Sideness
+static const int SideOuter = 0;
+static const int SideInner = 1;
+static const int SideBoth  = 2;
+
+
+// Elements
+static const int ElementAlbedo    = 0;
+static const int ElementEmission  = 1;
+static const int ElementIOR       = 2;
+static const int ElementRoughness = 3;
+static const int ElementNormal    = 4;
+static const int ElementJitter    = 5;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// AOVs
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Channels
+static const unsigned int ChannelBeauty    = 1 <<  0;
+static const unsigned int ChannelLightPath = 1 <<  1; // Reserved
+static const unsigned int ChannelUserData  = 1 <<  2;
+static const unsigned int ChannelDR        = 1 <<  3; // Diffuse Reflection
+static const unsigned int ChannelDRColor   = 1 <<  4; // Diffuse Reflection Texture
+static const unsigned int ChannelDT        = 1 <<  5; // Diffuse Transmittance
+static const unsigned int ChannelDTColor   = 1 <<  6; // Diffuse Transmittance Texture
+static const unsigned int ChannelGR        = 1 <<  7; // Glossy
+static const unsigned int ChannelGRColor   = 1 <<  8;
+static const unsigned int ChannelGT        = 1 <<  9;
+static const unsigned int ChannelGTColor   = 1 << 10;
+static const unsigned int ChannelSR        = 1 << 11; // Specular
+static const unsigned int ChannelSRColor   = 1 << 12;
+static const unsigned int ChannelST        = 1 << 13;
+static const unsigned int ChannelSTColor   = 1 << 14;
+static const unsigned int ChannelE         = 1 << 15; // Emission
+static const unsigned int ChannelNormal    = 1 << 16;
+static const unsigned int ChannelTangent   = 1 << 17;
+static const unsigned int ChannelPosition  = 1 << 18;
+static const unsigned int ChannelDepth     = 1 << 19;
+
+static const unsigned int ChannelDiffuse  = ChannelDR + ChannelDT; // Lambertian
+static const unsigned int ChannelGlossy   = ChannelGR + ChannelGT; // Glossy
+static const unsigned int ChannelSpecular = ChannelSR + ChannelST; // Specular
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Camera
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-API int  rqAddCamera            ( );
-API void rqSetCameraName        ( const int camera_id, const char*        name    );
-API void rqSetCameraProjection  ( const int camera_id, const Projection   type    );
-API void rqSetCameraAngleMeasure( const int camera_id, const AngleMeasure measure );
-API void rqSetCameraFOV         ( const int camera_id, const float        degree  );
-API void rqSetCameraBokeh       ( const int camera_id, const float        degree  );
-API void rqSetCameraTime        ( const int camera_id, const float        time    ); // time should be either 0.0f or 1.0f for now
-API void rqSetCameraSample      ( const int camera_id, const int          samples ); // AA Samples (can be an arbitrary number)
+// Field of View
+static const int AngleMeasureHorizontal = 0;
+static const int AngleMeasureVertical   = 1;
+static const int AngleMeasureDiagonal   = 2;
 
+// Projection for Camera and Light
+static const int ProjectionPerspective  = 0;
+static const int ProjectionSpherical    = 1;
+static const int ProjectionOrthographic = 2;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Textures
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Addressing
+static const int AddressingWrap  = 0;
+static const int AddressingClamp = 1;
+
+// Sampler
+static const int PixelSamplerNearest    = 0;
+static const int PixelSamplerStochastic = 1; // Stochastic Bilinear
+static const int PixelSamplerBilinear   = 2;
+
+// Filter
+static const int FilterNone     = 0;
+static const int FilterGradient = 1;
+static const int FilterNormal   = 2;
+static const int FilterGaussian = 3;
+static const int FilterVariance = 4;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Camera
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+API int  rqAddCamera            ( );
+API void rqSetCameraName        ( const int camera_id, const char* name       );
+API void rqSetCameraTime        ( const int camera_id, const float time       ); // should be either 0.0f or 1.0f for now
+API void rqSetCameraProjection  ( const int camera_id, const int   projection );
+API void rqSetCameraAngleMeasure( const int camera_id, const int   measure    );
+API void rqSetCameraFOV         ( const int camera_id, const float degree     );
+API void rqSetCameraBokeh       ( const int camera_id, const float degree     );
+API void rqSetCameraSample      ( const int camera_id, const int   samples    ); // AA Samples (can be an arbitrary number! 1,2,3,4,5,6,7,...)
 API void rqSetCameraResolution  ( const int camera_id, const int width, const int height );
 API void rqSetCameraRegion      ( const int camera_id, const int left, const int top, const int right, const int bottom );
-
 API void rqSetCameraPosition    ( const int camera_id, const float x, const float y, const float z );
 API void rqSetCameraTarget      ( const int camera_id, const float x, const float y, const float z );
 API void rqSetCameraUpVector    ( const int camera_id, const float x, const float y, const float z );
 API void rqSetCameraExposure    ( const int camera_id, const float r, const float g, const float b );
-
 API int  rqAddCameraAOV         ( const int camera_id );
-API void rqSetCameraAOVName     ( const int camera_id, const int aov_id, const char*   name    );
-API void rqSetCameraAOVChannel  ( const int camera_id, const int aov_id, const Channel channel );
-API void rqSetCameraAOVUserData ( const int camera_id, const int aov_id, const char*   name    );
-
-API void rqInitializeCameras ( );
-API void rqFinalizeCameras   ( );
+API void rqSetCameraAOVName     ( const int camera_id, const int aov_id, const char* name    );
+API void rqSetCameraAOVChannel  ( const int camera_id, const int aov_id, const int   channel );
+API void rqSetCameraAOVUserData ( const int camera_id, const int aov_id, const char* name    );
+API void rqInitializeCameras    ( );
+API void rqFinalizeCameras      ( );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Light
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 // Point Light
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddPointLight           ( );
-API void rqSetPointLightTime       ( const int point_light_id, const float time );
+//API void rqSetPointLightTime       ( const int point_light_id, const float time ); 
 API void rqSetPointLightPosition   ( const int point_light_id, const float x, const float y, const float z );
 API void rqSetPointLightDirection  ( const int point_light_id, const float x, const float y, const float z );
 API void rqSetPointLightColor      ( const int point_light_id, const float r, const float g, const float b );
-API void rqSetPointLightPhoton     ( const int point_light_id, const int   photon     );
-API void rqSetPointLightSample     ( const int point_light_id, const int   sample     );
-API void rqSetPointLightBlur       ( const int point_light_id, const float blur       );
-API void rqSetPointLightOffset     ( const int point_light_id, const float offset     );
-API void rqSetPointLightInnerAngle ( const int point_light_id, const float inner_angle_degree );
-API void rqSetPointLightOuterAngle ( const int point_light_id, const float outer_angle_degree );
-API void rqSetPointLightShaderLink ( const int point_light_id, const int shader_id ); // Light Linking
+API void rqSetPointLightPhoton     ( const int point_light_id, const int   photon ); // # of Light Paths
+API void rqSetPointLightSample     ( const int point_light_id, const int   sample );
+API void rqSetPointLightBlur       ( const int point_light_id, const float blur   );
+API void rqSetPointLightOffset     ( const int point_light_id, const float offset );
+API void rqSetPointLightInnerAngle ( const int point_light_id, const float angle  ); // [degree]
+API void rqSetPointLightOuterAngle ( const int point_light_id, const float angle  ); // [degree]
+API void rqSetPointLightLink       ( const int point_light_id, const int shader_id ); // Light Linking
 API int  rqAddPointLightAOV        ( const int point_light_id ); // Add AOV Channel
-API void rqSetPointLightAOVName    ( const int point_light_id, const int aov_id, const char*   name );
-API void rqSetPointLightAOVChannel ( const int point_light_id, const int aov_id, const Channel channel );
+API void rqSetPointLightAOVName    ( const int point_light_id, const int aov_id, const char* name    );
+API void rqSetPointLightAOVChannel ( const int point_light_id, const int aov_id, const int   channel ); // Select from Channels defined above
 
 
-// Parallel Light aka DIrectional Light
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Parallel Light
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddParallelLight           ( );
-API void rqSetParallelLightTime       ( const int parallel_light_id, const float time );
+//API void rqSetParallelLightTime       ( const int parallel_light_id, const float time   ); 
 API void rqSetParallelLightDirection  ( const int parallel_light_id, const float x, const float y, const float z );
 API void rqSetParallelLightColor      ( const int parallel_light_id, const float r, const float g, const float b );
-API void rqSetParallelLightPhoton     ( const int parallel_light_id, const int   photon );
+API void rqSetParallelLightPhoton     ( const int parallel_light_id, const int   photon ); // # of Light Paths
 API void rqSetParallelLightSample     ( const int parallel_light_id, const int   sample );
-API void rqSetParallelLightBlur       ( const int parallel_light_id, const float blur   );
+API void rqSetParallelLightBlur       ( const int parallel_light_id, const float blur   ); // Angle[degree]
 API void rqSetParallelLightOffset     ( const int parallel_light_id, const float offset );
-API void rqSetParallelLightShaderLink ( const int parallel_light_id, const int shader_id ); // Light Linking
-API int  rqAddParallelLightAOV        ( const int parallel_light_id ); // Add AOV Channel
-API void rqSetParallelLightAOVName    ( const int parallel_light_id, const int aov_id, const char*   name );
-API void rqSetParallelLightAOVChannel ( const int parallel_light_id, const int aov_id, const Channel channel );
+API void rqSetParallelLightLink       ( const int parallel_light_id, const int shader_id ); // Light Linking
+API int  rqAddParallelLightAOV        ( const int parallel_light_id ); // Add AOV channel
+API void rqSetParallelLightAOVName    ( const int parallel_light_id, const int aov_id, const char* name    );
+API void rqSetParallelLightAOVChannel ( const int parallel_light_id, const int aov_id, const int   channel ); // Select from Channels defined above
+
+API void rqInitializeGaffer ( ); // Takes care of all non-area lights
+API void rqFinalizeGaffer   ( );
 
 
-// Gaffer Initializes all Non-Area Lights (Point Lights and Parallel Lights)
-API void rqInitializeGaffer( );
-API void rqFinalizeGaffer  ( );
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Sky Light
-API void rqSetSkyLightTime       ( const float time   );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API void rqSetSkyLightImage      ( const char* name   );
+//API void rqSetSkyLightTime       ( const float time   );
 API void rqSetSkyLightBackdrop   ( const char* name   );
-API void rqSetSkyLightPhoton     ( const int   photon );
+API void rqSetSkyLightPhoton     ( const int   photon ); // # of Light Paths
 API void rqSetSkyLightSample     ( const int   sample );
 API void rqSetSkyLightColor      ( const float r, const float g, const float b );
 API void rqSetSkyLightNorth      ( const float x, const float y, const float z );
 API void rqSetSkyLightZenith     ( const float x, const float y, const float z );
-API void rqSetSkyLightShaderLink ( const int shader_id );
+API void rqSetSkyLightShader     ( const int shader_id ); // Window
+API void rqSetSkyLightLink       ( const int shader_id ); // Light Link
 API int  rqAddSkyLightAOV        ( );
-API void rqSetSkyLightAOVName    ( const int aov_id, const char*   name );
-API void rqSetSkyLightAOVChannel ( const int aov_id, const Channel channel );
+API void rqSetSkyLightAOVName    ( const int aov_id, const char* name    );
+API void rqSetSkyLightAOVChannel ( const int aov_id, const int   channel );
 
-API void rqInitializeSkyLight  ( );
-API void rqFinalizeSkyLight    ( );
+API void rqInitializeSkyLight ( );
+API void rqFinalizeSkyLight   ( );
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Geometry Light
-API void rqSetGeometryLightTime          ( const float time );
-API void rqSetGeometryLightPhoton        ( const int photon );
-API void rqSetGeometryLightSample        ( const int sample );
-API void rqSetGeometryLightShaderLink    ( const int shader_id );
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//API void rqSetGeometryLightTime       ( const float time   );
+API void rqSetGeometryLightPhoton        ( const int photon    ); // # of Light Paths
+API void rqSetGeometryLightSample        ( const int sample    );
+API void rqSetGeometryLightShader        ( const int shader_id ); // Mesh Light
+API void rqSetGeometryLightLink          ( const int shader_id ); // Light Link
 API int  rqAddGeometryLightAOV           ( );
-API void rqSetGeometryLightAOVName       ( const int aov_id, const char*   name    );
-API void rqSetGeometryLightAOVChannel    ( const int aov_id, const Channel channel );
-API void rqSetGeometryLightAOVShaderName ( const int aov_id, const char*   shader  );
+API void rqSetGeometryLightAOVName       ( const int aov_id, const char* name    );
+API void rqSetGeometryLightAOVChannel    ( const int aov_id, const int   channel );
+API void rqSetGeometryLightAOVShaderName ( const int aov_id, const char* shader  );
 
 API void rqInitializeGeometryLight ( );
 API void rqFinalizeGeometryLight   ( );
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Shader
+//
+// Surface Shader
+// The order of adding layers matters! You have to add layers from top to bottom.
+// In order to pass energy to the next layer, you have to add non-zero Transmittance value.
+// 0 = Roughness     : Specular
+// 0 < Roughness < 1 : Glossy
+//     Roughness = 1 : Diffuse
+//
+// Volumetric Flake Shader
+// This behaves as 2d flake shader when depth=0
+//
+// Normally layers are traversed from top to bottom.
+// two_sided option allows rays to traverse from bottom to top when they hit back side.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+API int  rqAddShader     ( );
+API void rqSetShaderName ( const int shader_id, const char* name );
+//API void rqSetShaderTime ( const int shader_id, const float time );
+
+// Geometry Shader
+API void rqSetShaderTwoSided    ( const int shader_id, const bool  two_sided    );
+API void rqSetShaderVisibility  ( const int shader_id, const int   visibility   );
+API void rqSetShaderSmoothAngle ( const int shader_id, const float smooth_angle );
+API void rqSetShaderRoundCorner ( const int shader_id, const float round_corner );
+
+// Surface Shader (The order matters! You have to add layers from top to bottom )
+API int  rqAddLayer      ( const int shader_id );
+API void rqSetLayerColor ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b ); // Set Color or Values
+API void rqSetLayerFlake ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b , const float scale, const float density, const float depth);
+API void rqSetLayerImage ( const int shader_id, const int layer_id, const int side, const int element, const char* name, const float gamma, const float* color_matrix_4x4, const float* uv_matrix_3x3 );
+
+// Volume Shader
+//API void rqSetTransmittance();
+
+API void rqInitializeShaders ( );
+API void rqFinalizeShaders   ( );
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Geometry
+// Multi-Level Instancing is supported.
+//
+// Vertex Data
+// "position" : reserved (Used as Pref when an object has motion data)
+// "motion"   : reserved (Offset from position)
+// "radius"	  : reserved (hair/particle)
+// "normal"	  : reserved
+// "tangents" : reserved
+// "uv"		  : reserved (texture coord, you can add multiple times)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+API int  rqAddObject      ( ); // Returns object_id
+API void rqSetObjectName  ( const int object_id, const char* name );
+//API void rqSetObjectTime  ( const int object_id, const float time );
+API void rqSetObjectMatrix( const int object_id, const float* matrix_4x4 = 0 );
+API void rqSetObjectShader( const int object_id, const int atom, const int shader_id );
+API void rqAddPrimitives  ( const int object_id, const int atom, const int num, const unsigned int* vertex_ids );
+API int  rqAddVertexData  ( const int object_id, const int atom, const char* name, const int num, const int dimension, const float* data );
+API int  rqSetVertexData  ( const int object_id, const int atom, const char* name, const int num, const int dimension, const float* data );
+API int  rqAddInstance    ( const int object_id );
+API void rqSetInstance    ( const int object_id, const int instance_id, const int   instanced_object_id, const float* matrix_4x4 = 0 );
+API void rqOverrideShader ( const int object_id, const int instance_id, const char* old_name, const char* new_name   );
+
+API void rqInitializeAccelerator( );
+API void rqFinalizeAccelerator  ( );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,118 +301,29 @@ API void rqSetRendererResolution  ( const float resolution );
 API void rqSetRendererRayDepth    ( const int   depth      );
 API void rqSetRendererPhotonDepth ( const int   depth      );
 API void rqSetRendererClamp       ( const float r, const float g, const float b );
-API void rqSetRendererError       ( const float r, const float g, const float b );
-
-API void rqInitializeRenderer  ( );
-API void rqFinalizeRenderer    ( );
+API void rqSetRendererError       ( const float r, const float g, const float b ); // The Color used for Nan etc.
+API void rqRender                 ( );
+API void rqRenderPixels           ( const int num_of_pixels, float* rgb_s, const int subpixel_id );
+API void rqInitializeRenderer     ( );
+API void rqFinalizeRenderer       ( );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Display
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API void rqSetDisplayGamma  ( const float gamma   ); // Not working yet
+API void rqSetDisplayGamma  ( const float gamma   );
 API void rqSetPreviewWindow ( const bool  preview );
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Shader
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-API int  rqAddShader            ( );
-API void rqSetShaderName        ( const int shader_id, const char*      name );
-API void rqSetShaderTime        ( const int shader_id, const float      time );
-API void rqSetShaderSmoothAngle ( const int shader_id, const float      smooth_angle           );
-API void rqSetShaderRoundCorner ( const int shader_id, const float      round_corner           ); // Not working yet
-API void rqSetShaderHairUV      ( const int shader_id, const bool       assign_hair_texture_uv );
-API void rqSetShaderVisibility  ( const int shader_id, const Visibility visibility             );
-
-// Surface Shader
-API int  rqAddSurfaceShader       ( const int shader_id );
-API void rqSetSurfaceSideness     ( const int shader_id, const int layer_id, const Sideness   sideness      );
-API void rqSetSurfaceMaterial     ( const int shader_id, const int layer_id, const Material   material      );
-API void rqSetSurfaceVirtualLight ( const int shader_id, const int layer_id, const bool       virtual_light );
-API void rqSetSurfaceColor        ( const int shader_id, const int layer_id, const Element    element, const float r, const float g, const float b ); // Set Color or Values
-API void rqSetSurfaceImage        ( const int shader_id, const int layer_id, const Element    element, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
-
-// Displacement Map (Needs Tangents and Normals to Work. They can be created by setting a proper smoothing angle )
-API int  rqAddDisplacementShader ( const int shader_id );
-API void rqSetDisplacementLevel  ( const int shader_id, const int displacement_id, const int level ); // Subdivision Level
-API void rqSetDisplacementVector ( const int shader_id, const int displacement_id, const float x, const float y, const float z );
-API void rqSetDisplacementImage  ( const int shader_id, const int displacement_id, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
-
-// Opacity
-API void rqSetOpacity      ( const int shader_id, const float r, const float g, const float b );
-API void rqSetOpacityImage ( const int shader_id, const char* name, const float gamma, const float color_matrix[ 4 ][ 4 ], const float uv_matrix[ 3 ][ 3 ] );
-
-// Volume Shader
-//API int  rqAddVolumeShader        ( const int shader_id );
-//API void rqSetVolumeTransmittance ( const int shader_id, const float r, const float g, const float b ); // Transmittance Per Meter
-//API void rqSetVolumeAlbedo        ( const int shader_id, const float r, const float g, const float b ); // Decay Per Particle Collision
-//API void rqSetVolumeAverageCosine ( const int shader_id, const float cosine );                          // Phase Function
-
-// Shader Library
-API void rqInitializeShaders ( );
-API void rqFinalizeShaders   ( );
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Geometry
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API int  rqAddObject     ( );
-API int  rqAddObject     ( const char* name );
-API void rqSetObjectName ( const int object_id, const char* name );
-API void rqSetObjectTime ( const int object_id, const float time );
-
-// Part ( Limitation: particles and cylinders and mesh(triangles and tetragons) should be in different groups )
-API int  rqAddPart ( const int object_id );
-
-// Set Temporal Shader ID
-API void rqSetShaderID ( const int object_id, const int part_id, const int shader_id );
-
-// Vertex Data
-API void rqAddRadii     ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddUVs       ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddPositions ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddNormals   ( const int object_id, const int part_id, const int n, const float* data );
-API void rqAddTangents  ( const int object_id, const int part_id, const int n, const float* data );
-
-// Primitive
-API void rqAddParticles ( const int object_id, const int part_id, const int n, const int* vertex_ids );
-API void rqAddCylinders ( const int object_id, const int part_id, const int n, const int* vertex_ids );
-API void rqAddTriangles ( const int object_id, const int part_id, const int n, const int* vertex_ids );
-API void rqAddTetragons ( const int object_id, const int part_id, const int n, const int* vertex_ids );
-
-// Multi-Level Instance
-API int  rqAddInstance ( const int object_id );
-API void rqSetInstance ( const int object_id, const int instance_id, const int instanced_object_id, const float matrix[4][4] = 0, int shader_id = 0 );
-
-
-// Per Vertex/Primitive data "position", "uv", and "radius" are reserved.
-API void rqAddVertexData    ( const int object_id, const int part_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
-//API void rqAddPrimitiveData ( const int object_id, const int part_id, const char* name, const int n, const int dim, const float* data ); // The length of data is n x 1 s s .....
-
-// Mesh Processing to Come..
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Accelerator
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API void rqInitializeAccelerator( );
-API void rqFinalizeAccelerator  ( );
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Utility
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API void rqStartup      ( );
-API void rqInitialize   ( ); // Initialize everything in an appropriate Order
-API void rqFinalize     ( ); // Finalize   everything in an appropriate Order
-API void rqShutdown     ( );
-//API void rqSerialize    ( const char* folder_name ); // Serialize   Scene
-//API void rqDeserialize  ( const char* folder_name ); // Deserialize Scene
-API void rqGo           ( const char* folder_name ); // This function does everything for you
-API void rqRender       ( );
-API void rqRenderPixels ( const int num_of_pixels, float* rgb_s, const int subpixel_id );
-
-
-#endif
+API void rqStartup    ( );
+API void rqSetTime    ( const float time );
+API void rqInitialize ( ); // Initialize everything in an appropriate Order
+API void rqFinalize   ( ); // Finalize   everything in an appropriate Order
+API void rqShutdown   ( );
+API void rqGo         ( const char* folder_name ); // This function does everything for you
+API void rqLoadScene  ( const char* folder_name ); // Load geo from file
+API void rqLoadFile   ( const char* file_name ); // Load geo from file
+API void rqSaveBeauty ( const char* file_name ); // Save Beauty
