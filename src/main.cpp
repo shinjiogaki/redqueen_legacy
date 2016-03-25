@@ -5,9 +5,9 @@
 
 
 //#define TUTORIAL01
-//#define TUTORIAL02
+#define TUTORIAL02
 //#define TUTORIAL03
-#define TUTORIAL04
+//#define TUTORIAL04
 //#define TUTORIAL05
 //#define TUTORIAL06
 //#define TUTORIAL0
@@ -20,7 +20,7 @@
 #include "rq.h"
 
 #include <iostream>
-
+#include <cstdlib>
 
 
 // The simplest scene: A single sphere
@@ -95,19 +95,25 @@ int main( )
 	// Object
 	auto object_id = rqAddObject( );
 	rqSetObjectName( object_id, "particles" );
-	const auto N = 4096;
-	float        positions[ N * 3 ];
-	float        radii    [ N ];
-	unsigned int ids      [ N ];
+	const auto N = 65536;
+
+	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
+	float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
+	unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
 
 	for(auto i = 0; i < N; ++i)
 	{
 		positions[i*3+0] = 2*rand()/(float)RAND_MAX-1.0f;
 		positions[i*3+1] = 2*rand()/(float)RAND_MAX-1.0f;
 		positions[i*3+2] = 2*rand()/(float)RAND_MAX-1.0f;
-		radii[i] = 0.05f;
+		radii[i] = 0.01f;
 		ids  [i] = i;
 	}
+
+	std::free(positions);
+	std::free(radii    );
+	std::free(ids      );
+
 	rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
 	rqAddVertexData  ( object_id, AtomParticle, "radius"  , N, 1, radii     );
 	rqAddPrimitives  ( object_id, AtomParticle, N, ids );
@@ -206,55 +212,7 @@ int main( )
 
 
 
-// Image Processing
-#ifdef TUTORIAL04
-int main( )
-{
 
-	rqStartup( );
-
-	// Camera
-	auto camera_id = rqAddCamera( );
-	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
-	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV       ( camera_id, 35.0f );
-	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
-	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
-	rqSetCameraFOV       ( camera_id, 35.0f );
-	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
-
-	// Object
-	auto object_id = rqAddObject( );
-	float        position[ ] = { 0, 0,  0 };
-	float        radius  [ ] = { 1.0 };
-	unsigned int id      [ ] = { 0   };
-	rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, position );
-	rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radius   );
-	rqAddPrimitives  ( object_id, AtomParticle, 1, id );
-	
-	// Parallel Light
-	auto light_id = rqAddParallelLight();
-	rqSetParallelLightColor    ( light_id, 1,1,1);
-	rqSetParallelLightDirection( light_id, 1,-1,1);
-
-	// Display
-	rqSetPreviewWindow ( true );
-	rqSetDisplayGamma  ( 1.45f );
-
-	// Renderer
-	rqSetRendererSample ( 256 );
-
-	rqInitialize ( );
-	rqRender     ( );
-	rqFinalize   ( );
-
-	rqShutdown ( );
-
-	return 0;
-
-}
-#endif
 
 
 

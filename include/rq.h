@@ -79,7 +79,7 @@ static const unsigned int ChannelTangent   = 1 << 17;
 static const unsigned int ChannelPosition  = 1 << 18;
 static const unsigned int ChannelDepth     = 1 << 19;
 
-static const unsigned int ChannelDiffuse  = ChannelDR + ChannelDT; // Lambertian
+static const unsigned int ChannelDiffuse  = ChannelDR + ChannelDT; // Diffuse
 static const unsigned int ChannelGlossy   = ChannelGR + ChannelGT; // Glossy
 static const unsigned int ChannelSpecular = ChannelSR + ChannelST; // Specular
 
@@ -236,7 +236,6 @@ API void rqFinalizeGeometryLight   ( );
 // Volumetric Flake Shader
 // This behaves as 2d flake shader when depth=0
 //
-// Normally layers are traversed from top to bottom.
 // two_sided option allows rays to traverse from bottom to top when they hit back side.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddShader     ( );
@@ -271,7 +270,7 @@ API void rqFinalizeShaders   ( );
 // "motion"   : reserved (Offset from position)
 // "radius"	  : reserved (hair/particle)
 // "normal"	  : reserved
-// "tangents" : reserved
+// "tangent"  : reserved
 // "uv"		  : reserved (texture coord, you can add multiple times)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -324,6 +323,6 @@ API void rqInitialize ( ); // Initialize everything in an appropriate Order
 API void rqFinalize   ( ); // Finalize   everything in an appropriate Order
 API void rqShutdown   ( );
 API void rqGo         ( const char* folder_name ); // This function does everything for you
-API void rqLoadScene  ( const char* folder_name ); // Load geo from file
+API void rqLoadScene  ( const char* folder_name ); // Load geo from files
 API void rqLoadFile   ( const char* file_name ); // Load geo from file
 API void rqSaveBeauty ( const char* file_name ); // Save Beauty
