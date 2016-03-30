@@ -228,7 +228,7 @@ API void rqFinalizeGeometryLight   ( );
 //
 // Surface Shader
 // The order of adding layers matters! You have to add layers from top to bottom.
-// In order to pass energy to the next layer, you have to add non-zero Transmittance value.
+// In order to pass energy to the next layer, you have to set non-zero albedo for both sides.
 // 0 = Roughness     : Specular
 // 0 < Roughness < 1 : Glossy
 //     Roughness = 1 : Diffuse
@@ -241,21 +241,22 @@ API void rqFinalizeGeometryLight   ( );
 API int  rqAddShader     ( );
 API void rqSetShaderName ( const int shader_id, const char* name );
 //API void rqSetShaderTime ( const int shader_id, const float time );
-
-// Geometry Shader
-API void rqSetShaderTwoSided    ( const int shader_id, const bool  two_sided    );
-API void rqSetShaderVisibility  ( const int shader_id, const int   visibility   );
-API void rqSetShaderSmoothAngle ( const int shader_id, const float smooth_angle );
-API void rqSetShaderRoundCorner ( const int shader_id, const float round_corner );
+API void rqSetShaderTwoSided     ( const int shader_id, const bool two_sided );
+API void rqSetShaderGeometryLight( const int shader_id, const int  side, const bool flag );
 
 // Surface Shader (The order matters! You have to add layers from top to bottom )
 API int  rqAddLayer      ( const int shader_id );
 API void rqSetLayerColor ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b ); // Set Color or Values
 API void rqSetLayerFlake ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b , const float scale, const float density, const float depth);
-API void rqSetLayerImage ( const int shader_id, const int layer_id, const int side, const int element, const char* name, const float gamma, const float* color_matrix_4x4, const float* uv_matrix_3x3 );
+API void rqSetLayerImage ( const int shader_id, const int layer_id, const int side, const int element, const char* name, const float gamma, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 );
 
 // Volume Shader
 //API void rqSetTransmittance();
+
+// Geometry Shader
+API void rqSetShaderVisibility  ( const int shader_id, const int   visibility   );
+API void rqSetShaderSmoothAngle ( const int shader_id, const float smooth_angle );
+API void rqSetShaderRoundCorner ( const int shader_id, const float round_corner );
 
 API void rqInitializeShaders ( );
 API void rqFinalizeShaders   ( );
