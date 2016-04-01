@@ -7,10 +7,10 @@
 //#define TUTORIAL01
 //#define TUTORIAL02
 //#define TUTORIAL03
-#define TUTORIAL04
+//#define TUTORIAL04
 //#define TUTORIAL05
-//#define TUTORIAL06
-//#define TUTORIAL0
+#define TUTORIAL06
+//#define TUTORIAL07
 //#define TUTORIAL08
 //#define TUTORIAL09
 //#define TUTORIAL10
@@ -23,7 +23,7 @@
 #include <cstdlib>
 
 
-// The simplest scene: A single sphere
+// The simplest scene: A single sphere with one directional light light
 #ifdef TUTORIAL01
 int main( )
 {
@@ -74,7 +74,7 @@ int main( )
 #endif
 
 
-// Particles
+// A single sphere with sky light
 #ifdef TUTORIAL02
 int main( )
 {
@@ -84,56 +84,40 @@ int main( )
 	// Camera
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
-	rqSetCameraResolution( camera_id, 800, 800 );
+	rqSetCameraResolution( camera_id, 512, 512 );
 	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV       ( camera_id, 25.0f );
-	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
-	rqSetCameraFOV       ( camera_id, 25.0f );
-	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
 	// Object
 	auto object_id = rqAddObject( );
-	rqSetObjectName( object_id, "particles" );
-	const auto N = 65536*16;
-
-	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
-	float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
-	unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
-
-	for(auto i = 0; i < N; ++i)
-	{
-		positions[i*3+0] = 4*rand()/(float)RAND_MAX-2.0f;
-		positions[i*3+1] = 4*rand()/(float)RAND_MAX-2.0f;
-		positions[i*3+2] = 4*rand()/(float)RAND_MAX-2.0f;
-		radii[i] = 0.02f;
-		ids  [i] = i;
-	}
-
-	rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
-	rqAddVertexData  ( object_id, AtomParticle, "radius"  , N, 1, radii     );
-	rqAddPrimitives  ( object_id, AtomParticle, N, ids );
+	float        position[ ] = { 0, 0,  0 };
+	float        radius  [ ] = { 1.0 };
+	unsigned int id      [ ] = { 0   };
+	rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, position );
+	rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radius   );
+	rqAddPrimitives  ( object_id, AtomParticle, 1, id );
 	
-	std::free(positions);
-	std::free(radii    );
-	std::free(ids      );
-
-	// Parallel Light
-	auto light_id = rqAddParallelLight();
-	rqSetParallelLightColor    ( light_id, 1,1,1);
-	rqSetParallelLightDirection( light_id, 1,-1,1);
+	// Sky Light
+	rqSetSkyLightColor(1000,1000,1000);
+	rqSetSkyLightImage("sky.png");
+	rqSetSkyLightSample(256);
 
 	// Display
 	rqSetPreviewWindow ( true );
 	rqSetDisplayGamma  ( 1.45f );
 
 	// Renderer
-	rqSetRendererSample ( 128 );
+	rqSetRendererSample (256);
 
 	rqInitialize ( );
 	rqRender     ( );
 	rqFinalize   ( );
-	rqShutdown   ( );
+
+	rqShutdown ( );
 
 	return 0;
 
@@ -141,8 +125,79 @@ int main( )
 #endif
 
 
-// Flake Shader
+// Geometry Light
 #ifdef TUTORIAL03
+int main( )
+{
+
+	rqStartup( );
+
+	// Camera
+	auto camera_id = rqAddCamera( );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
+	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, 4 );
+	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraFOV       ( camera_id, 35.0f );
+	rqSetCameraPosition  ( camera_id, 0, 0, 4 );
+
+	// Shader
+	auto shader_id = rqAddShader();
+	auto layer0_id = rqAddLayer( shader_id );
+	rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementEmission , 100,100,100 );
+	rqSetShaderGeometryLight( shader_id, SideOuter, true );
+
+	// Sphere
+	{
+		auto object_id = rqAddObject( );
+		float        position[ ] = { 0, 0,  0 };
+		float        radius  [ ] = { 1.0 };
+		unsigned int id      [ ] = { 0   };
+		rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, position );
+		rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radius   );
+		rqAddPrimitives  ( object_id, AtomParticle, 1, id );
+	}
+
+	// Geometry Light
+	{
+		auto object_id = rqAddObject( );
+		float        position[ ] = { 10, 10,  10 };
+		float        radius  [ ] = { 1.0 };
+		unsigned int id      [ ] = { 0   };
+		rqAddVertexData  ( object_id, AtomParticle, "position", 1, 3, position );
+		rqAddVertexData  ( object_id, AtomParticle, "radius"  , 1, 1, radius   );
+		rqAddPrimitives  ( object_id, AtomParticle, 1, id );
+		rqSetObjectShader( object_id, AtomParticle, shader_id );
+	}
+	
+	// Sky Light
+	rqSetSkyLightColor(0,0,0);
+
+	// Geometry Light
+	rqSetGeometryLightSample(256);
+
+	// Display
+	rqSetPreviewWindow ( true );
+	rqSetDisplayGamma  ( 1.45f );
+
+	// Renderer
+	rqSetRendererSample (256);
+
+	rqInitialize ( );
+	rqRender     ( );
+	rqFinalize   ( );
+
+	rqShutdown ( );
+
+	return 0;
+}
+#endif
+
+
+// Flake Shader
+#ifdef TUTORIAL04
 int main( )
 {
 
@@ -209,11 +264,8 @@ int main( )
 #endif
 
 
-
-
-
 // Particles
-#ifdef TUTORIAL04
+#ifdef TUTORIAL05
 int main( )
 {
 
@@ -221,127 +273,106 @@ int main( )
 
 	// Camera
 	auto camera_id = rqAddCamera( );
-	rqSetCameraSample    ( camera_id, 31 ); // AA samples can be an arbitrary number
-	rqSetCameraResolution( camera_id, 960, 540 );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
 	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV       ( camera_id, 70.0f );
-	rqSetCameraPosition  ( camera_id, 20, 20, -20 );
+	rqSetCameraFOV       ( camera_id, 25.0f );
+	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
 	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
-	rqSetCameraFOV       ( camera_id, 70.0f );
-	rqSetCameraPosition  ( camera_id, 20, 20, -20 );
-
-		const auto U = 128;
-		const auto V = 128;
-		const auto N = U * V / 2;
+	rqSetCameraFOV       ( camera_id, 25.0f );
+	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
 
 	// Object
+	auto object_id = rqAddObject( );
+	rqSetObjectName( object_id, "particles" );
+	const auto N = 65536*128;
+
+	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
+	float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
+	unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
+
+	for(auto i = 0; i < N; ++i)
 	{
-		auto object_id = rqAddObject( );
-		rqSetObjectName( object_id, "group1" );
-
-
-		float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
-		float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
-		unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
-
-
-		auto shader_id = rqAddShader();
-		auto layer0_id = rqAddLayer( shader_id );
-		rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementEmission , 1,1,1 );
-		rqSetShaderGeometryLight( shader_id, SideOuter, true );
-
-		auto i = 0;
-		for(auto v = 0; v < V; ++v)
-		{
-			for(auto u = 0; u < U; ++u)
-			{
-				if(((0==u%2)^(0==v%2)))
-				{
-				positions[i*3+0] = u*2+1-U;
-				positions[i*3+1] = 0;
-				positions[i*3+2] = v*2+1-V;
-				radii[i] = 0.75f;
-				ids  [i] = i;
-				++i;
-				}
-			}
-		}
-		rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
-		rqAddVertexData  ( object_id, AtomParticle, "radius"  , N, 1, radii     );
-		rqAddPrimitives  ( object_id, AtomParticle, N, ids );
-		rqSetObjectShader( object_id, AtomParticle, shader_id );
-		
-		std::free(positions);
-		std::free(radii    );
-		std::free(ids      );
+		positions[i*3+0] = 5*rand()/(float)RAND_MAX-2.5f;
+		positions[i*3+1] = 5*rand()/(float)RAND_MAX-2.5f;
+		positions[i*3+2] = 5*rand()/(float)RAND_MAX-2.5f;
+		radii[i] = 0.01f;
+		ids  [i] = i;
 	}
+
+	rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
+	rqAddVertexData  ( object_id, AtomParticle, "radius"  , N, 1, radii     );
+	rqAddPrimitives  ( object_id, AtomParticle, N, ids );
+	
+	std::free(positions);
+	std::free(radii    );
+	std::free(ids      );
+
+	// Parallel Light
+	auto light_id = rqAddParallelLight();
+	rqSetParallelLightColor    ( light_id, 1,1,1);
+	rqSetParallelLightDirection( light_id, 1,-1,1);
+
+	// Display
+	rqSetPreviewWindow ( true );
+	rqSetDisplayGamma  ( 1.45f );
+
+	// Renderer
+	rqSetRendererSample ( 128 );
+
+	rqInitialize ( );
+	rqRender     ( );
+	rqFinalize   ( );
+	rqShutdown   ( );
+
+	return 0;
+
+}
+#endif
+
+
+// Load OBJ File
+#ifdef TUTORIAL06
+int main( )
+{
+	
+	rqStartup( );
+
+	// Camera
+	auto camera_id = rqAddCamera( );
+	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraResolution( camera_id, 512, 512 );
+	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraFOV       ( camera_id, 30.0f );
+	rqSetCameraPosition  ( camera_id, 4, 4, 4 );
+	rqSetCameraTarget    ( camera_id, -0.66,0.91,-0.31 );
+	rqSetCameraTime      ( camera_id,  1.0f );  // Shutter Close
+	rqSetCameraFOV       ( camera_id, 30.0f );
+	rqSetCameraPosition  ( camera_id, 4, 4, 4 );
+	rqSetCameraTarget    ( camera_id, -0.66,0.91,-0.31 );
+
+	// Shader
+	auto shader_id = rqAddShader();
+	rqSetShaderName    ( shader_id, "teapot" );
+	rqSetShaderTwoSided (shader_id, false );
+
+	// Layer
+	auto layer0_id = rqAddLayer( shader_id );
+	rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementAlbedo   , 1,0.5,0.5 );
+	rqSetLayerColor ( shader_id, layer0_id, SideBoth , ElementRoughness, 1,1,1 );
+	rqSetLayerColor ( shader_id, layer0_id, SideInner, ElementIOR      , 5,5,5 );
 
 	// Object
-	{
-		auto object_id = rqAddObject( );
-		rqSetObjectName( object_id, "group2" );
+	auto object_id = rqAddObject( );
+	rqLoadObject( object_id, "teapot.obj" );
+	
+	// Parallel Light
+	auto light_id = rqAddParallelLight();
+	rqSetParallelLightColor    ( light_id, 1,1,0.5);
+	rqSetParallelLightDirection( light_id, 1,-1,1);
 
-		float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
-		float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
-		unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
-
-		auto shader_id = rqAddShader();
-		auto layer0_id = rqAddLayer( shader_id );
-		rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementAlbedo   , 0.9,0.9,0.9 );
-		rqSetLayerColor ( shader_id, layer0_id, SideInner, ElementIOR      , 100,100,100 );
-		rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementRoughness, 1.0,1.0,1.0 );
-
-		auto i = 0;
-		for(auto v = 0; v < V; ++v)
-		{
-			for(auto u = 0; u < U; ++u)
-			{
-				if(!((0==u%2)^(0==v%2)))
-				{
-				positions[i*3+0] = u*2+1-U;
-				positions[i*3+1] = 0;
-				positions[i*3+2] = v*2+1-V;
-				radii[i] = 0.75f;
-				ids  [i] = i;
-				++i;
-				}
-			}
-		}
-
-		rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
-		rqAddVertexData  ( object_id, AtomParticle, "radius"  , N, 1, radii     );
-		rqAddPrimitives  ( object_id, AtomParticle, N, ids );
-		rqSetObjectShader( object_id, AtomParticle, shader_id );
-		
-		std::free(positions);
-		std::free(radii    );
-		std::free(ids      );
-	}
-
-
-	// Floor
-	{
-		auto object_id = rqAddObject( );
-		rqSetObjectName( object_id, "floor" );
-
-		auto shader_id = rqAddShader();
-		auto layer0_id = rqAddLayer( shader_id );
-		rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementAlbedo   , 0.9,0.9,0.9 );
-		rqSetLayerColor ( shader_id, layer0_id, SideInner, ElementIOR      , 100,100,100 );
-		rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementRoughness, 1.0,1.0,1.0 );
-
-		float positions[ ] = { -U, -0.75, V, U, -0.75, V, U, -0.75, -V, -U, -0.75, -V };
-
-		unsigned int vertex_ids[ ] = { 0,1,2,3 };
-
-		rqAddVertexData  ( object_id, AtomTetragon, "position", 4, 3, positions );
-		rqSetObjectShader( object_id, AtomTetragon, shader_id );
-		rqAddPrimitives  ( object_id, AtomTetragon, 1, vertex_ids );
-	}
-
-	// Lights
-	rqSetSkyLightColor      ( 0,0,0);
-	rqSetGeometryLightSample( 256 );
+	// Sky Light
+	rqSetSkyLightColor ( 0.5,0.5,1.0);
 
 	// Display
 	rqSetPreviewWindow ( true );
@@ -356,14 +387,8 @@ int main( )
 	rqShutdown   ( );
 
 	return 0;
-
 }
 #endif
-
-
-
-
-
 
 
 
