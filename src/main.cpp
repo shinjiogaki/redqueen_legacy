@@ -1,19 +1,18 @@
 
 
 
-// Uncomment your favorite One
+// Uncomment your favorite one
 
-
-//#define TUTORIAL01
-//#define TUTORIAL02
-//#define TUTORIAL03
-//#define TUTORIAL04
-//#define TUTORIAL05
-#define TUTORIAL06
-//#define TUTORIAL07
-//#define TUTORIAL08
-//#define TUTORIAL09
-//#define TUTORIAL10
+#define TUTORIAL01 // Sphere with Parallel Light
+//#define TUTORIAL02 // Sphere with Sky      Light
+//#define TUTORIAL03 // Sphere with Geometry Light
+//#define TUTORIAL04 // Sphere with Flake Shader
+//#define TUTORIAL05 // Particles with Motion Blur
+//#define TUTORIAL06 // Loading .obj File & Texture Mapping
+//#define TUTORIAL07 // Hair Shading
+//#define TUTORIAL08 // Instancing and Final Gathering
+//#define TUTORIAL09 // redqueen.exe
+//#define TUTORIAL10 // Turn Table Animation
 
 
 // Include API header
@@ -23,7 +22,7 @@
 #include <cstdlib>
 
 
-// The simplest scene: A single sphere with one directional light light
+// Sphere with Parallel Light
 #ifdef TUTORIAL01
 int main( )
 {
@@ -74,7 +73,7 @@ int main( )
 #endif
 
 
-// A single sphere with sky light
+// Sphere with Sky Light
 #ifdef TUTORIAL02
 int main( )
 {
@@ -102,16 +101,19 @@ int main( )
 	rqAddPrimitives  ( object_id, AtomParticle, 1, id );
 	
 	// Sky Light
+	// Visit sIBL (http://www.hdrlabs.com/sibl/archive.html)
+	//rqSetSkyLightColor(1,1,1);
+	//rqSetSkyLightImage("Barce_Rooftop_C_3k.hdr");
 	rqSetSkyLightColor(1000,1000,1000);
 	rqSetSkyLightImage("sky.png");
-	rqSetSkyLightSample(256);
+	rqSetSkyLightSample(512);
 
 	// Display
 	rqSetPreviewWindow ( true );
 	rqSetDisplayGamma  ( 1.45f );
 
 	// Renderer
-	rqSetRendererSample (256);
+	rqSetRendererSample (512);
 
 	rqInitialize ( );
 	rqRender     ( );
@@ -125,7 +127,7 @@ int main( )
 #endif
 
 
-// Geometry Light
+// Sphere with Geometry Light
 #ifdef TUTORIAL03
 int main( )
 {
@@ -196,7 +198,7 @@ int main( )
 #endif
 
 
-// Flake Shader
+// Sphere with Flake Shader
 #ifdef TUTORIAL04
 int main( )
 {
@@ -264,7 +266,7 @@ int main( )
 #endif
 
 
-// Particles
+// Particles with Motion Blur
 #ifdef TUTORIAL05
 int main( )
 {
@@ -273,38 +275,57 @@ int main( )
 
 	// Camera
 	auto camera_id = rqAddCamera( );
-	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
+	rqSetCameraSample    ( camera_id, 43 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
 	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
-	rqSetCameraFOV       ( camera_id, 25.0f );
+	rqSetCameraFOV       ( camera_id, 40.0f );
 	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
 	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
-	rqSetCameraFOV       ( camera_id, 25.0f );
+	rqSetCameraFOV       ( camera_id, 40.0f );
 	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
 
 	// Object
 	auto object_id = rqAddObject( );
 	rqSetObjectName( object_id, "particles" );
-	const auto N = 65536*128;
+	const auto N = 10000;
 
 	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
+	float        *motions0  = (float*)       std::malloc( N * 3 * sizeof(float)       );
+	float        *motions1  = (float*)       std::malloc( N * 3 * sizeof(float)       );
+	float        *motions2  = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
 	unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
 
 	for(auto i = 0; i < N; ++i)
 	{
-		positions[i*3+0] = 5*rand()/(float)RAND_MAX-2.5f;
-		positions[i*3+1] = 5*rand()/(float)RAND_MAX-2.5f;
-		positions[i*3+2] = 5*rand()/(float)RAND_MAX-2.5f;
-		radii[i] = 0.01f;
+		positions[i*3+0] =   5*rand()/(float)RAND_MAX-2.5f;
+		positions[i*3+1] =   5*rand()/(float)RAND_MAX-2.5f;
+		positions[i*3+2] =   5*rand()/(float)RAND_MAX-2.5f;
+		motions0 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions0 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions0 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions1 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions1 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions1 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions2 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions2 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		motions2 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
+
+		radii[i] = 0.05f;
 		ids  [i] = i;
 	}
 
-	rqAddVertexData  ( object_id, AtomParticle, "position", N, 3, positions );
-	rqAddVertexData  ( object_id, AtomParticle, "radius"  , N, 1, radii     );
-	rqAddPrimitives  ( object_id, AtomParticle, N, ids );
+	rqAddVertexData ( object_id, AtomParticle, "position", N, 3, positions );
+	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions0  );
+	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions1  );
+	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions2  );
+	rqAddVertexData ( object_id, AtomParticle, "radius"  , N, 1, radii     );
+	rqAddPrimitives ( object_id, AtomParticle, N, ids );
 	
 	std::free(positions);
+	std::free(motions0 );
+	std::free(motions1 );
+	std::free(motions2 );
 	std::free(radii    );
 	std::free(ids      );
 
@@ -318,7 +339,7 @@ int main( )
 	rqSetDisplayGamma  ( 1.45f );
 
 	// Renderer
-	rqSetRendererSample ( 128 );
+	rqSetRendererSample ( 1024 );
 
 	rqInitialize ( );
 	rqRender     ( );
@@ -331,7 +352,7 @@ int main( )
 #endif
 
 
-// Load OBJ File
+// Loading .obj File & Texture Mapping
 #ifdef TUTORIAL06
 int main( )
 {
@@ -351,16 +372,35 @@ int main( )
 	rqSetCameraPosition  ( camera_id, 4, 4, 4 );
 	rqSetCameraTarget    ( camera_id, -0.66,0.91,-0.31 );
 
+	// Texture
+	const auto w = 256;
+	const auto h = 256;
+	const auto tile = 16;
+	const auto image_id = rqAddImage();
+	rqSetImageName( image_id, "checker.png" );
+	rqCreateImage( image_id, w, h );
+	for( auto v = 0; v < h; ++v )
+	{
+		for( auto u = 0; u < w; ++u )
+		{
+			if( ((u/tile)%2)^((v/tile)%2) )
+				rqSetImageColor(image_id, u,v,0,0,0);
+			else
+				rqSetImageColor(image_id, u,v,1,1,1);
+		}
+	}
+
 	// Shader
 	auto shader_id = rqAddShader();
-	rqSetShaderName    ( shader_id, "teapot" );
-	rqSetShaderTwoSided (shader_id, false );
+	rqSetShaderName     ( shader_id, "teapot" );
+	rqSetShaderTwoSided ( shader_id, false    );
 
 	// Layer
 	auto layer0_id = rqAddLayer( shader_id );
-	rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementAlbedo   , 1,0.5,0.5 );
-	rqSetLayerColor ( shader_id, layer0_id, SideBoth , ElementRoughness, 1,1,1 );
-	rqSetLayerColor ( shader_id, layer0_id, SideInner, ElementIOR      , 5,5,5 );
+	rqSetLayerColor ( shader_id, layer0_id, SideOuter, ElementAlbedo   , 0.9,0.9,0.9 );
+	rqSetLayerImage ( shader_id, layer0_id, SideOuter, ElementAlbedo   , "checker.png" );
+	rqSetLayerColor ( shader_id, layer0_id, SideBoth , ElementRoughness, 1, 1, 1   );
+	rqSetLayerColor ( shader_id, layer0_id, SideInner, ElementIOR      , 8, 8, 8   );
 
 	// Object
 	auto object_id = rqAddObject( );
@@ -391,8 +431,116 @@ int main( )
 #endif
 
 
+// Hair Shading
+#ifdef TUTORIAL07
+int main( )
+{
+	
+	rqStartup( );
 
-// Code to Build Your Own Software
+	// Camera
+	auto camera_id = rqAddCamera( );
+	rqSetCameraSample      ( camera_id, 31 ); // AA samples can be an arbitrary number
+	//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
+	rqSetCameraResolution  ( camera_id, 512, 512 );
+	rqSetCameraProjection  ( camera_id, ProjectionPerspective );
+	rqSetCameraAngleMeasure( camera_id, AngleMeasureVertical  );
+
+	// Camera Pose - Shutter Open
+	rqSetCameraTime     ( camera_id,  0.0f );
+	rqSetCameraFOV      ( camera_id, 30.0f );
+	rqSetCameraBokeh    ( camera_id,  0.0f );
+	rqSetCameraPosition ( camera_id, 2, 1, -2 );
+	rqSetCameraTarget   ( camera_id, 0, 0,  0 );
+	rqSetCameraUpVector ( camera_id, 0, 1,  0 );
+
+	// Camera Pose - Shutter Close
+	rqSetCameraTime     ( camera_id,  1.0f );
+	rqSetCameraFOV      ( camera_id, 30.0f );
+	rqSetCameraBokeh    ( camera_id,  0.0f );
+	rqSetCameraPosition ( camera_id, 2, 1, -2);
+	rqSetCameraTarget   ( camera_id, 0, 0,  0 );
+	rqSetCameraUpVector ( camera_id, 0, 1,  0 );
+
+	// Shader
+	auto shader_id = rqAddShader();
+	auto layer_id  = rqAddLayer( shader_id );
+	rqSetLayerColor ( shader_id, layer_id, SideOuter, ElementAlbedo   , 1.0f, 1.0f, 1.0f ); // Reflection
+	rqSetLayerColor ( shader_id, layer_id, SideInner, ElementAlbedo   , 0.9f, 0.8f, 0.7f ); // Transmittance
+	rqSetLayerColor ( shader_id, layer_id, SideBoth , ElementRoughness, 0.2f, 0.4f, 0.6f ); // for R, TT, TRT
+	rqSetLayerColor ( shader_id, layer_id, SideBoth , ElementIOR      , 1.5f, 1.5f, 1.5f ); // IOR
+
+	// Object
+	const auto S = 8;  // Num Segments
+	const auto W = 48;
+	const auto H = 48;
+	const auto N = W*H; // Num Strands
+
+	float        *positions = (float       *)std::malloc( N *  S    * 3 * sizeof(float)       );
+	float        *radii     = (float       *)std::malloc( N *  S    * 1 * sizeof(float)       );
+	unsigned int *ids       = (unsigned int*)std::malloc( N * (S-1) * 1 * sizeof(unsigned int));
+
+	auto object_id = rqAddObject( );
+	rqSetObjectShader( object_id, AtomCylinder, shader_id );
+
+	auto n  = 0;
+	auto id = 0;
+	for(auto v = 0; v < H; ++v )
+	{
+		for(auto u = 0; u < W; ++u )
+		{
+			for(auto s = 0; s < S; ++s)
+			{
+				positions[ (S*n + s)*3+0 ] = (u+rand()/(float)RAND_MAX)/W - 0.5;
+				positions[ (S*n + s)*3+1 ] = ((s+0.5)/S - 0.5) * 1.2;
+				positions[ (S*n + s)*3+2 ] = (v+rand()/(float)RAND_MAX)/H - 0.5;
+				radii    [  S*n + s      ] = 0.004 * (s+0.5)/S;
+			}
+			for(auto s = 0; s < S-1; ++s)
+			{
+				ids[ id ] = S*n + s;
+				++id;
+			}
+			++n;
+		}
+	}
+
+	rqAddVertexData ( object_id, AtomCylinder, "position", N*S, 3, positions );
+	rqAddVertexData ( object_id, AtomCylinder, "radius"  , N*S, 1, radii     );
+	rqAddPrimitives ( object_id, AtomCylinder, N*(S-1), ids);
+	
+	std::free(positions);
+	std::free(radii    );
+	std::free(ids      );
+
+
+	// Parallel Light
+	auto light_id = rqAddParallelLight();
+	rqSetParallelLightColor    ( light_id, 1,1,1);
+	rqSetParallelLightDirection( light_id, 1,0,1);
+
+	// Sky Light
+	rqSetSkyLightColor (0.2,0.2,0.2);
+
+	// Display
+	rqSetPreviewWindow ( true );
+	rqSetDisplayGamma  ( 1.45f );
+
+	// Renderer
+	rqSetRendererSample ( 256 );
+	rqSetRendererBounce ( 4   );
+
+	rqInitialize ( );
+	rqRender     ( );
+	rqFinalize   ( );
+	rqShutdown   ( );
+
+	return 0;
+}
+#endif
+
+
+// Instancing and Final Gathering
 #ifdef TUTORIAL08
 int main( )
 {
@@ -458,12 +606,11 @@ int main( )
 	// Shader 0 
 	{
 		auto layer_id0 = rqAddLayer( shader_id0 );
-		rqSetLayerColor ( shader_id0, layer_id0, SideInner, ElementAlbedo   , 0.4f, 0.4f, 0.9f );
-		rqSetLayerColor ( shader_id0, layer_id0, SideOuter, ElementAlbedo   , 0.9f, 0.9f, 0.9f );
+		rqSetLayerColor ( shader_id0, layer_id0, SideOuter, ElementAlbedo   , 0.7f, 0.7f, 0.7f );
+		rqSetLayerColor ( shader_id0, layer_id0, SideInner, ElementAlbedo   , 0.2f, 0.2f, 0.2f );
 		rqSetLayerColor ( shader_id0, layer_id0, SideBoth , ElementRoughness, 1.0f, 1.0f, 1.0f );
-		rqSetLayerColor ( shader_id0, layer_id0, SideOuter, ElementIOR      , 1,1,1 );
-		rqSetLayerColor ( shader_id0, layer_id0, SideInner, ElementIOR      , 500, 500, 500 );
-		//rqSetShaderTwoSided( shader_id0, true );
+		rqSetLayerColor ( shader_id0, layer_id0, SideInner, ElementIOR      , 100, 100, 100 );
+		rqSetShaderTwoSided( shader_id0, true );
 	}
 
 	// Shader 1
@@ -471,32 +618,14 @@ int main( )
 		auto layer_id = rqAddLayer( shader_id1 );
 		rqSetLayerColor ( shader_id1, layer_id, SideBoth , ElementAlbedo   , 1,1,1 );
 		rqSetLayerColor ( shader_id1, layer_id, SideBoth , ElementRoughness, 0,0,0 );
-		rqSetLayerColor ( shader_id1, layer_id, SideInner, ElementIOR      , 2,2,2 );
-	}
-	{
-		auto layer_id = rqAddLayer( shader_id1 );
-		rqSetLayerColor ( shader_id1, layer_id, SideOuter, ElementAlbedo   , 0.0f, 0.0f, 0.0f );
-		rqSetLayerColor ( shader_id1, layer_id, SideBoth , ElementNormal   , 1.0f, 1.0f, 1.0f );
-		rqSetLayerFlake ( shader_id1, layer_id, SideBoth , ElementAlbedo   , 0.9f, 0.6f, 0.3f, 0.005, 0.004, 0.1 );
-		rqSetLayerFlake ( shader_id1, layer_id, SideBoth , ElementNormal   , 0.9f, 0.9f, 0.9f, 0.005, 0.004, 0.1 );
-		rqSetLayerColor ( shader_id1, layer_id, SideBoth , ElementRoughness, 0.1,0.1,0.1 );
-		rqSetLayerColor ( shader_id1, layer_id, SideInner, ElementIOR      , 500, 500, 500 );
+		rqSetLayerColor ( shader_id1, layer_id, SideInner, ElementIOR      , 1.33,1.33,1.33 );
 	}
 
-
-	// Shader 2
-	{
-		auto layer_id = rqAddLayer( shader_id2 );
-		rqSetLayerColor ( shader_id2, layer_id, SideBoth, ElementAlbedo   , 1.0f, 1.0f, 1.0f );
-		rqSetLayerColor ( shader_id2, layer_id, SideBoth, ElementRoughness, 1.0f, 1.0f, 1.0f );
-		rqSetLayerColor ( shader_id2, layer_id, SideBoth, ElementIOR      , 1.5f, 1.5f, 1.5f );
-	}
 
 	// Smoothing ( to create vertex normals and tangents )
 	{
 		rqSetShaderSmoothAngle( shader_id0, -1 );
 		rqSetShaderSmoothAngle( shader_id1, -1 );
-		rqSetShaderSmoothAngle( shader_id2, -1 );
 	}
 
 
@@ -508,7 +637,7 @@ int main( )
 		rqSetObjectName( instanced_object_id, "particles" );
 		{
 			float        positions[ ] = { 0, 0,  0 };
-			float        radii    [ ] = { 0.3 };
+			float        radii    [ ] = { 0.2 };
 			unsigned int ids      [ ] = { 0   };
 			rqSetObjectShader( instanced_object_id, AtomParticle, shader_id1  );
 			rqAddVertexData  ( instanced_object_id, AtomParticle, "position", 1, 3, positions );
@@ -576,23 +705,6 @@ int main( )
 			rqSetObjectShader( object_id, AtomTetragon, shader_id0 );
 			rqAddPrimitives  ( object_id, AtomTetragon, 5, vertex_ids );
 		}
-
-		
-		// Cylinder (Ribbon) Example
-		{
-			// xyzxyz...
-			float        reference[ ] = { -0.8,  1.0, 0.0,    -0.4,  1.0, 0.0,   0,  1.0, 0.0,   0.4,  1.0,  0.0,    0.8,   1.0, 0.0 };
-			float        offset0  [ ] = {  0.0, +0.1, 0.0,     0.0, -0.1, 0.0,   0, +0.1, 0.0,   0.0, -0.1,  0.0,    0.0,  +0.1, 0.0 };
-			float        offset1  [ ] = {  0.0, -0.1, 0.0,     0.0, +0.1, 0.0,   0, -0.1, 0.0,   0.0, +0.1,  0.0,    0.0,  -0.1, 0.0 };
-			float        radii    [ ] = { 0.01, 0.01, 0.01, 0.01, 0.01 };
-			unsigned int ids      [ ] = { 0, 1, 2, 3  };
-			rqSetObjectShader( object_id, AtomCylinder, shader_id2 );
-			rqAddVertexData  ( object_id, AtomCylinder, "position", 5, 3, reference );
-			rqAddVertexData  ( object_id, AtomCylinder, "motion"  , 5, 3, offset0   );
-			rqAddVertexData  ( object_id, AtomCylinder, "motion"  , 5, 3, offset1   );
-			rqAddVertexData  ( object_id, AtomCylinder, "radius"  , 5, 1, radii     );
-			rqAddPrimitives  ( object_id, AtomCylinder, 4, ids);
-		}
 		
 	}
 
@@ -658,9 +770,9 @@ int main( )
 	////////////////////////
 	rqSetRendererClamp     ( 1000, 1000, 1000);
 	rqSetRendererSample    ( 256 );
-	rqSetRendererBounce    ( 2 );
-	rqSetRendererResolution( 0 ); // Turn Off FG
-	rqSetRendererRadius    ( 0 ); // Turn off Caustics Photon
+	rqSetRendererBounce    ( 1 );
+	rqSetRendererResolution( 0.01 ); // Turn Off FG
+	rqSetRendererRadius    ( 0.05 ); // Turn off Caustics Photon
 
 	rqInitialize ( );
 	rqRender     ( );
@@ -673,7 +785,6 @@ int main( )
 
 }
 #endif
-
 
 
 
@@ -693,7 +804,7 @@ int main( int argc, char *argv[ ] )
 #endif
 
 
-#ifdef TUTORIAL10 // Turntable
+#ifdef TUTORIAL10 // Turn Table
 int main( int argc, char *argv[ ] )
 {
 
