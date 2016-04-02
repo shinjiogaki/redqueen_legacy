@@ -3,14 +3,14 @@
 
 // Uncomment your favorite one
 
-#define TUTORIAL01 // Sphere with Parallel Light
+//#define TUTORIAL01 // Sphere with Parallel Light
 //#define TUTORIAL02 // Sphere with Sky      Light
 //#define TUTORIAL03 // Sphere with Geometry Light
 //#define TUTORIAL04 // Sphere with Flake Shader
 //#define TUTORIAL05 // Particles with Motion Blur
 //#define TUTORIAL06 // Loading .obj File & Texture Mapping
 //#define TUTORIAL07 // Hair Shading
-//#define TUTORIAL08 // Instancing and Final Gathering
+#define TUTORIAL08 // Instancing & Final Gathering
 //#define TUTORIAL09 // redqueen.exe
 //#define TUTORIAL10 // Turn Table Animation
 
@@ -597,7 +597,6 @@ int main( )
 	////////////////////////
 	auto shader_id0 = rqAddShader( ); rqSetShaderName ( shader_id0, "wall" );
 	auto shader_id1 = rqAddShader( ); rqSetShaderName ( shader_id1, "ball" );
-	auto shader_id2 = rqAddShader( ); rqSetShaderName ( shader_id2, "wire" );
 	
 	// Matrix for Color and UV
 	float color_matrix[4][4] = { 1,0,0,0,   0,1,0,0,   0,0,1,0,   0,0,0,1 };	
@@ -717,9 +716,9 @@ int main( )
 		rqSetPointLightPosition  ( point_light_id, 0.0,  1.5, 0.0 );
 		rqSetPointLightColor     ( point_light_id, 1.0,  1.0, 1.0 );
 		rqSetPointLightDirection ( point_light_id, 0.5, -1.0, 0.0 );
-		rqSetPointLightOuterAngle( point_light_id, 90 );
-		rqSetPointLightInnerAngle( point_light_id, 60 );
-		rqSetPointLightBlur      ( point_light_id, 0.1 );
+		rqSetPointLightOuterAngle( point_light_id, 30 );
+		rqSetPointLightInnerAngle( point_light_id, 25 );
+		rqSetPointLightBlur      ( point_light_id, 0 );
 		rqSetPointLightSample    ( point_light_id, 256 );
 		rqSetPointLightPhoton    ( point_light_id, 1000000 );
 	}
@@ -729,9 +728,9 @@ int main( )
 		rqSetPointLightPosition  ( point_light_id,  0.0,  1.5, 0.0 );
 		rqSetPointLightColor     ( point_light_id,  1.0,  1.0, 1.0 );
 		rqSetPointLightDirection ( point_light_id, -0.5, -1.0, 0.0 );
-		rqSetPointLightOuterAngle( point_light_id,  90 );
-		rqSetPointLightInnerAngle( point_light_id,  60 );
-		rqSetPointLightBlur      ( point_light_id,  0.1 );
+		rqSetPointLightOuterAngle( point_light_id,  30 );
+		rqSetPointLightInnerAngle( point_light_id,  25 );
+		rqSetPointLightBlur      ( point_light_id,  0 );
 		rqSetPointLightSample    ( point_light_id,  256 );
 		rqSetPointLightPhoton    ( point_light_id, 1000000 );
 	}
@@ -747,9 +746,6 @@ int main( )
 		rqSetSkyLightNorth  ( 0, 0, -1 );
 		rqSetSkyLightSample ( 0 );
 		rqSetSkyLightPhoton ( 1000000 );
-		// From sIBL Library
-		//rqSetSkyLightImage ( "d:\\Redqueen\\Model\\Materials\\light\\image.hdr" );
-		//rqSetSkyLightImage ( "BasketballCourt_3k.hdr" );
 		
 		// Light AOVs
 		auto aov_id = rqAddSkyLightAOV ( );
