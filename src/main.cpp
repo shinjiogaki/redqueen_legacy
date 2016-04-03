@@ -9,8 +9,8 @@
 //#define TUTORIAL04 // Sphere with Flake Shader
 //#define TUTORIAL05 // Particles with Motion Blur
 //#define TUTORIAL06 // Loading .obj File & Texture Mapping
-//#define TUTORIAL07 // Hair Shading
-#define TUTORIAL08 // Instancing & Final Gathering
+#define TUTORIAL07 // Hair Shading
+//#define TUTORIAL08 // Instancing & Final Gathering
 //#define TUTORIAL09 // redqueen.exe
 //#define TUTORIAL10 // Turn Table Animation
 
@@ -33,10 +33,10 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraTime      ( camera_id, ShutterOpen );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
-	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
@@ -84,10 +84,10 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraTime      ( camera_id,  ShutterOpen );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
-	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
@@ -138,10 +138,10 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraTime      ( camera_id, ShutterOpen );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, 4 );
-	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, 4 );
 
@@ -209,10 +209,10 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraTime      ( camera_id, ShutterOpen ); 
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
-	rqSetCameraTime      ( camera_id,  1.0f );  // Shutter Close
+	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
@@ -277,10 +277,10 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 43 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraTime      ( camera_id, ShutterOpen );
 	rqSetCameraFOV       ( camera_id, 40.0f );
 	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
-	rqSetCameraTime      ( camera_id,  1.0f ); // Shutter Close
+	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 40.0f );
 	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
 
@@ -292,7 +292,6 @@ int main( )
 	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *motions0  = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *motions1  = (float*)       std::malloc( N * 3 * sizeof(float)       );
-	float        *motions2  = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
 	unsigned int *ids       = (unsigned int*)std::malloc( N * 1 * sizeof(unsigned int));
 
@@ -307,9 +306,6 @@ int main( )
 		motions1 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
 		motions1 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
 		motions1 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions2 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions2 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions2 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
 
 		radii[i] = 0.05f;
 		ids  [i] = i;
@@ -318,14 +314,12 @@ int main( )
 	rqAddVertexData ( object_id, AtomParticle, "position", N, 3, positions );
 	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions0  );
 	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions1  );
-	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions2  );
 	rqAddVertexData ( object_id, AtomParticle, "radius"  , N, 1, radii     );
 	rqAddPrimitives ( object_id, AtomParticle, N, ids );
 	
 	std::free(positions);
 	std::free(motions0 );
 	std::free(motions1 );
-	std::free(motions2 );
 	std::free(radii    );
 	std::free(ids      );
 
@@ -363,11 +357,11 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id,  0.0f ); // Shutter Open
+	rqSetCameraTime      ( camera_id, ShutterOpen );
 	rqSetCameraFOV       ( camera_id, 30.0f );
 	rqSetCameraPosition  ( camera_id, 4, 4, 4 );
 	rqSetCameraTarget    ( camera_id, -0.66,0.91,-0.31 );
-	rqSetCameraTime      ( camera_id,  1.0f );  // Shutter Close
+	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 30.0f );
 	rqSetCameraPosition  ( camera_id, 4, 4, 4 );
 	rqSetCameraTarget    ( camera_id, -0.66,0.91,-0.31 );
@@ -441,27 +435,27 @@ int main( )
 	// Camera
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample      ( camera_id, 31 ); // AA samples can be an arbitrary number
-	//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 	rqSetCameraResolution  ( camera_id, 512, 512 );
 	rqSetCameraProjection  ( camera_id, ProjectionPerspective );
 	rqSetCameraAngleMeasure( camera_id, AngleMeasureVertical  );
-
-	// Camera Pose - Shutter Open
-	rqSetCameraTime     ( camera_id,  0.0f );
+	rqSetCameraTime     ( camera_id, ShutterOpen );
 	rqSetCameraFOV      ( camera_id, 30.0f );
 	rqSetCameraBokeh    ( camera_id,  0.0f );
 	rqSetCameraPosition ( camera_id, 2, 1, -2 );
 	rqSetCameraTarget   ( camera_id, 0, 0,  0 );
 	rqSetCameraUpVector ( camera_id, 0, 1,  0 );
-
-	// Camera Pose - Shutter Close
-	rqSetCameraTime     ( camera_id,  1.0f );
+	rqSetCameraTime     ( camera_id,  ShutterClose );
 	rqSetCameraFOV      ( camera_id, 30.0f );
 	rqSetCameraBokeh    ( camera_id,  0.0f );
 	rqSetCameraPosition ( camera_id, 2, 1, -2);
 	rqSetCameraTarget   ( camera_id, 0, 0,  0 );
 	rqSetCameraUpVector ( camera_id, 0, 1,  0 );
 
+	// AOV
+	auto aov_id = rqAddCameraAOV( camera_id );
+	rqSetCameraAOVName     ( camera_id, aov_id, "parameter.png" );
+	rqSetCameraAOVUserData ( camera_id, aov_id, "parameter" );
+	
 	// Shader
 	auto shader_id = rqAddShader();
 	auto layer_id  = rqAddLayer( shader_id );
@@ -472,9 +466,10 @@ int main( )
 
 	// Object
 	const auto S = 8;  // Num Segments
-	const auto W = 48;
-	const auto H = 48;
+	const auto W = 64;
+	const auto H = 64;
 	const auto N = W*H; // Num Strands
+
 
 	float        *positions = (float       *)std::malloc( N *  S    * 3 * sizeof(float)       );
 	float        *radii     = (float       *)std::malloc( N *  S    * 1 * sizeof(float)       );
@@ -562,16 +557,14 @@ int main( )
 		rqSetCameraProjection  ( camera_id, ProjectionPerspective );
 		rqSetCameraAngleMeasure( camera_id, AngleMeasureVertical  );
 
-		// Camera Pose - Shutter Open
-		rqSetCameraTime     ( camera_id,  0.0f );
+		rqSetCameraTime     ( camera_id, ShutterOpen );
 		rqSetCameraFOV      ( camera_id, 35.0f );
 		rqSetCameraBokeh    ( camera_id,  0.4f );
 		rqSetCameraPosition ( camera_id, 0, 1, -4 );
 		rqSetCameraTarget   ( camera_id, 0, 1,  0 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
 
-		// Camera Pose - Shutter Close
-		rqSetCameraTime     ( camera_id,  1.0f );
+		rqSetCameraTime     ( camera_id, ShutterClose );
 		rqSetCameraFOV      ( camera_id, 35.0f );
 		rqSetCameraBokeh    ( camera_id,  0.4f );
 		rqSetCameraPosition ( camera_id, 0, 1, -4 );
