@@ -9,8 +9,8 @@
 //#define TUTORIAL04 // Sphere with Flake Shader
 //#define TUTORIAL05 // Particles with Motion Blur
 //#define TUTORIAL06 // Loading .obj File & Texture Mapping
-#define TUTORIAL07 // Hair Shading
-//#define TUTORIAL08 // Instancing & Final Gathering
+//#define TUTORIAL07 // Hair Shading
+#define TUTORIAL08 // Instancing & Final Gathering
 //#define TUTORIAL09 // redqueen.exe
 //#define TUTORIAL10 // Turn Table Animation
 
@@ -707,9 +707,9 @@ int main( )
 	{
 		auto point_light_id = rqAddPointLight( );
 		rqSetPointLightPosition  ( point_light_id, 0.0,  1.5, 0.0 );
-		rqSetPointLightColor     ( point_light_id, 1.0,  1.0, 1.0 );
+		rqSetPointLightColor     ( point_light_id, 1.0, 0.5, 0.5 );
 		rqSetPointLightDirection ( point_light_id, 0.5, -1.0, 0.0 );
-		rqSetPointLightOuterAngle( point_light_id, 30 );
+		rqSetPointLightOuterAngle( point_light_id, 180 );
 		rqSetPointLightInnerAngle( point_light_id, 25 );
 		rqSetPointLightBlur      ( point_light_id, 0 );
 		rqSetPointLightSample    ( point_light_id, 256 );
@@ -719,9 +719,9 @@ int main( )
 	{
 		auto point_light_id = rqAddPointLight( );
 		rqSetPointLightPosition  ( point_light_id,  0.0,  1.5, 0.0 );
-		rqSetPointLightColor     ( point_light_id,  1.0,  1.0, 1.0 );
+		rqSetPointLightColor     ( point_light_id,  0.5,  1.0, 0.50 );
 		rqSetPointLightDirection ( point_light_id, -0.5, -1.0, 0.0 );
-		rqSetPointLightOuterAngle( point_light_id,  30 );
+		rqSetPointLightOuterAngle( point_light_id,  180 );
 		rqSetPointLightInnerAngle( point_light_id,  25 );
 		rqSetPointLightBlur      ( point_light_id,  0 );
 		rqSetPointLightSample    ( point_light_id,  256 );
@@ -734,7 +734,7 @@ int main( )
 	// Skylight
 	////////////////////////
 	{
-		rqSetSkyLightColor  ( 1, 1,  1 );
+		rqSetSkyLightColor  ( 0, 0, 0 );
 		rqSetSkyLightZenith ( 0, 1,  0 );
 		rqSetSkyLightNorth  ( 0, 0, -1 );
 		rqSetSkyLightSample ( 0 );
@@ -760,8 +760,8 @@ int main( )
 	rqSetRendererClamp     ( 1000, 1000, 1000);
 	rqSetRendererSample    ( 256 );
 	rqSetRendererBounce    ( 1 );
-	rqSetRendererResolution( 0.01 ); // Turn Off FG
-	rqSetRendererRadius    ( 0.05 ); // Turn off Caustics Photon
+	rqSetRendererResolution( 0.05 );
+	rqSetRendererRadius    ( 0.05 );
 
 	rqInitialize ( );
 	rqRender     ( );
