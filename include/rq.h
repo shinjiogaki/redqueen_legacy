@@ -268,7 +268,8 @@ API void rqSetShaderGeometryLight( const int shader_id, const int  side, const b
 // Surface Shader (The order matters! You have to add layers from top to bottom )
 API int  rqAddLayer      ( const int shader_id );
 API void rqSetLayerColor ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b ); // Set Color or Values
-API void rqSetLayerFlake ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b , const float scale, const float density, const float depth);
+API void rqSetLayerFlake ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b , const float scale, const float density, const float depth );
+API void rqSetLayerStone ( const int shader_id, const int layer_id, const int side, const int element, const float weathering,                       const float scale, const float density, const int   level );
 API void rqSetLayerImage ( const int shader_id, const int layer_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 );
 
 // Volume Shader
@@ -287,12 +288,13 @@ API void rqFinalizeShaders   ( );
 // Geometry ( Multi-Level Instancing is supported.)
 //
 // Vertex Data
-// "position" : reserved (Used as Pref when an object has motion data)
-// "motion"   : reserved (Offset from position)
-// "radius"	  : reserved (hair/particle)
-// "normal"	  : reserved
-// "tangent"  : reserved
-// "uv"		  : reserved (texture coord, you can add multiple times)
+// "position"  : reserved (Used as Pref when an object has motion data)
+// "motion"    : reserved (Offset from position)
+// "radius"	   : reserved (hair/particle)
+// "normal"	   : reserved
+// "tangent"   : reserved
+// "uv"		   : reserved (texture coord, you can add multiple times)
+// "parameter" : reserved (hair root:0 hair tip:1)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 API int  rqAddObject      ( ); // Returns object_id

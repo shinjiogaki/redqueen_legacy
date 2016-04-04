@@ -6,11 +6,11 @@
 //#define TUTORIAL01 // Sphere with Parallel Light
 //#define TUTORIAL02 // Sphere with Sky      Light
 //#define TUTORIAL03 // Sphere with Geometry Light
-//#define TUTORIAL04 // Sphere with Flake Shader
+#define TUTORIAL04 // Sphere with Flake & Stone Shader
 //#define TUTORIAL05 // Particles with Motion Blur
 //#define TUTORIAL06 // Loading .obj File & Texture Mapping
 //#define TUTORIAL07 // Hair Shading
-#define TUTORIAL08 // Instancing & Final Gathering
+//#define TUTORIAL08 // Instancing & Final Gathering
 //#define TUTORIAL09 // redqueen.exe
 //#define TUTORIAL10 // Turn Table Animation
 
@@ -198,7 +198,7 @@ int main( )
 #endif
 
 
-// Sphere with Flake Shader
+// Sphere with Flake & Stone Shader
 #ifdef TUTORIAL04
 int main( )
 {
@@ -220,18 +220,19 @@ int main( )
 	// Shader
 	auto shader_id = rqAddShader();
 
-	auto layer0_id = rqAddLayer( shader_id );
-	rqSetLayerColor ( shader_id, layer0_id, SideBoth , ElementAlbedo   , 1,1,1 );
-	rqSetLayerColor ( shader_id, layer0_id, SideBoth , ElementRoughness, 0,0,0 );
-	rqSetLayerColor ( shader_id, layer0_id, SideInner, ElementIOR      , 2,2,2 );
+	auto layer_id = rqAddLayer( shader_id );
+	rqSetLayerColor ( shader_id, layer_id, SideOuter, ElementAlbedo   , 1.0f, 1.0f, 1.0f );
+	rqSetLayerColor ( shader_id, layer_id, SideBoth , ElementNormal   , 1.0f, 1.0f, 1.0f );
 
-	auto layer1_id = rqAddLayer( shader_id );
-	rqSetLayerColor ( shader_id, layer1_id, SideOuter, ElementAlbedo   , 0.0f, 0.0f, 0.0f );
-	rqSetLayerColor ( shader_id, layer1_id, SideBoth , ElementNormal   , 1.0f, 1.0f, 1.0f );
-	rqSetLayerFlake ( shader_id, layer1_id, SideBoth , ElementAlbedo   , 0.9f, 0.6f, 0.3f, 0.01, 0.01, 0.1 );
-	rqSetLayerFlake ( shader_id, layer1_id, SideBoth , ElementNormal   , 0.9f, 0.9f, 0.9f, 0.01, 0.01, 0.1 );
-	rqSetLayerColor ( shader_id, layer1_id, SideBoth , ElementRoughness, 0.1,0.1,0.1 );
-	rqSetLayerColor ( shader_id, layer1_id, SideInner, ElementIOR      , 500, 500, 500 );
+	// Flake
+	rqSetLayerFlake ( shader_id, layer_id, SideBoth , ElementAlbedo   , 0.7f, 0.6f, 0.3f, 0.01, 0.01, 0 );
+
+	// Stone
+	rqSetLayerImage ( shader_id, layer_id, SideBoth , ElementAlbedo   , "stone.png");
+	rqSetLayerStone ( shader_id, layer_id, SideBoth , ElementAlbedo   , 0.7, 1.0, 0.2, 10 );
+
+	rqSetLayerColor ( shader_id, layer_id, SideBoth , ElementRoughness, 1,1,1 );
+	rqSetLayerColor ( shader_id, layer_id, SideInner, ElementIOR      , 500, 500, 500 );
 
 	// Object
 	auto object_id = rqAddObject( );
