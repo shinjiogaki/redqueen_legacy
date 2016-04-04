@@ -28,7 +28,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Uber Shader (The parameters are automatically interpreted as those of Eugene's model when applied to hair strands)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Procedural Shaders
-![Flake](https://github.com/shinjiogaki/redqueen/blob/master/images/stone.gif)
+![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/stone.png)
 * Multi-Level Instancing (40559990463 triangles in the image below)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/forest.png)
