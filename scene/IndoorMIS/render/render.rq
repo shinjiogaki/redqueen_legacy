@@ -1,0 +1,16 @@
+render
+
+	clamp        4 4 4
+	gamma        2.2
+	exposure     1
+	image_path   ""
+
+	final_gather
+		sample       100
+		ray_depth    16
+		photon_depth 16
+		bounce       2
+		radius       0
+		resolution   0.002
+	end
+end

@@ -1,0 +1,5 @@
+
+object
+	name       "obj"
+	obj        "model\IndoorMIS\geometry\CornellBox-MIS.obj"
+end

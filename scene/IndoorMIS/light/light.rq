@@ -1,0 +1,13 @@
+
+geometry_light
+	photon 1000000
+	sample 100
+end
+
+sky_light
+	image        ""
+	color        0 0 0 0.5 0.5 0.5 1.0
+	north        0 0 1
+	zenith       0 1 0
+end
+

@@ -1,0 +1,24 @@
+camera
+	name       "perspShape"
+	resolution 800 800
+	sample     17
+	projection "perspective"
+	pose
+		position      0 1 4
+		target        0 1 0.5
+		up_vector     0 1 0
+		bokeh         0
+		field_of_view 36
+	end
+	pose
+		position      0 1 4
+		target        0 1 0.5
+		up_vector     0 1 0
+		bokeh         0
+		field_of_view 36
+	end
+	aov
+	image "c:\shinji\redqueen\light.hdr"
+	type "light_path"
+	end
+end
