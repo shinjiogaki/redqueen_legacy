@@ -18,7 +18,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Small Memory Footprint
 * Reasonably Fast
 ![Benchmark](https://github.com/shinjiogaki/redqueen/blob/master/images/rungholt.png)
-* Motion Blur with Consistent Motion
+* Deformation Blur with Consistent Motion
 * Integrators:
   * Unidirectional Path Tracing with MIS for Outdoor Scenes
   * Progressive Final Gathering for Interior Scenes
