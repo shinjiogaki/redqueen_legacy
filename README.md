@@ -18,7 +18,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Small Memory Footprint
 * Reasonably Fast
 ![Benchmark](https://github.com/shinjiogaki/redqueen/blob/master/images/rungholt.png)
-* Motion Blur with Consistent Motion
+* Deformation Blur with Consistent Motion
 * Integrators:
   * Unidirectional Path Tracing with MIS for Outdoor Scenes
   * Progressive Final Gathering for Interior Scenes
@@ -46,3 +46,9 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Fast - make best use of the instruction sets of modern CPUs
 * Robust - never crashes
 * Free - targeting at individuals and small studios
+
+# Publications
+* [An N-ary BVH Child Node Sorting Technique for Occlusion Test](http://jcgt.org/read.html?reload=1)
+* [Ray Tracing of Quadratic Parametric Surface](http://gcoe-mi.jp/english/temp/publish/62e18d4d8cbad1e01f68cebb2e81ac3e.pdf)
+* [Direct Ray Tracing of Phong Tessellation](http://www.jp.square-enix.com/info/library/)
+* [An Empirical Fur Shader](http://www.jp.square-enix.com/info/library/)
