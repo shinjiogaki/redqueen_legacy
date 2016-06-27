@@ -4,7 +4,8 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 
 ###To give a shot:
   
-1. Download and Install Intel Compiler Redistributable Libraries <https://software.intel.com/en-us/articles/redistributables-for-intel-parallel-studio-xe-2016-composer-edition-for-windows>
+1. Download and Install Visual C++ Redistributable for Visual Studio 2015
+ <https://www.microsoft.com/en-us/download/details.aspx?id=48145>
 2. Double click "tutorialxx.exe" in the "bin" folder
 
 ###To create your app:
@@ -29,6 +30,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Per Light AOVs
 * Uber Shader (The parameters are automatically interpreted as those of Eugene's model when applied to hair strands)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
+* Brute-force SSS
 * Three-Dimensional Procedural Shaders using Voronoi Cells
 ![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/stone.png)
 ![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/beauty-20160305-222532.png)
