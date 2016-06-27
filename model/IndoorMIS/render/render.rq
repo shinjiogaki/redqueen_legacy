@@ -1,6 +1,6 @@
 render
 
-	clamp        4 4 4
+	clamp        10000 10000 10000
 	gamma        2.2
 	exposure     1
 	image_path   ""

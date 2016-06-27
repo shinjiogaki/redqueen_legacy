@@ -1,20 +1,11 @@
 
 shader
-	name               "undefined"
+	name "undefined"
 	single_sided
-	surface_shader
-		albedo
-			color 0.85 0.85 0.85
-		end
-		roughness
-			color 1 1 1
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
+	diffuse
+		color 0.85 0.85 0.85
 	end
-	geometry_shader
+	geometry
 		smooth_angle 0
 	end
 end
@@ -22,31 +13,20 @@ end
 shader
 	name "light"
 	virtual_light
-	surface_shader
-		side "outer"
-		emission
-		    color 150 150 150
-		end
+	side "outer"
+	emission
+	    color 150 150 150
 	end
 end
 
 
 shader
 	name "rightwall"
-	single_sided
-	surface_shader
-		albedo
-			color 0.85 0.15 0.15
-		end
-		roughness
-			color 1 1 1
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
+	single_sided	
+	diffuse
+		color 0.85 0.15 0.15
 	end
-	geometry_shader
+	geometry
 		smooth_angle 0
 	end
 end
@@ -55,378 +35,317 @@ end
 shader
 	name "leftwall"
 	single_sided
-	surface_shader
-		albedo
-			color 0.15 0.85 0.15
-		end
-		roughness
-			color 1 1 1
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
+	diffuse
+		color 0.15 0.85 0.15
 	end
-	geometry_shader
+	geometry
 		smooth_angle 0
 	end
 end
 
 shader
-	name               "Sphere1"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.21 0.21 0.21
-		end
+	name "Sphere1"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	roughness
+	    color 0.21 0.21 0.21
+	end
+	volume
+		ior 100
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere2"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.17 0.17 0.17
-		end
+	name "Sphere2"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.17 0.17 0.17
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere3"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.13 0.13 0.13
-		end
+	name "Sphere3"
+
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.13 0.13 0.13
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere4"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.09 0.09 0.09
-		end
+	name "Sphere4"
+	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.09 0.09 0.09
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere5"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.05 0.05 0.05
-		end
+	name "Sphere5"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.05 0.05 0.05
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere6"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.01 0.01 0.01
-		end
+	name "Sphere6"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.01 0.01 0.01
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere7"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.21 0.105 0
-		end
+	name "Sphere7"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.21 0.105 0
+	end
+	geometry
 		smooth_angle 30
 		ignore_vertex_vector 0
 	end
 end
 
 shader
-	name               "Sphere8"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.17 0.085 0
-		end
+	name "Sphere8"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.17 0.085 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere9"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.13 0.065 0
-		end
+	name "Sphere9"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.13 0.065 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere10"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.09 0.045 0
-		end
+	name "Sphere10"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.09 0.045 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere11"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.05 0.025 0.0
-		end
+	name "Sphere11"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.05 0.025 0.0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere12"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.01 0.005 0
-		end
+	name "Sphere12"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.01 0.005 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere13"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.21 0.0525 0
-		end
+	name "Sphere13"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.21 0.0525 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere14"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.17 0.0425 0
-		end
+	name "Sphere14"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.17 0.0425 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere15"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.13 0.0325 0
-		end
+	name "Sphere15"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.13 0.0325 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere16"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.09 0.0225 0
-		end
+	name "Sphere16"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.09 0.0225 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere17"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.05 0.0125 0
-		end
+	name "Sphere17"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.05 0.0125 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere18"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.01 0.0025 0
-		end
+	name "Sphere18"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.01 0.0025 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
@@ -434,244 +353,205 @@ end
 
 
 
-
-
-
 shader
-	name               "Sphere19"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.21 0.02625 0
-		end
+	name "Sphere19"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.21 0.02625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere20"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.17 0.02625 0
-		end
+	name "Sphere20"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.17 0.02625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere21"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.13 0.01625 0
-		end
+	name "Sphere21"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.13 0.01625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere22"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.09 0.01125 0
-		end
+	name "Sphere22"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.09 0.01125 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere23"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.05 0.00625 0
-		end
+	name "Sphere23"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.05 0.00625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere24"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.01 0.00125 0
-		end
+	name "Sphere24"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.01 0.00125 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere25"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.21 0.013125 0
-		end
+	name "Sphere25"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.21 0.013125 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere26"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.17 0.010625 0
-		end
+	name "Sphere26"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.17 0.010625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere27"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.13 0.008125 0
-		end
+	name "Sphere27"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.13 0.008125 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere28"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.09 0.005625 0
-		end
+	name "Sphere28"	
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.09 0.005625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere29"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.05 0.003125 0
-		end
+	name "Sphere29"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.05 0.003125 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end
 end
 
 shader
-	name               "Sphere30"
-	surface_shader
-		albedo
-			color 0.8 0.8 0.8
-		end
-		ior
-			side  "inner"
-			color 100 100 100
-		end
-		roughness
-		    color 0.01 0.000625 0
-		end
+	name "Sphere30"
+	glossy
+		color 0.8 0.8 0.8
 	end
-	geometry_shader
+	volume
+		ior 100
+	end
+	roughness
+	    color 0.01 0.000625 0
+	end
+	geometry
 		ignore_vertex_vector 0
 		smooth_angle 30
 	end

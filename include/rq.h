@@ -29,7 +29,12 @@ static const float ShutterClose = 1.0f;
 // Geometry
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Primitives
+// Class Type
+static const int ClassPrimitive = 0;
+static const int ClassObject    = 1;
+static const int ClassInstance  = 2;
+
+// Atomic Objects (Primitives)
 static const int AtomNull     = 0;
 static const int AtomParticle = 1;
 static const int AtomCylinder = 2;
@@ -48,18 +53,22 @@ static const int InvisibleFromCamera = 2;
 static const int Invisible           = 3;
 
 // Sideness
-static const int SideOuter = 0;
-static const int SideInner = 1;
-static const int SideBoth  = 2;
+static const int SideFace = 1; // front clear_coat tip
+static const int SideBack = 2; // back  base    root
+static const int SideBoth = 3;
 
 
 // Elements
-static const int ElementAlbedo    = 0;
-static const int ElementEmission  = 1;
-static const int ElementIOR       = 2;
-static const int ElementRoughness = 3;
-static const int ElementNormal    = 4;
-static const int ElementJitter    = 5;
+static const int ElementEmission     = 0;
+static const int ElementDiffuse      = 1;
+static const int ElementSpecular     = 2;
+static const int ElementGlossy       = 3;
+static const int ElementRoughness    = 4;
+static const int ElementClearCoat    = 5;
+static const int ElementClearCoatIOR = 6;
+static const int ElementNormal       = 7;
+static const int ElementSSS          = 8;
+static const int NumElements         = 9;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -248,8 +257,7 @@ API void rqGetImageColor( const int image_id, const int u, const int v,       fl
 // Shader
 //
 // Surface Shader
-// The order of adding layers matters! You have to add layers from top to bottom.
-// In order to pass energy to the next layer, you have to set non-zero albedo for both sides.
+// Set non-zero albedo for both sides to compute transmittance.
 // 0 = Roughness     : Specular
 // 0 < Roughness < 1 : Glossy
 //     Roughness = 1 : Diffuse
@@ -266,16 +274,21 @@ API void rqSetShaderTwoSided     ( const int shader_id, const bool two_sided );
 API void rqSetShaderGeometryLight( const int shader_id, const int  side, const bool flag );
 
 // Surface Shader (The order matters! You have to add layers from top to bottom )
-API int  rqAddLayer      ( const int shader_id );
-API void rqSetLayerColor ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b ); // Set Color or Values
-API void rqSetLayerFlake ( const int shader_id, const int layer_id, const int side, const int element, const float r, const float g, const float b , const float scale, const float density, const float depth );
-API void rqSetLayerStone ( const int shader_id, const int layer_id, const int side, const int element, const float weathering,                       const float scale, const float density, const int   level );
-API void rqSetLayerImage ( const int shader_id, const int layer_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 );
+API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b ); // Color
+API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 ); // Texture
+API void rqSetShaderNoise( const int shader_id, const int side, const int element  ); // Uniform Random
+API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D Procedural Flake Shader
+API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level ); // 3D Procedural Stone Shader
+API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value ); // Add Random Color Shift per Primitive/Object/Instance
 
-// Volume Shader
-//API void rqSetTransmittance();
+// Volumetric Properties
+API void rqSetShaderIOR          ( const int shader_id, const float ior );
+API void rqSetShaderDensity      ( const int shader_id, const float density );
+API void rqSetShaderAverageCosine( const int shader_id, const float cosine  );
+API void rqSetShaderParticleColor( const int shader_id, const float r, const float g, const float b );
+API void rqSetShaderTransmittance( const int shader_id, const float r, const float g, const float b );
 
-// Geometry Shader
+// Geometric Properties
 API void rqSetShaderVisibility  ( const int shader_id, const int   visibility   );
 API void rqSetShaderSmoothAngle ( const int shader_id, const float smooth_angle );
 API void rqSetShaderRoundCorner ( const int shader_id, const float round_corner );
