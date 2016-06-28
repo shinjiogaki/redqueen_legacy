@@ -53,8 +53,8 @@ static const int InvisibleFromCamera = 2;
 static const int Invisible           = 3;
 
 // Sideness
-static const int SideFace = 1; // front clear_coat tip
-static const int SideBack = 2; // back  base    root
+static const int SideFace = 1; // front side / also for hair tip
+static const int SideBack = 2; // back  side / also for hair root
 static const int SideBoth = 3;
 
 
