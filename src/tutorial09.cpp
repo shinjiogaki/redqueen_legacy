@@ -17,7 +17,7 @@ int main( )
 	// Camera
 	auto camera_id = rqAddCamera( );
 	{
-		rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
+		rqSetCameraSample      ( camera_id, 17 ); // AA samples can be an arbitrary number
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, ProjectionPerspective );
 		rqSetCameraAngleMeasure( camera_id, AngleMeasureVertical  );
@@ -36,10 +36,10 @@ int main( )
 
 	// Shader
 	auto shader_id = rqAddShader( ); rqSetShaderName ( shader_id, "ball" );
-	rqSetShaderColor ( shader_id, SideFace, ElementDiffuse, 1,1,1 );
+	rqSetShaderColor ( shader_id, SideFace, ElementDiffuse, 0.8,0.8,0.8 );
 	rqSetShaderImage ( shader_id, SideFace, ElementDiffuse, "stone.png");
 	rqSetShaderStone ( shader_id, SideFace, ElementDiffuse, 0.6, 0.1, 0.7, 8 );
-	rqSetShaderIOR   ( shader_id, 100 );
+	rqSetShaderShift ( shader_id, SideFace, ElementDiffuse, ClassInstance, 0.1, 0.1, 0.1 );
 
 
 	// Sphere
@@ -112,11 +112,16 @@ int main( )
 			rqSetInstance( zgroup_object_id, instance_id0, ygroup_object_id, matrix0 );
 			rqSetInstance( zgroup_object_id, instance_id1, ygroup_object_id, matrix1 );
 			rqSetInstance( zgroup_object_id, instance_id2, ygroup_object_id, matrix2 );
-		}		
+		}
 	}
-
+	
 	// Skylight
-	rqSetSkyLightColor  ( 1,1,1 );
+	rqSetSkyLightColor  ( 0.5,0.5,0.5 );
+
+	int id = rqAddPointLight();
+	rqSetPointLightPosition(id, -10 , 5, 10);
+	rqSetPointLightColor   (id, 400,400,400);
+
 		
 	// Display
 	rqSetPreviewWindow ( true );
@@ -124,9 +129,9 @@ int main( )
 
 
 	// Rendering
-	rqSetRendererClamp     ( 1000, 1000, 1000);
-	rqSetRendererSample    ( 256 );
-	rqSetRendererBounce    ( 1 );
+	rqSetRendererClamp  ( 1000, 1000, 1000);
+	rqSetRendererSample ( 256 );
+	rqSetRendererBounce ( 1 );
 
 	rqInitialize ( );
 	rqRender     ( );

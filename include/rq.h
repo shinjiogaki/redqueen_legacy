@@ -30,9 +30,9 @@ static const float ShutterClose = 1.0f;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Class Type
-static const int ClassPrimitive = 0;
+static const int ClassInstance  = 0;
 static const int ClassObject    = 1;
-static const int ClassInstance  = 2;
+static const int ClassPrimitive = 2;
 
 // Atomic Objects (Primitives)
 static const int AtomNull     = 0;
@@ -53,10 +53,11 @@ static const int InvisibleFromCamera = 2;
 static const int Invisible           = 3;
 
 // Sideness
-static const int SideFace = 1; // front side / also for hair tip
-static const int SideBack = 2; // back  side / also for hair root
-static const int SideBoth = 3;
-
+static const int SideFace = 1; // front side
+static const int SideBack = 2; // back  side
+static const int SideBoth = 3; // both  sides
+static const int HairRoot = 1; // hair  root
+static const int HairTip  = 2; // hair  tip
 
 // Elements
 static const int ElementEmission     = 0;
@@ -167,7 +168,6 @@ API void rqFinalizeCameras      ( );
 // Point Light
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddPointLight           ( );
-//API void rqSetPointLightTime       ( const int point_light_id, const float time ); 
 API void rqSetPointLightPosition   ( const int point_light_id, const float x, const float y, const float z );
 API void rqSetPointLightDirection  ( const int point_light_id, const float x, const float y, const float z );
 API void rqSetPointLightColor      ( const int point_light_id, const float r, const float g, const float b );
@@ -187,7 +187,6 @@ API void rqSetPointLightAOVChannel ( const int point_light_id, const int aov_id,
 // Parallel Light
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddParallelLight           ( );
-//API void rqSetParallelLightTime       ( const int parallel_light_id, const float time   ); 
 API void rqSetParallelLightDirection  ( const int parallel_light_id, const float x, const float y, const float z );
 API void rqSetParallelLightColor      ( const int parallel_light_id, const float r, const float g, const float b );
 API void rqSetParallelLightPhoton     ( const int parallel_light_id, const int   photon ); // # of Light Paths
@@ -207,7 +206,6 @@ API void rqFinalizeGaffer   ( );
 // Sky Light
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API void rqSetSkyLightImage      ( const char* name   );
-//API void rqSetSkyLightTime       ( const float time   );
 API void rqSetSkyLightBackdrop   ( const char* name   );
 API void rqSetSkyLightPhoton     ( const int   photon ); // # of Light Paths
 API void rqSetSkyLightSample     ( const int   sample );
@@ -227,7 +225,6 @@ API void rqFinalizeSkyLight   ( );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Geometry Light
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//API void rqSetGeometryLightTime       ( const float time   );
 API void rqSetGeometryLightPhoton        ( const int photon    ); // # of Light Paths
 API void rqSetGeometryLightSample        ( const int sample    );
 API void rqSetGeometryLightShader        ( const int shader_id ); // Mesh Light
@@ -269,17 +266,16 @@ API void rqGetImageColor( const int image_id, const int u, const int v,       fl
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddShader     ( );
 API void rqSetShaderName ( const int shader_id, const char* name );
-//API void rqSetShaderTime ( const int shader_id, const float time );
 API void rqSetShaderTwoSided     ( const int shader_id, const bool two_sided );
 API void rqSetShaderGeometryLight( const int shader_id, const int  side, const bool flag );
 
-// Surface Shader (The order matters! You have to add layers from top to bottom )
+// Surface Properties (The order matters! You have to add layers from top to bottom )
 API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b ); // Color
 API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 ); // Texture
-API void rqSetShaderNoise( const int shader_id, const int side, const int element  ); // Uniform Random
 API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D Procedural Flake Shader
 API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level ); // 3D Procedural Stone Shader
 API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value ); // Add Random Color Shift per Primitive/Object/Instance
+API void rqSetShaderNoise( const int shader_id, const int side, const int element, const float u, const float v ); // For Normal Mapping
 
 // Volumetric Properties
 API void rqSetShaderIOR          ( const int shader_id, const float ior );
@@ -313,7 +309,6 @@ API void rqFinalizeShaders   ( );
 API int  rqAddObject      ( ); // Returns object_id
 API void rqLoadObject     ( const int object_id, const char* name );
 API void rqSetObjectName  ( const int object_id, const char* name );
-//API void rqSetObjectTime  ( const int object_id, const float time );
 API void rqSetObjectMatrix( const int object_id, const float* matrix_4x4 = 0 );
 API void rqSetObjectShader( const int object_id, const int atom, const int shader_id );
 API void rqAddPrimitives  ( const int object_id, const int atom, const int num, const unsigned int* vertex_ids );
@@ -355,7 +350,6 @@ API void rqSetPreviewWindow ( const bool  preview );
 // Utility
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API void rqStartup    ( );
-API void rqSetTime    ( const float time );
 API void rqInitialize ( ); // Initialize everything in an appropriate Order
 API void rqFinalize   ( ); // Finalize   everything in an appropriate Order
 API void rqShutdown   ( );

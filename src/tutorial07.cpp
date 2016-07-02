@@ -38,15 +38,16 @@ int main( )
 	
 	// Shader
 	auto shader_id = rqAddShader();
-	rqSetShaderColor ( shader_id, SideBoth, ElementDiffuse  , 0.2f, 0.2f, 0.2f ); // Reflection
+	rqSetShaderColor ( shader_id, HairRoot, ElementDiffuse  , 0.2f, 0.0f, 0.0f ); // Reflection
+	rqSetShaderColor ( shader_id, HairTip , ElementDiffuse  , 0.0f, 0.2f, 0.2f ); // Reflection
 	rqSetShaderColor ( shader_id, SideBoth, ElementGlossy   , 0.8f, 0.8f, 0.8f ); // Transmittance
 	rqSetShaderColor ( shader_id, SideBoth, ElementRoughness, 0.3f, 0.6f, 0.9f ); // for R, TT, TRT
 	rqSetShaderIOR ( shader_id, 1.5f ); // IOR
 
 	// Object
-	const auto W =  64;
-	const auto H =  64;
-	const auto S =   8; // Num Segments
+	const auto W =  8;
+	const auto H =  8;
+	const auto S =  8; // Num Segments
 	const auto N = W*H; // Num Strands
 
 
@@ -68,7 +69,7 @@ int main( )
 				positions[ (S*n + s)*3+0 ] = (u+rand()/(float)RAND_MAX)/W - 0.5;
 				positions[ (S*n + s)*3+1 ] = ((s+0.5)/S - 0.5) * 1.2;
 				positions[ (S*n + s)*3+2 ] = (v+rand()/(float)RAND_MAX)/H - 0.5;
-				radii    [  S*n + s      ] = 0.002 * (s+0.5)/S;
+				radii    [  S*n + s      ] = 0.02 * (s+0.5)/S;
 			}
 			for(auto s = 0; s < S-1; ++s)
 			{
@@ -94,11 +95,11 @@ int main( )
 	rqSetParallelLightDirection( light_id, 1,0,1);
 
 	// Sky Light
-	rqSetSkyLightColor (0.2,0.2,0.2);
+	rqSetSkyLightColor (0.5,0.5,0.5);
 
 	// Display
 	rqSetPreviewWindow ( true );
-	rqSetDisplayGamma  ( 1.45f );
+	rqSetDisplayGamma  ( 1.0f );
 
 	// Renderer
 	rqSetRendererSample ( 256 );

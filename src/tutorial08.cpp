@@ -74,6 +74,7 @@ int main( )
 	// Shader 1
 	{
 		rqSetShaderColor ( shader_id1, SideBoth, ElementSpecular, 1,1,1 );
+		//rqSetShaderNoise ( shader_id1, SideBoth, ElementNormal  , 0.01, 0.01  );
 		rqSetShaderIOR   ( shader_id1, 1.5 );
 		rqSetShaderTwoSided( shader_id1, true );
 	}
@@ -174,8 +175,8 @@ int main( )
 		rqSetPointLightPosition  ( point_light_id, 0.0,  1.5, 0.0 );
 		rqSetPointLightColor     ( point_light_id, 1.0, 0.5, 0.0 );
 		rqSetPointLightDirection ( point_light_id, 0.5, -1.0, 0.0 );
-		//rqSetPointLightOuterAngle( point_light_id, 180 );
-		//rqSetPointLightInnerAngle( point_light_id, 25 );
+		rqSetPointLightOuterAngle( point_light_id, 60 );
+		rqSetPointLightInnerAngle( point_light_id, 25 );
 		rqSetPointLightBlur      ( point_light_id, 0 );
 		rqSetPointLightSample    ( point_light_id, 256 );
 		rqSetPointLightPhoton    ( point_light_id, 1000000 );
@@ -186,8 +187,8 @@ int main( )
 		rqSetPointLightPosition  ( point_light_id,  0.0,  1.5, 0.0 );
 		rqSetPointLightColor     ( point_light_id,  0.0,  0.5, 1.0 );
 		rqSetPointLightDirection ( point_light_id, -0.5, -1.0, 0.0 );
-		//rqSetPointLightOuterAngle( point_light_id,  180 );
-		//rqSetPointLightInnerAngle( point_light_id,  25 );
+		rqSetPointLightOuterAngle( point_light_id,  60 );
+		rqSetPointLightInnerAngle( point_light_id,  25 );
 		rqSetPointLightBlur      ( point_light_id,  0 );
 		rqSetPointLightSample    ( point_light_id,  256 );
 		rqSetPointLightPhoton    ( point_light_id, 1000000 );
@@ -216,7 +217,7 @@ int main( )
 	// Display
 	////////////////////////
 	rqSetPreviewWindow ( true );
-	rqSetDisplayGamma  ( 1.45f );
+	rqSetDisplayGamma  ( 2.2f );
 
 
 	////////////////////////
@@ -224,8 +225,9 @@ int main( )
 	////////////////////////
 	rqSetRendererClamp     ( 1000, 1000, 1000);
 	rqSetRendererSample    ( 256 );
-	rqSetRendererBounce    ( 2 );
+	rqSetRendererBounce    ( 1 );
 	rqSetRendererResolution( 0.001 );
+	rqSetRendererRadius    ( 0.0f );
 
 	rqInitialize ( );
 	rqRender     ( );
