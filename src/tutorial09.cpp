@@ -39,7 +39,7 @@ int main( )
 	rqSetShaderColor ( shader_id, SideFace, ElementDiffuse, 0.8,0.8,0.8 );
 	rqSetShaderImage ( shader_id, SideFace, ElementDiffuse, "stone.png");
 	rqSetShaderStone ( shader_id, SideFace, ElementDiffuse, 0.6, 0.1, 0.7, 8 );
-	rqSetShaderShift ( shader_id, SideFace, ElementDiffuse, ClassInstance, 0.1, 0.1, 0.1 );
+	rqSetShaderShift ( shader_id, SideFace, ElementDiffuse, ClassInstance, 0.3, 0.1, 0.1 );
 
 
 	// Sphere

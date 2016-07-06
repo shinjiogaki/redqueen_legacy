@@ -53,11 +53,11 @@ static const int InvisibleFromCamera = 2;
 static const int Invisible           = 3;
 
 // Sideness
-static const int SideFace = 1; // front side
-static const int SideBack = 2; // back  side
-static const int SideBoth = 3; // both  sides
-static const int HairRoot = 1; // hair  root
-static const int HairTip  = 2; // hair  tip
+static const int SideFace = 1; // Front side
+static const int SideBack = 2; // Back  side
+static const int SideBoth = 3; // Both  sides
+static const int HairRoot = 1; // Hair  root
+static const int HairTip  = 2; // Hair  tip
 
 // Elements
 static const int ElementEmission     = 0;
@@ -80,10 +80,10 @@ static const int NumElements         = 9;
 static const unsigned int ChannelBeauty    = 1 <<  0;
 static const unsigned int ChannelLightPath = 1 <<  1; // Reserved
 static const unsigned int ChannelUserData  = 1 <<  2;
-static const unsigned int ChannelDR        = 1 <<  3; // Diffuse Reflection
-static const unsigned int ChannelDRColor   = 1 <<  4; // Diffuse Reflection Texture
-static const unsigned int ChannelDT        = 1 <<  5; // Diffuse Transmittance
-static const unsigned int ChannelDTColor   = 1 <<  6; // Diffuse Transmittance Texture
+static const unsigned int ChannelDR        = 1 <<  3; // Diffuse reflection
+static const unsigned int ChannelDRColor   = 1 <<  4; // Diffuse reflection texture
+static const unsigned int ChannelDT        = 1 <<  5; // Diffuse transmittance
+static const unsigned int ChannelDTColor   = 1 <<  6; // Diffuse transmittance texture
 static const unsigned int ChannelGR        = 1 <<  7; // Glossy
 static const unsigned int ChannelGRColor   = 1 <<  8;
 static const unsigned int ChannelGT        = 1 <<  9;
@@ -128,7 +128,7 @@ static const int AddressingClamp = 1;
 
 // Sampler
 static const int PixelSamplerNearest    = 0;
-static const int PixelSamplerStochastic = 1; // Stochastic Bilinear
+static const int PixelSamplerStochastic = 1; // Stochastic bilinear
 static const int PixelSamplerBilinear   = 2;
 
 // Filter
@@ -149,7 +149,7 @@ API void rqSetCameraProjection  ( const int camera_id, const int   projection );
 API void rqSetCameraAngleMeasure( const int camera_id, const int   measure    );
 API void rqSetCameraFOV         ( const int camera_id, const float degree     );
 API void rqSetCameraBokeh       ( const int camera_id, const float degree     );
-API void rqSetCameraSample      ( const int camera_id, const int   samples    ); // AA Samples (can be an arbitrary number! 1,2,3,4,5,6,7,...)
+API void rqSetCameraSample      ( const int camera_id, const int   samples    ); // AA samples (can be an arbitrary number! 1,2,3,4,5,6,7,...)
 API void rqSetCameraResolution  ( const int camera_id, const int width, const int height );
 API void rqSetCameraRegion      ( const int camera_id, const int left, const int top, const int right, const int bottom );
 API void rqSetCameraPosition    ( const int camera_id, const float x, const float y, const float z );
@@ -272,10 +272,10 @@ API void rqSetShaderGeometryLight( const int shader_id, const int  side, const b
 // Surface Properties (The order matters! You have to add layers from top to bottom )
 API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b ); // Color
 API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 ); // Texture
-API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D Procedural Flake Shader
-API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level ); // 3D Procedural Stone Shader
-API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value ); // Add Random Color Shift per Primitive/Object/Instance
-API void rqSetShaderNoise( const int shader_id, const int side, const int element, const float u, const float v ); // For Normal Mapping
+API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D procedural flake shader
+API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level ); // 3D procedural stone shader
+API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value ); // Random color shift per Primitive/Object/Instance
+API void rqSetShaderNoise( const int shader_id, const int side, const int element, const float u, const float v ); // For normal mapping
 
 // Volumetric Properties
 API void rqSetShaderIOR          ( const int shader_id, const float ior );
