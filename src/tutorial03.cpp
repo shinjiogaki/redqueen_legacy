@@ -62,7 +62,7 @@ int main( )
 	rqSetDisplayGamma  ( 1.45f );
 
 	// Renderer
-	rqSetRendererSample (256);
+	rqSetRendererSample (1024);
 
 	rqInitialize ( );
 	rqRender     ( );

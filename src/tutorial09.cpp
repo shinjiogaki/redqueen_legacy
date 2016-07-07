@@ -119,7 +119,7 @@ int main( )
 	rqSetSkyLightColor  ( 0.5,0.5,0.5 );
 
 	int id = rqAddPointLight();
-	rqSetPointLightPosition(id, -10 , 5, 10);
+	rqSetPointLightPosition(id, 10 , 10, 0);
 	rqSetPointLightColor   (id, 400,400,400);
 
 		

@@ -21,7 +21,7 @@ int main( )
 	////////////////////////
 	auto camera_id = rqAddCamera( );
 	{
-		rqSetCameraSample      ( camera_id, 23 ); // AA samples can be an arbitrary number
+		rqSetCameraSample      ( camera_id, 31 ); // AA samples can be an arbitrary number
 		//rqSetCameraRegion      ( camera_id, 16, 16, 496, 496 ); // Render Region
 		rqSetCameraResolution  ( camera_id, 512, 512 );
 		rqSetCameraProjection  ( camera_id, ProjectionPerspective );
@@ -74,6 +74,7 @@ int main( )
 	// Shader 1
 	{
 		rqSetShaderColor ( shader_id1, SideBoth, ElementSpecular, 1,1,1 );
+		//rqSetShaderColor ( shader_id1, SideFace, ElementDiffuse, 0.8,0.7,0.7 );
 		//rqSetShaderNoise ( shader_id1, SideBoth, ElementNormal  , 0.01, 0.01  );
 		rqSetShaderIOR   ( shader_id1, 1.5 );
 		rqSetShaderTwoSided( shader_id1, true );
@@ -223,11 +224,11 @@ int main( )
 	////////////////////////
 	// Rendering
 	////////////////////////
-	rqSetRendererClamp     ( 1000, 1000, 1000);
-	rqSetRendererSample    ( 256 );
-	rqSetRendererBounce    ( 1 );
+	rqSetRendererClamp     ( 2, 2, 2 );
+	rqSetRendererSample    ( 1024 );
+	rqSetRendererBounce    ( 2 );
 	rqSetRendererResolution( 0.001 );
-	rqSetRendererRadius    ( 0.0f );
+	rqSetRendererRadius    ( 0.01f );
 
 	rqInitialize ( );
 	rqRender     ( );

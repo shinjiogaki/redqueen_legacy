@@ -58,6 +58,7 @@ static const int SideBack = 2; // Back  side
 static const int SideBoth = 3; // Both  sides
 static const int HairRoot = 1; // Hair  root
 static const int HairTip  = 2; // Hair  tip
+static const int HairBoth = 3; // Hair  root & tip
 
 // Elements
 static const int ElementEmission     = 0;

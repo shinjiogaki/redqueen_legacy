@@ -38,10 +38,11 @@ int main( )
 	
 	// Shader
 	auto shader_id = rqAddShader();
-	rqSetShaderColor ( shader_id, HairRoot, ElementDiffuse  , 0.2f, 0.0f, 0.0f ); // Reflection
-	rqSetShaderColor ( shader_id, HairTip , ElementDiffuse  , 0.0f, 0.2f, 0.2f ); // Reflection
-	rqSetShaderColor ( shader_id, SideBoth, ElementGlossy   , 0.8f, 0.8f, 0.8f ); // Transmittance
-	rqSetShaderColor ( shader_id, SideBoth, ElementRoughness, 0.3f, 0.6f, 0.9f ); // for R, TT, TRT
+	rqSetShaderColor ( shader_id, SideBoth, ElementGlossy   , 0.6f, 0.6f, 0.6f ); // Transmittance
+	rqSetShaderColor ( shader_id, HairRoot, ElementDiffuse  , 0.4f, 0.2f, 0.0f ); // Reflection
+	rqSetShaderColor ( shader_id, HairTip , ElementDiffuse  , 0.0f, 0.2f, 0.4f ); // Reflection
+	rqSetShaderColor ( shader_id, HairRoot, ElementRoughness, 0.2f, 0.2f, 0.2f ); // for R, TT, TRT
+	rqSetShaderColor ( shader_id, HairTip , ElementRoughness, 1.0f, 1.0f, 1.0f ); // for R, TT, TRT
 	rqSetShaderIOR ( shader_id, 1.5f ); // IOR
 
 	// Object
@@ -104,6 +105,7 @@ int main( )
 	// Renderer
 	rqSetRendererSample ( 256 );
 	rqSetRendererBounce ( 4   );
+	rqSetRendererClamp  ( 1.0f, 1.0f, 1.0f );
 
 	rqInitialize ( );
 	rqRender     ( );
