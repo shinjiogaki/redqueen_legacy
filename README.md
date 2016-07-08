@@ -4,13 +4,13 @@ A Simple Production Renderer
 
 ###To give a shot:
   
-1. Download and install Visual C++ Redistributable for Visual Studio 2015
+1. Install Visual C++ Redistributable for Visual Studio 2015
  <https://www.microsoft.com/en-us/download/details.aspx?id=48145>
 2. Double click "tutorialxx.exe" in the "bin" folder
 
 ###To create your app:
   
-1. Download and install Visual Studio Community <https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx>
+1. Install Visual Studio Community <https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx>
 2. Select "Release" and "x64" in Configuration Manager to build your application
 
 
