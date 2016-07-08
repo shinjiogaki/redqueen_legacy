@@ -28,6 +28,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 ![Primitives](https://github.com/shinjiogaki/redqueen/blob/master/images/fur.png)
 * Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
+![Per Light AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/per_light_aovs.png)
 * Uber Shader (The parameters are automatically interpreted as those of Eugene's model when applied to hair strands)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Brute-force SSS
