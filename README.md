@@ -1,6 +1,6 @@
 # Redqueen
 
-A Simple Production Renderer for Educational Purpose (Made in Japan)
+A Simple Production Renderer
 
 ###To give a shot:
   
@@ -29,7 +29,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Light Sources: Point / Parallel / Geometry / Sky
 * Per Light AOVs
 ![Per Light AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/per_light_aovs.png)
-* Uber Shader (The parameters are automatically interpreted as those of Eugene d'Eon's model when applied to hair strands)
+* Uber Shader (The parameters are automatically interpreted as those of d'Eon's model when applied to hair strands)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Brute-force SSS
 ![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss_boundaries.png)
