@@ -33,8 +33,6 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Brute-force SSS
 ![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss_boundaries.png)
 * Three-Dimensional Procedural Shaders using Voronoi Cells
-![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/stone.png)
-![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/beauty-20160305-222532.png)
 * Multi-Level Instancing (40559990463 triangles in the image below)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
 ![Multi-Level Instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/forest.png)
