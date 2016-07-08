@@ -37,7 +37,7 @@ A Simple Production Renderer
 * Multi-level instancing (40559990463 triangles in the image below)
 ![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
 ![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/forest.png)
-* AOVs with per vertex user data
+* AOVs (Per vertex user data can be easily obtained)
 ![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
 * OBVH with refitting / treelet reordering / child node sorting for fast occlusion test
 * Redqueen does not use Embree
