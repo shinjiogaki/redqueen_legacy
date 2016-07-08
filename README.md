@@ -31,6 +31,7 @@ A Simple Production Renderer for Educational Purpose (Made in Japan)
 * Uber Shader (The parameters are automatically interpreted as those of Eugene's model when applied to hair strands)
 ![Materials(Uber Shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Brute-force SSS
+![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss_boundaries.png)
 * Three-Dimensional Procedural Shaders using Voronoi Cells
 ![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/stone.png)
 ![Procedural Shaders](https://github.com/shinjiogaki/redqueen/blob/master/images/beauty-20160305-222532.png)
