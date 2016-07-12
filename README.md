@@ -37,7 +37,7 @@ A Simple Production Renderer
 * Uber shader (The parameters are automatically interpreted as those of d'Eon's model when applied to hair strands)
 ![Materials(Uber shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Brute-force SSS
-![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss.png)
+![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/volume.png)
 * Three-dimensional procedural shaders using Voronoi cells
 * Redqueen does not use Embree
 
