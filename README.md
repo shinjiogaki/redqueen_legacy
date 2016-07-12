@@ -31,7 +31,7 @@ A Simple Production Renderer
 * Uber shader (The parameters are automatically interpreted as those of d'Eon's model when applied to hair strands)
 ![Materials(Uber shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Brute-force SSS
-![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss_boundaries.png)
+![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss.png)
 * Three-dimensional procedural shaders using Voronoi cells
 * Multi-level instancing (40559990463 triangles in the image below)
 ![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
