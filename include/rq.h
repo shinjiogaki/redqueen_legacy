@@ -70,7 +70,8 @@ static const int ElementClearCoat    = 5;
 static const int ElementClearCoatIOR = 6;
 static const int ElementNormal       = 7;
 static const int ElementSSS          = 8;
-static const int NumElements         = 9;
+static const int ElementShadow       = 9;
+static const int NumElements         = 10;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,11 +94,12 @@ static const unsigned int ChannelSR        = 1 << 11; // Specular
 static const unsigned int ChannelSRColor   = 1 << 12;
 static const unsigned int ChannelST        = 1 << 13;
 static const unsigned int ChannelSTColor   = 1 << 14;
-static const unsigned int ChannelE         = 1 << 15; // Emission
-static const unsigned int ChannelNormal    = 1 << 16;
-static const unsigned int ChannelTangent   = 1 << 17;
-static const unsigned int ChannelPosition  = 1 << 18;
-static const unsigned int ChannelDepth     = 1 << 19;
+static const unsigned int ChannelSSS       = 1 << 15; // SSS
+static const unsigned int ChannelE         = 1 << 16; // Emission
+static const unsigned int ChannelNormal    = 1 << 17;
+static const unsigned int ChannelTangent   = 1 << 18;
+static const unsigned int ChannelPosition  = 1 << 19;
+static const unsigned int ChannelDepth     = 1 << 20;
 
 static const unsigned int ChannelDiffuse  = ChannelDR + ChannelDT; // Diffuse
 static const unsigned int ChannelGlossy   = ChannelGR + ChannelGT; // Glossy
