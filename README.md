@@ -18,27 +18,27 @@ A Simple Production Renderer
 * Small memory footprint
 * Reasonably fast
 ![Benchmark](https://github.com/shinjiogaki/redqueen/blob/master/images/rungholt.png)
-* Deformation blur with consistent motion
 * Integrators:
   * Unidirectional path tracing with MIS for outdoor scenes
   * Progressive final gathering for interior scenes
   * Photon mapping for SDS paths
 * Primitives: particle / cylinder (with runtime tessellation) / triangle / tetragon
 ![Primitives](https://github.com/shinjiogaki/redqueen/blob/master/images/fur.png)
+* OBVH with refitting / treelet reordering / child node sorting for fast occlusion test
+* Multi-level instancing (40559990463 triangles in the image below)
+![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
+![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/forest.png)
+* Deformation blur with consistent motion
 * Light sources: point / parallel / geometry / sky
 * Per light AOVs
 ![Per light AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/per_light_aovs.png)
+* AOVs (Per vertex user data can be easily obtained)
+![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
 * Uber shader (The parameters are automatically interpreted as those of d'Eon's model when applied to hair strands)
 ![Materials(Uber shader)](https://github.com/shinjiogaki/redqueen/blob/master/images/materials.png)
 * Brute-force SSS
 ![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/sss.png)
 * Three-dimensional procedural shaders using Voronoi cells
-* Multi-level instancing (40559990463 triangles in the image below)
-![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/mli.gif)
-![Multi-level instancing](https://github.com/shinjiogaki/redqueen/blob/master/images/forest.png)
-* AOVs (Per vertex user data can be easily obtained)
-![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
-* OBVH with refitting / treelet reordering / child node sorting for fast occlusion test
 * Redqueen does not use Embree
 
 ###Goals:
