@@ -39,6 +39,7 @@ A Simple Production Renderer
 * Brute-force SSS
 ![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/volume.png)
 * Three-dimensional procedural shaders using Voronoi cells
+![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/weathering.png)
 * Redqueen does not use Embree
 
 ###Goals:
