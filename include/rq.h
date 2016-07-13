@@ -104,6 +104,7 @@ static const unsigned int ChannelDepth     = 1 << 20;
 static const unsigned int ChannelDiffuse  = ChannelDR + ChannelDT; // Diffuse
 static const unsigned int ChannelGlossy   = ChannelGR + ChannelGT; // Glossy
 static const unsigned int ChannelSpecular = ChannelSR + ChannelST; // Specular
+static const unsigned int ChannelEmission = ChannelE; // Emission
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,14 +175,14 @@ API int  rqAddPointLight           ( );
 API void rqSetPointLightPosition   ( const int point_light_id, const float x, const float y, const float z );
 API void rqSetPointLightDirection  ( const int point_light_id, const float x, const float y, const float z );
 API void rqSetPointLightColor      ( const int point_light_id, const float r, const float g, const float b );
-API void rqSetPointLightPhoton     ( const int point_light_id, const int   photon ); // # of Light Paths
+API void rqSetPointLightPhoton     ( const int point_light_id, const int   photon ); // # of light paths
 API void rqSetPointLightSample     ( const int point_light_id, const int   sample );
 API void rqSetPointLightBlur       ( const int point_light_id, const float blur   );
 API void rqSetPointLightOffset     ( const int point_light_id, const float offset );
 API void rqSetPointLightInnerAngle ( const int point_light_id, const float angle  ); // [degree]
 API void rqSetPointLightOuterAngle ( const int point_light_id, const float angle  ); // [degree]
-API void rqSetPointLightLink       ( const int point_light_id, const int shader_id ); // Light Linking
-API int  rqAddPointLightAOV        ( const int point_light_id ); // Add AOV Channel
+API void rqSetPointLightLink       ( const int point_light_id, const int shader_id ); 
+API int  rqAddPointLightAOV        ( const int point_light_id ); // Add AOV channel
 API void rqSetPointLightAOVName    ( const int point_light_id, const int aov_id, const char* name    );
 API void rqSetPointLightAOVChannel ( const int point_light_id, const int aov_id, const int   channel ); // Select from Channels defined above
 
@@ -192,11 +193,11 @@ API void rqSetPointLightAOVChannel ( const int point_light_id, const int aov_id,
 API int  rqAddParallelLight           ( );
 API void rqSetParallelLightDirection  ( const int parallel_light_id, const float x, const float y, const float z );
 API void rqSetParallelLightColor      ( const int parallel_light_id, const float r, const float g, const float b );
-API void rqSetParallelLightPhoton     ( const int parallel_light_id, const int   photon ); // # of Light Paths
+API void rqSetParallelLightPhoton     ( const int parallel_light_id, const int   photon ); // # of light paths
 API void rqSetParallelLightSample     ( const int parallel_light_id, const int   sample );
 API void rqSetParallelLightBlur       ( const int parallel_light_id, const float blur   ); // Angle[degree]
 API void rqSetParallelLightOffset     ( const int parallel_light_id, const float offset );
-API void rqSetParallelLightLink       ( const int parallel_light_id, const int shader_id ); // Light Linking
+API void rqSetParallelLightLink       ( const int parallel_light_id, const int shader_id ); 
 API int  rqAddParallelLightAOV        ( const int parallel_light_id ); // Add AOV channel
 API void rqSetParallelLightAOVName    ( const int parallel_light_id, const int aov_id, const char* name    );
 API void rqSetParallelLightAOVChannel ( const int parallel_light_id, const int aov_id, const int   channel ); // Select from Channels defined above
@@ -216,7 +217,7 @@ API void rqSetSkyLightColor      ( const float r, const float g, const float b )
 API void rqSetSkyLightNorth      ( const float x, const float y, const float z );
 API void rqSetSkyLightZenith     ( const float x, const float y, const float z );
 API void rqSetSkyLightShader     ( const int shader_id ); // Window
-API void rqSetSkyLightLink       ( const int shader_id ); // Light Link
+API void rqSetSkyLightLink       ( const int shader_id ); 
 API int  rqAddSkyLightAOV        ( );
 API void rqSetSkyLightAOVName    ( const int aov_id, const char* name    );
 API void rqSetSkyLightAOVChannel ( const int aov_id, const int   channel );
@@ -231,7 +232,7 @@ API void rqFinalizeSkyLight   ( );
 API void rqSetGeometryLightPhoton        ( const int photon    ); // # of Light Paths
 API void rqSetGeometryLightSample        ( const int sample    );
 API void rqSetGeometryLightShader        ( const int shader_id ); // Mesh Light
-API void rqSetGeometryLightLink          ( const int shader_id ); // Light Link
+API void rqSetGeometryLightLink          ( const int shader_id ); 
 API int  rqAddGeometryLightAOV           ( );
 API void rqSetGeometryLightAOVName       ( const int aov_id, const char* name    );
 API void rqSetGeometryLightAOVChannel    ( const int aov_id, const int   channel );
@@ -258,21 +259,17 @@ API void rqGetImageColor( const int image_id, const int u, const int v,       fl
 //
 // Surface Shader
 // Set non-zero albedo for both sides to compute transmittance.
-// 0 = Roughness     : Specular
-// 0 < Roughness < 1 : Glossy
-//     Roughness = 1 : Diffuse
 //
 // Volumetric Flake Shader
 // This behaves as 2d flake shader when depth=0
 //
-// two_sided option allows rays to traverse from bottom to top when they hit back side.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddShader     ( );
 API void rqSetShaderName ( const int shader_id, const char* name );
 API void rqSetShaderTwoSided     ( const int shader_id, const bool two_sided );
 API void rqSetShaderGeometryLight( const int shader_id, const int  side, const bool flag );
 
-// Surface Properties (The order matters! You have to add layers from top to bottom )
+// Surface Properties
 API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b ); // Color
 API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 ); // Texture
 API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D procedural flake shader
