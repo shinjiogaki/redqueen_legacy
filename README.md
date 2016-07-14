@@ -32,6 +32,7 @@ A Simple Production Renderer
 * Light sources: point / parallel / geometry / sky
 * Per light AOVs
 ![Per light AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/per_light_aovs.png)
+![Per light AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov_pm.png)
 * AOVs (Per vertex user data can be easily obtained)
 ![AOVs](https://github.com/shinjiogaki/redqueen/blob/master/images/aov2.png)
 * Uber shader (The parameters are automatically interpreted as those of d'Eon's model when applied to hair strands)
