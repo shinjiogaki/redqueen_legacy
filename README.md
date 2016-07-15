@@ -51,7 +51,7 @@ A Simple Production Renderer
 * Free - targeting at individuals and small studios
 
 # Publications
-* [An N-ary BVH Child Node Sorting Technique for Occlusion Test](http://jcgt.org/published/0005/02/02/)
+* [An N-ary BVH Child Node Sorting Technique for Occlusion Tests](http://jcgt.org/published/0005/02/02/)
 * [Ray Tracing of Quadratic Parametric Surface](http://gcoe-mi.jp/english/temp/publish/62e18d4d8cbad1e01f68cebb2e81ac3e.pdf)
 * [Direct Ray Tracing of Phong Tessellation](http://www.jp.square-enix.com/info/library/)
 * [An Empirical Fur Shader](http://www.jp.square-enix.com/info/library/)
