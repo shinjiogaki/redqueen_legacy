@@ -131,16 +131,10 @@ static const int AddressingWrap  = 0;
 static const int AddressingClamp = 1;
 
 // Sampler
-static const int PixelSamplerNearest    = 0;
-static const int PixelSamplerStochastic = 1; // Stochastic bilinear
+static const int PixelSamplerStochastic = 0; // Stochastic bilinear
+static const int PixelSamplerNearest    = 1;
 static const int PixelSamplerBilinear   = 2;
 
-// Filter
-static const int FilterNone     = 0;
-static const int FilterGradient = 1;
-static const int FilterNormal   = 2;
-static const int FilterGaussian = 3;
-static const int FilterVariance = 4;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -264,23 +258,30 @@ API void rqGetImageColor( const int image_id, const int u, const int v,       fl
 // This behaves as 2d flake shader when depth=0
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API int  rqAddShader     ( );
-API void rqSetShaderName ( const int shader_id, const char* name );
+API int  rqAddShader             ( );
+API void rqSetShaderName         ( const int shader_id, const char* name );
 API void rqSetShaderTwoSided     ( const int shader_id, const bool two_sided );
 API void rqSetShaderGeometryLight( const int shader_id, const int  side, const bool flag );
 
 // Surface Properties
 API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b ); // Color
-API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name, const float gamma = 1.0f, const float* color_matrix_4x4 = 0, const float* uv_matrix_3x3 = 0 ); // Texture
 API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D procedural flake shader
 API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level ); // 3D procedural stone shader
 API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value ); // Random color shift per Primitive/Object/Instance
 API void rqSetShaderNoise( const int shader_id, const int side, const int element, const float u, const float v ); // For normal mapping
+API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name,
+	const float  gamma            = 1.0f, // Degamma
+	const float* color_matrix_4x4 = 0, // Color correction (Identity matrix if 0)
+	const float* uv_matrix_3x3    = 0, // Tiling           (Identity matrix if 0)
+	const int    pixel_sampler    = 0,
+	const int    addressing_u     = 0,
+	const int    addressing_v     = 0
+	); // Texture
 
 // Volumetric Properties
 API void rqSetShaderIOR          ( const int shader_id, const float ior );
 API void rqSetShaderDensity      ( const int shader_id, const float density );
-API void rqSetShaderAverageCosine( const int shader_id, const float cosine  );
+API void rqSetShaderAverageCosine( const int shader_id, const float cosine  ); // Phase function
 API void rqSetShaderParticleColor( const int shader_id, const float r, const float g, const float b );
 API void rqSetShaderTransmittance( const int shader_id, const float r, const float g, const float b );
 
