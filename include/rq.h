@@ -61,17 +61,17 @@ static const int HairTip  = 2; // Hair  tip
 static const int HairBoth = 3; // Hair  root & tip
 
 // Elements
-static const int ElementEmission     = 0;
-static const int ElementDiffuse      = 1;
-static const int ElementSpecular     = 2;
-static const int ElementGlossy       = 3;
-static const int ElementRoughness    = 4;
-static const int ElementClearCoat    = 5;
-static const int ElementClearCoatIOR = 6;
-static const int ElementNormal       = 7;
-static const int ElementSSS          = 8;
-static const int ElementShadow       = 9;
-static const int NumElements         = 10;
+static const int ElementEmission        = 0;
+static const int ElementDiffuse         = 1;
+static const int ElementSpecular        = 2;
+static const int ElementGlossy          = 3;
+static const int ElementRoughness       = 4;
+static const int ElementNormal          = 5;
+static const int ElementSSS             = 6;
+static const int ElementShadow          = 7;
+static const int ElementClearCoat       = 8; // Clear top coat (Specular)
+static const int ElementClearCoatIOR    = 9;
+static const int NumElements            = 10;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ static const int ProjectionOrthographic = 2;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Textures
+// Texture
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Addressing
@@ -196,7 +196,11 @@ API int  rqAddParallelLightAOV        ( const int parallel_light_id ); // Add AO
 API void rqSetParallelLightAOVName    ( const int parallel_light_id, const int aov_id, const char* name    );
 API void rqSetParallelLightAOVChannel ( const int parallel_light_id, const int aov_id, const int   channel ); // Select from Channels defined above
 
-API void rqInitializeGaffer ( ); // Takes care of all non-area lights
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Non-Area Light - Takes care of all non-area lights (point & parallel lights)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+API void rqInitializeGaffer ( );
 API void rqFinalizeGaffer   ( );
 
 
@@ -205,7 +209,7 @@ API void rqFinalizeGaffer   ( );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API void rqSetSkyLightImage      ( const char* name   );
 API void rqSetSkyLightBackdrop   ( const char* name   );
-API void rqSetSkyLightPhoton     ( const int   photon ); // # of Light Paths
+API void rqSetSkyLightPhoton     ( const int   photon ); // # of light paths
 API void rqSetSkyLightSample     ( const int   sample );
 API void rqSetSkyLightColor      ( const float r, const float g, const float b );
 API void rqSetSkyLightNorth      ( const float x, const float y, const float z );
@@ -223,9 +227,9 @@ API void rqFinalizeSkyLight   ( );
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Geometry Light
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-API void rqSetGeometryLightPhoton        ( const int photon    ); // # of Light Paths
+API void rqSetGeometryLightPhoton        ( const int photon    ); // # of light paths
 API void rqSetGeometryLightSample        ( const int sample    );
-API void rqSetGeometryLightShader        ( const int shader_id ); // Mesh Light
+API void rqSetGeometryLightShader        ( const int shader_id ); // Mesh light
 API void rqSetGeometryLightLink          ( const int shader_id ); 
 API int  rqAddGeometryLightAOV           ( );
 API void rqSetGeometryLightAOVName       ( const int aov_id, const char* name    );
@@ -251,24 +255,26 @@ API void rqGetImageColor( const int image_id, const int u, const int v,       fl
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Shader
 //
-// Surface Shader
+// Surface Properties
 // Set non-zero albedo for both sides to compute transmittance.
 //
-// Volumetric Flake Shader
-// This behaves as 2d flake shader when depth=0
-//
+// Color : Color or parameters
+// Flake : Volumetric flake shader - This behaves as 2d flake shader when depth=0
+// Stone : 3D procedural stone shader - Image is used as an Exemplar
+// Shift : Random color shifter using hash function
+// Image : Used as a texture map or exemplar 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddShader             ( );
 API void rqSetShaderName         ( const int shader_id, const char* name );
 API void rqSetShaderTwoSided     ( const int shader_id, const bool two_sided );
+API void rqSetShaderPriority     ( const int shader_id, const int  priority ); // Priority in intersection test
 API void rqSetShaderGeometryLight( const int shader_id, const int  side, const bool flag );
 
 // Surface Properties
-API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b ); // Color
-API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth ); // 3D procedural flake shader
-API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level ); // 3D procedural stone shader
-API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value ); // Random color shift per Primitive/Object/Instance
-API void rqSetShaderNoise( const int shader_id, const int side, const int element, const float u, const float v ); // For normal mapping
+API void rqSetShaderColor( const int shader_id, const int side, const int element, const float r, const float g, const float b );
+API void rqSetShaderFlake( const int shader_id, const int side, const int element, const float r, const float g, const float b, const float scale, const float density, const float depth );
+API void rqSetShaderStone( const int shader_id, const int side, const int element, const float weathering, const float scale, const float density, const int level );
+API void rqSetShaderShift( const int shader_id, const int side, const int element, const int class_type, const float hue, const float saturation, const float value );
 API void rqSetShaderImage( const int shader_id, const int side, const int element, const char* name,
 	const float  gamma            = 1.0f, // Degamma
 	const float* color_matrix_4x4 = 0, // Color correction (Identity matrix if 0)
@@ -279,9 +285,9 @@ API void rqSetShaderImage( const int shader_id, const int side, const int elemen
 	); // Texture
 
 // Volumetric Properties
-API void rqSetShaderIOR          ( const int shader_id, const float ior );
-API void rqSetShaderDensity      ( const int shader_id, const float density );
-API void rqSetShaderAverageCosine( const int shader_id, const float cosine  ); // Phase function
+API void rqSetShaderIOR          ( const int shader_id, const float ior );     // Index of refraction
+API void rqSetShaderDensity      ( const int shader_id, const float density ); // The probability of a ray hitting a particle within a unit distance
+API void rqSetShaderAverageCosine( const int shader_id, const float cosine  ); // The "k" parameter of Schlick phase function
 API void rqSetShaderParticleColor( const int shader_id, const float r, const float g, const float b );
 API void rqSetShaderTransmittance( const int shader_id, const float r, const float g, const float b );
 
@@ -314,7 +320,6 @@ API void rqSetObjectMatrix( const int object_id, const float* matrix_4x4 = 0 );
 API void rqSetObjectShader( const int object_id, const int atom, const int shader_id );
 API void rqAddPrimitives  ( const int object_id, const int atom, const int num, const unsigned int* vertex_ids );
 API int  rqAddVertexData  ( const int object_id, const int atom, const char* name, const int num, const int dimension, const float* data );
-API int  rqSetVertexData  ( const int object_id, const int atom, const char* name, const int num, const int dimension, const float* data );
 API int  rqAddInstance    ( const int object_id );
 API void rqSetInstance    ( const int object_id, const int instance_id, const int   instanced_object_id, const float* matrix_4x4 = 0 );
 API void rqOverrideShader ( const int object_id, const int instance_id, const char* old_name, const char* new_name   );
@@ -356,5 +361,5 @@ API void rqFinalize   ( ); // Finalize   everything in an appropriate Order
 API void rqShutdown   ( );
 API void rqGo         ( const char* folder_name ); // This function does everything for you
 API void rqLoadScene  ( const char* folder_name ); // Load geo from files
-API void rqLoadFile   ( const char* file_name ); // Load geo from file
-API void rqSaveBeauty ( const char* file_name ); // Save Beauty
+API void rqLoadFile   ( const char*   file_name ); // Load geo from file
+API void rqSaveBeauty ( const char*   file_name ); // Save Beauty
