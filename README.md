@@ -22,7 +22,7 @@ A Simple Production Renderer
   * Unidirectional path tracing with MIS for outdoor scenes
   * Progressive final gathering for interior scenes
   * Photon mapping for SDS paths
-* Primitives: particle / cylinder (with runtime tessellation) / triangle / tetragon
+* Primitives: particle / cylinder (with runtime tessellation) / triangle / tetragon / cube (for voxel art)
 ![Primitives](https://github.com/shinjiogaki/redqueen/blob/master/images/fur.png)
 * OBVH with refitting / treelet reordering / child node sorting for fast occlusion test
 * Multi-level instancing (40559990463 triangles in the image below)
