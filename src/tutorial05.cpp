@@ -23,12 +23,40 @@ int main( )
 	rqSetCameraFOV       ( camera_id, 40.0f );
 	rqSetCameraPosition  ( camera_id, 32, 32, -32 );
 
+
+	// Texture
+	const auto w = 256;
+	const auto h = 256;
+	const auto tile = 16;
+	const auto image_id = rqAddImage();
+	rqSetImageName( image_id, "noise.png" );
+	rqCreateImage( image_id, w, h );
+	for( auto v = 0; v < h; ++v )
+	{
+		for( auto u = 0; u < w; ++u )
+		{
+			rqSetImageColor(image_id, u,v, rand()/(float)RAND_MAX,rand()/(float)RAND_MAX,rand()/(float)RAND_MAX);
+		}
+	}
+
+
+	// Shader
+	auto shader_id = rqAddShader();
+	rqSetShaderName     ( shader_id, "noise" );
+	rqSetShaderTwoSided ( shader_id, false    );
+	rqSetShaderColor    ( shader_id, SideFace, ElementDiffuse, 0.9,0.9,0.9 );
+	rqSetShaderImage    ( shader_id, SideFace, ElementDiffuse, "noise.png", 1, 0, 0, PixelSamplerNearest, 0, 0 );
+	rqSetShaderIOR      ( shader_id, 8 );
+
+
+
 	// Object
 	auto object_id = rqAddObject( );
 	rqSetObjectName( object_id, "particles" );
-	const auto N = 1024;
+	const auto N = 256;
 
 	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
+	float        *uvs       = (float*)       std::malloc( N * 2 * sizeof(float)       );
 	float        *motions0  = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *motions1  = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *radii     = (float*)       std::malloc( N * 1 * sizeof(float)       );
@@ -36,31 +64,37 @@ int main( )
 
 	for(auto i = 0; i < N; ++i)
 	{
-		positions[i*3+0] =   rand()%25-12;
-		positions[i*3+1] =   rand()%25-12;
-		positions[i*3+2] =   rand()%25-12;
-		motions0 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions0 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions0 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions1 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions1 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
-		motions1 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
+		positions[i*3+0] = rand()%25-12;
+		positions[i*3+1] = rand()%25-12;
+		positions[i*3+2] = rand()%25-12;
+		uvs      [i*2+0] = rand()/(float)RAND_MAX;
+		uvs      [i*2+1] = rand()/(float)RAND_MAX;
+		motions0 [i*3+0] = rand()/(float)RAND_MAX-0.5f;
+		motions0 [i*3+1] = rand()/(float)RAND_MAX-0.5f;
+		motions0 [i*3+2] = rand()/(float)RAND_MAX-0.5f;
+		motions1 [i*3+0] = rand()/(float)RAND_MAX-0.5f;
+		motions1 [i*3+1] = rand()/(float)RAND_MAX-0.5f;
+		motions1 [i*3+2] = rand()/(float)RAND_MAX-0.5f;
 
 		radii[i] = 0.5f;
 		ids  [i] = i;
 	}
 
 	// Spheres
+	//rqSetObjectShader( object_id, AtomParticle, shader_id );
 	//rqAddVertexData ( object_id, AtomParticle, "position", N, 3, positions );
-	////rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions0  );
-	////rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions1  );
+	//rqAddVertexData ( object_id, AtomParticle, "uv"      , N, 2, uvs       );
+	//rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions0  );
+	//rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions1  );
 	//rqAddVertexData ( object_id, AtomParticle, "radius"  , N, 1, radii     );
 	//rqAddPrimitives ( object_id, AtomParticle, N, ids );
 	
 	// Cubes
+	rqSetObjectShader( object_id, AtomCube, shader_id );
 	rqAddVertexData ( object_id, AtomCube, "position", N, 3, positions );
-	//rqAddVertexData ( object_id, AtomCube, "motion"  , N, 3, motions0  );
-	//rqAddVertexData ( object_id, AtomCube, "motion"  , N, 3, motions1  );
+	rqAddVertexData ( object_id, AtomCube, "uv"      , N, 2, uvs       );
+	rqAddVertexData ( object_id, AtomCube, "motion"  , N, 3, motions0  );
+	rqAddVertexData ( object_id, AtomCube, "motion"  , N, 3, motions1  );
 	rqAddVertexData ( object_id, AtomCube, "half_width"  , N, 1, radii     );
 	rqAddPrimitives ( object_id, AtomCube, N, ids );
 
