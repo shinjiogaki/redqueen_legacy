@@ -36,11 +36,12 @@ static const int ClassPrimitive = 2;
 
 // Atomic Objects (Primitives)
 static const int AtomNull     = 0;
-static const int AtomParticle = 1;
-static const int AtomCylinder = 2;
-static const int AtomTriangle = 3;
-static const int AtomTetragon = 4;
-static const int AtomInstance = 5;
+static const int AtomCube     = 1; // Axis Aligned Cube
+static const int AtomParticle = 2;
+static const int AtomCylinder = 3;
+static const int AtomTriangle = 4;
+static const int AtomTetragon = 5;
+static const int AtomInstance = 6;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,13 +305,14 @@ API void rqFinalizeShaders   ( );
 // Geometry ( Multi-Level Instancing is supported.)
 //
 // Vertex Data
-// "position"  : reserved (Used as Pref when an object has motion data)
-// "motion"    : reserved (Offset from position)
-// "radius"	   : reserved (hair/particle)
-// "normal"	   : reserved
-// "tangent"   : reserved
-// "uv"		   : reserved (texture coord, you can add multiple times)
-// "parameter" : reserved (hair root:0 hair tip:1)
+// "position"   : reserved Used as Pref when an object has motion data
+// "motion"     : reserved Offset from the original position
+// "radius"	    : reserved hair(AtomCylinder)/particle(AtomParticle)
+// "half_width" : reserved cube(AtomCube)
+// "normal"	    : reserved
+// "tangent"    : reserved
+// "uv"		    : reserved texture coord, you can add multiple times
+// "parameter"  : reserved hair root:0 hair tip:1)
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 API int  rqAddObject      ( ); // Returns object_id

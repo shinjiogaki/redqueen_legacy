@@ -18,15 +18,15 @@ int main( )
 	rqSetCameraResolution( camera_id, 512, 512 );
 	rqSetCameraTime      ( camera_id, ShutterOpen );
 	rqSetCameraFOV       ( camera_id, 40.0f );
-	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
+	rqSetCameraPosition  ( camera_id, 32, 32, -32 );
 	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 40.0f );
-	rqSetCameraPosition  ( camera_id, 8, 8, -8 );
+	rqSetCameraPosition  ( camera_id, 32, 32, -32 );
 
 	// Object
 	auto object_id = rqAddObject( );
 	rqSetObjectName( object_id, "particles" );
-	const auto N = 10000;
+	const auto N = 1024;
 
 	float        *positions = (float*)       std::malloc( N * 3 * sizeof(float)       );
 	float        *motions0  = (float*)       std::malloc( N * 3 * sizeof(float)       );
@@ -36,9 +36,9 @@ int main( )
 
 	for(auto i = 0; i < N; ++i)
 	{
-		positions[i*3+0] =   5*rand()/(float)RAND_MAX-2.5f;
-		positions[i*3+1] =   5*rand()/(float)RAND_MAX-2.5f;
-		positions[i*3+2] =   5*rand()/(float)RAND_MAX-2.5f;
+		positions[i*3+0] =   rand()%25-12;
+		positions[i*3+1] =   rand()%25-12;
+		positions[i*3+2] =   rand()%25-12;
 		motions0 [i*3+0] = 0.5*rand()/(float)RAND_MAX-0.25f;
 		motions0 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
 		motions0 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
@@ -46,16 +46,24 @@ int main( )
 		motions1 [i*3+1] = 0.5*rand()/(float)RAND_MAX-0.25f;
 		motions1 [i*3+2] = 0.5*rand()/(float)RAND_MAX-0.25f;
 
-		radii[i] = 0.05f;
+		radii[i] = 0.5f;
 		ids  [i] = i;
 	}
 
-	rqAddVertexData ( object_id, AtomParticle, "position", N, 3, positions );
-	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions0  );
-	rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions1  );
-	rqAddVertexData ( object_id, AtomParticle, "radius"  , N, 1, radii     );
-	rqAddPrimitives ( object_id, AtomParticle, N, ids );
+	// Spheres
+	//rqAddVertexData ( object_id, AtomParticle, "position", N, 3, positions );
+	////rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions0  );
+	////rqAddVertexData ( object_id, AtomParticle, "motion"  , N, 3, motions1  );
+	//rqAddVertexData ( object_id, AtomParticle, "radius"  , N, 1, radii     );
+	//rqAddPrimitives ( object_id, AtomParticle, N, ids );
 	
+	// Cubes
+	rqAddVertexData ( object_id, AtomCube, "position", N, 3, positions );
+	//rqAddVertexData ( object_id, AtomCube, "motion"  , N, 3, motions0  );
+	//rqAddVertexData ( object_id, AtomCube, "motion"  , N, 3, motions1  );
+	rqAddVertexData ( object_id, AtomCube, "half_width"  , N, 1, radii     );
+	rqAddPrimitives ( object_id, AtomCube, N, ids );
+
 	std::free(positions);
 	std::free(motions0 );
 	std::free(motions1 );
