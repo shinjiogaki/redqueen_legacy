@@ -12,7 +12,7 @@ int main( int argc, char *argv[ ] )
 	{
 		for( auto i = 2; i < argc; ++i )
 		{
-			if( 0 == strcmp( argv[ i ], "-preview" ) ) { rqSetPreviewWindow( true ); }
+			if( 0 == strcmp( argv[ i ], "-preview" ) ) { rqCreatePreviewWindow( ); }
 		}
 		rqGo( argv[ 1 ] );
 	}

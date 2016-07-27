@@ -22,12 +22,6 @@ int main( )
 		rqSetCameraProjection  ( camera_id, ProjectionPerspective );
 		rqSetCameraAngleMeasure( camera_id, AngleMeasureVertical  );
 
-		rqSetCameraTime     ( camera_id, ShutterOpen );
-		rqSetCameraFOV      ( camera_id, 30.0f );
-		rqSetCameraPosition ( camera_id, 3,3,3 );
-		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
-
-		rqSetCameraTime     ( camera_id, ShutterClose );
 		rqSetCameraFOV      ( camera_id, 30.0f );
 		rqSetCameraPosition ( camera_id, 3,3,3 );
 		rqSetCameraUpVector ( camera_id, 0, 1,  0 );
@@ -124,7 +118,7 @@ int main( )
 
 		
 	// Display
-	rqSetPreviewWindow ( true );
+	rqCreatePreviewWindow ( );
 	rqSetDisplayGamma  ( 1.45f );
 
 

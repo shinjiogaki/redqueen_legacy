@@ -16,10 +16,6 @@ int main( )
 	auto camera_id = rqAddCamera( );
 	rqSetCameraSample    ( camera_id, 23 ); // AA samples can be an arbitrary number
 	rqSetCameraResolution( camera_id, 512, 512 );
-	rqSetCameraTime      ( camera_id, ShutterOpen ); 
-	rqSetCameraFOV       ( camera_id, 35.0f );
-	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
-	rqSetCameraTime      ( camera_id, ShutterClose );
 	rqSetCameraFOV       ( camera_id, 35.0f );
 	rqSetCameraPosition  ( camera_id, 0, 0, -4 );
 
@@ -46,7 +42,7 @@ int main( )
 	rqSetParallelLightDirection( light_id, 1,-1,1);
 
 	// Display
-	rqSetPreviewWindow ( true );
+	rqCreatePreviewWindow ( );
 	rqSetDisplayGamma  ( 1.45f );
 
 	// Renderer
