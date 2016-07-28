@@ -71,12 +71,19 @@ int main( )
 	
 
 	// Cubes Initial positions are used to build bvh, hair uv, etc.
-	rqSetObjectDynamic( object_id, AtomCube ); // Dynamic object
-	rqSetObjectShader ( object_id, AtomCube, shader_id );
-	rqAddPrimitives   ( object_id, AtomCube, N, ids );
+	rqSetObjectDynamic( object_id, AtomCube );            // Dynamic object
+	rqSetObjectShader ( object_id, AtomCube, shader_id ); // Shader
+
+	rqAddPrimitives   ( object_id, AtomCube,             N,    ids       );
 	rqAddVertexData   ( object_id, AtomCube, "position", N, 3, positions );
 	rqAddVertexData   ( object_id, AtomCube, "uv"      , N, 2, uvs       );
 	rqAddVertexData   ( object_id, AtomCube, "radius"  , N, 1, radii     );
+
+	std::free(positions);
+	std::free(radii    );
+	std::free(uvs      );
+	std::free(ids      );
+
 
 	// Parallel Light
 	auto light_id = rqAddParallelLight();
@@ -115,11 +122,6 @@ int main( )
 		rqRenderPixels       ( );
 		rqUpdatePreviewWindow( );
 	}
-
-	std::free(positions);
-	std::free(radii    );
-	std::free(uvs      );
-	std::free(ids      );
 
 	rqFinalize ( );
 
