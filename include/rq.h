@@ -187,7 +187,8 @@ API void rqSetPointLightImage      ( const int point_light_id,
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 API int  rqAddParallelLight           ( );
 API void rqSetParallelLightDirection  ( const int parallel_light_id, const float x, const float y, const float z );
-API void rqSetParallelLightTangent    ( const int parallel_light_id, const float x, const float y, const float z );
+API void rqSetParallelLightTangent    ( const int parallel_light_id, const float x, const float y, const float z ); // Used for projection map
+API void rqSetParallelLightPosition   ( const int parallel_light_id, const float x, const float y, const float z ); // Used for projection map
 API void rqSetParallelLightColor      ( const int parallel_light_id, const float r, const float g, const float b );
 API void rqSetParallelLightPhoton     ( const int parallel_light_id, const int   photon ); // # of light paths
 API void rqSetParallelLightSample     ( const int parallel_light_id, const int   sample );
