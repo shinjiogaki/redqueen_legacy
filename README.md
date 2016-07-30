@@ -57,5 +57,5 @@ A Simple Production Renderer
 * [An Empirical Fur Shader](http://www.jp.square-enix.com/info/library/)
 
 # Technical Report
-* [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/redqueen/blob/master/report/report.pdf)
+* [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/reports/blob/master/report.pdf)
 
