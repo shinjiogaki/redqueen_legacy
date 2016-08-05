@@ -1,3 +1,6 @@
+As I joined Solid Angle, I won't add new features.
+I will only fix critical bugs for the current users.
+
 # Redqueen
 
 A Simple Production Renderer
