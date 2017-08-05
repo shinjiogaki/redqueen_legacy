@@ -5,22 +5,23 @@ I will only fix critical bugs for the current users.
 
 A Simple Production Renderer
 
-###To give a shot:
+### To give a shot:
   
 1. Install Visual C++ Redistributable <https://www.microsoft.com/en-us/download/details.aspx?id=48145>
 2. Double click "tutorialxx.exe" in the "bin" folder
 
-###To create your app:
+### To create your app:
   
 1. Install Visual Studio Community <https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx>
 2. Select "Release" and "x64" in Configuration Manager to build your application
 
 
-###Features:
+### Features:
 * Extremely simple APIs
 * Small memory footprint
 * Reasonably fast
-![Benchmark](https://github.com/shinjiogaki/redqueen/blob/master/images/rungholt.png)
+![Benchmark](https://github.com/shinjiogaki/redqueen/blob/master/images/robot.png)
+![Benchmark](https://github.com/shinjiogaki/redqueen/blob/master/images/living.png)
 * Integrators:
   * Unidirectional path tracing with MIS for outdoor scenes
   * Progressive final gathering for interior scenes
@@ -46,7 +47,7 @@ A Simple Production Renderer
 ![Materials(Brute-force SSS)](https://github.com/shinjiogaki/redqueen/blob/master/images/weathering.png)
 * Redqueen does not use Embree
 
-###Goals:
+### Goals:
 * Compact - reduce memory consumption 
 * Simple - so that people can use without manual
 * Fast - make best use of the instruction sets of modern CPUs
