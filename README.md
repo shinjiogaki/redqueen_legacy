@@ -63,3 +63,5 @@ A Simple Production Renderer
 # Technical Report
 * [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/reports/blob/master/report.pdf)
 
+# 日本語記事
+* [行列を使ったポリゴン・メッシュの扱いについて](https://github.com/shinjiogaki/reports/blob/master/meshmatrix.pdf)
