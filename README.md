@@ -62,7 +62,7 @@ A Simple Production Renderer
 * [Production Ray Tracing of Feature Lines](http://www.iliyan.com/publications/FeatureLineDrawing)
 
 # Technical Report
-* [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/reports/blob/master/report.pdf)
+* [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/reports/blob/master/Fragmentation-Aware%20BVH%20Construction.pdf)
 
 # 日本語記事
 * [行列を使ったポリゴン・メッシュの扱いについて](http://qiita.com/shinjiogaki/items/d16abb018a843c09b8c8)
