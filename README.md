@@ -61,6 +61,9 @@ A Simple Production Renderer
 # Technical Report
 * [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/reports/blob/master/Fragmentation-Aware%20BVH%20Construction.pdf)
 
+# Presentation
+* [Procedural Shading & Texturing (CEDEC)](https://speakerdeck.com/shinjiogaki/procedural-shading-and-texturing)
+
 # 日本語記事
 * [行列を使ったポリゴン・メッシュの扱いについて](http://qiita.com/shinjiogaki/items/d16abb018a843c09b8c8)
 * [BVHのはなし](https://shinjiogaki.github.io/bvh/)
