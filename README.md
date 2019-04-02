@@ -57,7 +57,8 @@ A Simple Production Renderer
 * [Direct Ray Tracing of Phong Tessellation](http://www.jp.square-enix.com/info/library/)
 * [An Empirical Fur Shader](http://www.jp.square-enix.com/info/library/)
 * [Production Ray Tracing of Feature Lines](http://www.iliyan.com/publications/FeatureLineDrawing)
-
+* [Shader Development at OLM](https://github.com/shinjiogaki/reports/blob/master/Shader%20Development%20at%20OLM.pdf)
+      
 # Technical Report
 * [Fragmentation-Aware BVH Contraction](https://github.com/shinjiogaki/reports/blob/master/Fragmentation-Aware%20BVH%20Construction.pdf)
 
