@@ -12,7 +12,6 @@ A Simple Production Renderer
 1. Install Visual Studio Community <https://www.visualstudio.com/en-us/products/free-developer-offers-vs.aspx>
 2. Select "Release" and "x64" in Configuration Manager to build your application
 
-
 ### Features:
 * Extremely simple APIs
 * Small memory footprint
@@ -50,3 +49,5 @@ A Simple Production Renderer
 * Fast - make best use of the instruction sets of modern CPUs
 * Robust - never crashes
 * Free - targeting at individuals and small studios
+
+I'm working on a new version.
