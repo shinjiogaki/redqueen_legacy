@@ -13,7 +13,7 @@ A Simple Production Renderer
 2. Select "Release" and "x64" in Configuration Manager to build your application
 
 ### Features:
-* Extremely simple APIs
+* Extremely simple API
 * Small memory footprint
 * Reasonably fast
 ![Benchmark](https://github.com/shinjiogaki/redqueen_legacy/blob/master/images/robot.png)
