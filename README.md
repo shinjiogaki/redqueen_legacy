@@ -24,7 +24,7 @@ A Simple Production Renderer
   * Photon mapping for SDS paths
 * Primitives: particle / cylinder (with runtime tessellation) / triangle / tetragon / cube (for voxel art)
 ![Primitives](https://github.com/shinjiogaki/redqueen_legacy/blob/master/images/fur.png)
-* OBVH with refitting / treelet reordering / child node sorting for fast occlusion test
+* OBVH with refitting / treelet restructuring / child node reordering for fast occlusion test
 * Multi-level instancing (40559990463 triangles in the image below)
 ![Multi-level instancing](https://github.com/shinjiogaki/redqueen_legacy/blob/master/images/mli.gif)
 ![Multi-level instancing](https://github.com/shinjiogaki/redqueen_legacy/blob/master/images/forest.png)
